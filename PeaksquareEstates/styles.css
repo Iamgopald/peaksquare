@@ -10,7 +10,7 @@ body { background:#000; color:#fff; overflow-x:hidden; }
 /* page spacing */
 .section { padding:100px 6%; }
 body, * {
-  cursor: none !important;
+  cursor: none;
 }
 /* -------------------------
 HEADER / BRAND
@@ -115,14 +115,13 @@ HERO
 }
 
 .hero-title {
+  display: flex;
+  flex-wrap: wrap; /* words stay inline, wrap if needed */
+  gap: 0.5rem;
   font-size: 4rem;
   font-weight: 700;
   line-height: 1.05;
   text-transform: uppercase;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  z-index: 3;
 }
 
 .hero-title span {
@@ -131,8 +130,8 @@ HERO
   background-clip: text;
   -webkit-text-fill-color: transparent;
   display: block;
-  opacity: 0;
-  transform: translateY(60px);
+  /* opacity: 1 !important;
+  transform: translateY(0) !important; */
 }
 
 .hero-sub {
@@ -146,6 +145,10 @@ HERO
 .hero-cta {
   position: relative;
   z-index: 60 !important;
+  margin-top: 2rem;
+  display: flex;      /* arrange buttons horizontally */
+  justify-content: center; /* center them */
+  gap: 1rem; 
 }
 
 
@@ -247,7 +250,7 @@ HERO
 /* HERO CONTENT MUST BE ABOVE ALL LAYERS */
 .hero-content {
   position: relative;
-  z-index: 50 !important;   /* bring ENTIRE hero content above overlays */
+  z-index: 999999  !important;   /* bring ENTIRE hero content above overlays */
 }
 
 /* FINAL HERO BUTTON FIX */
@@ -267,6 +270,7 @@ HERO
 .cursor-lux {
   mix-blend-mode: normal !important;
   background: #ffffff !important;
+  opacity: 0;
 }
 
 .btn, .hero-cta, .hero-content {
@@ -284,6 +288,12 @@ HERO
 .particles {
   z-index: 999997 !important;
   opacity: 1 !important;
+}
+.cursor-lux, .cursor-ripple, .particles {
+  position: fixed;
+  pointer-events: none;
+  z-index: 999999;
+  opacity: 1;
 }
 
 
@@ -321,7 +331,7 @@ PROJECTS
 --------------------------*/
 .section-title { font-size:2rem; margin-bottom:28px; background:linear-gradient(90deg,#D4AF37,#C9A53E); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
 .project-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px; }
-.project-card { background:#0e0e0e; border:1px solid #1f1f1f; border-radius:14px; padding:12px; transition:transform .35s ease, box-shadow .35s ease; }
+.project-card { background:#0e0e0e; border:1px solid #1f1f1f; border-radius:14px; padding:12px; transition:transform .35s ease, box-shadow .35s ease; position: relative; z-index: 10;}
 .project-card img { width:100%; height:220px; object-fit:cover; border-radius:10px; display:block; }
 .project-card .meta { margin-top:12px; }
 .project-card h4 { color:#D4AF37; margin:0; font-size:1.15rem; }
@@ -347,12 +357,22 @@ ANIMATION HELPERS (do NOT hide by default)
 We intentionally do NOT set opacity:0 here.
 GSAP will animate FROM opacity:0 -> 1, but if GSAP fails, elements remain visible.
 --------------------------*/
-.fade-up { /* kept neutral so content is visible by default */ transform:none; opacity:1; }
+.fade-up { opacity: 1; transform: none; } /* keep visible */
+
 
 
 /* mask reveal */
 .mask-reveal { overflow:hidden; display:inline-block; }
-.mask-reveal span { display:inline-block; transform:translateY(100%); }
+.mask-reveal span {
+  display: inline-block;
+  transform: translateY(100%);  /* start hidden below */
+  background: linear-gradient(90deg, #D4AF37, #C9A53E);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+}
+
 
 /* shimmer */
 .shimmer { background:linear-gradient(90deg,#D4AF37,#C9A53E,#D4AF37); -webkit-background-clip:text; background-clip:text; color:transparent; background-size:200%; animation:shimmerMove 4s linear infinite; }
@@ -424,10 +444,97 @@ button, .project-card {
 }
 
 
-/* responsive */
-@media (max-width: 920px) {
-  .hero h2 { font-size:2rem; }
-  .project-grid { grid-template-columns:1fr; }
+/* Mobile Hero Adjustments */
+@media (max-width: 768px) {
+  .hero {
+    height: auto;              /* Let hero shrink if content is smaller */
+    min-height: 80vh;          /* Still occupy most of the screen */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    /* Center content vertically */
+    align-items: center;        /* Center horizontally */
+    text-align: center;
+    padding: 40px 20px;         /* Reduce top/bottom padding */
+  }
+
+  .hero-title {
+    font-size: 3.5rem;         /* Keep title bold and big */
+    line-height: 1.1;
+    margin-bottom: 1rem;       /* Keep space for subtitle */
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    max-width: 90%;
+    margin: 0 auto 1.5rem auto;
+  }
+
+  .hero-cta .btn {
+    font-size: 1.15rem;         /* Bigger text for buttons */
+    padding: 14px 36px;         /* Slightly bigger button */
+    margin-top: 1rem;
+    border-radius: 50px;        /* Premium feel */
+    background: linear-gradient(90deg, #FFD773, #D4AF37);
+    color: #000;
+    box-shadow: 0 8px 20px rgba(212,175,55,0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hero-cta .btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 28px rgba(212,175,55,0.6);
+  }
+
+  /* Reduce extra gap before next section */
+  .section {
+    padding-top: 60px;          /* Less top padding */
+    padding-bottom: 80px;       /* Moderate bottom padding */
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 3rem;
+    line-height: 1.15;
+  }
+
+  .hero-sub {
+    font-size: 0.95rem;
+  }
+
+  .hero-cta .btn {
+    font-size: 1rem;
+    padding: 12px 28px;
+  }
+}
+@media (max-width: 768px) {
+  .cursor-lux,
+  .cursor-ripple {
+    display: none !important;
+  }
+  @media (max-width: 768px) {
+
+    .project-grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 16px;
+      padding: 0 20px;
+    }
+  
+    .project-card {
+      min-width: 80%;
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      border-radius: 20px;
+    }
+  
+    /* Hide scrollbar for a cleaner look */
+    .project-grid::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 
