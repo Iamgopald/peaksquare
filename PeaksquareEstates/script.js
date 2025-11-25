@@ -17,8 +17,8 @@ if (contactForm) {
     e.preventDefault();
     const formData = new FormData(contactForm);
     try {
-      const res = await fetch(
-        "https://forms.zohopublic.in/gopaldeshmukhpeaksqua1/form/ContactUs/formperma/tgxDsFXrBrHYL9fFyQzSEaVfm2Zf21dsuvZhfyMYQkg",
+    const res = await fetch(
+        "https://script.google.com/macros/s/AKfycbyoRil7QPM5Fuo59C8-sDZ4biUYNVonjY3UJMrV9Qq2FUFDt4psuMkAMYyk_JG-UMy33w/exec",
         { method: "POST", body: formData }
       );
       if (res.ok) {
@@ -194,3 +194,4 @@ ScrollTrigger.scrollerProxy(document.body, {
 lenis.on("scroll", ScrollTrigger.update);
 ScrollTrigger.addEventListener("refresh", () => lenis.update());
 ScrollTrigger.refresh();
+
