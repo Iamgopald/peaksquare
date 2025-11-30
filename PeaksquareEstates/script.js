@@ -1,11 +1,15 @@
 // -------------------------
+// Disable custom cursor on mobile
+if (window.innerWidth < 768) {
+  document.querySelector(".cursor-lux").style.display = "none";
+  document.querySelector(".cursor-ripple").style.display = "none";
+}
+
 // Smooth Scroll Buttons
 // -------------------------
 const contactBtn = document.getElementById("contactScroll");
 const projectsBtn = document.getElementById("projectScroll");
 
-if (contactBtn) contactBtn.addEventListener("click", () => lenis.scrollTo("#contact"));
-if (projectsBtn) projectsBtn.addEventListener("click", () => lenis.scrollTo("#projects"));
 
 // -------------------------
 // Zoho Form Submit
@@ -17,12 +21,12 @@ if (contactForm) {
     e.preventDefault();
     const formData = new FormData(contactForm);
     try {
-    const res = await fetch(
+      const res = await fetch(
         "https://script.google.com/macros/s/AKfycbyoRil7QPM5Fuo59C8-sDZ4biUYNVonjY3UJMrV9Qq2FUFDt4psuMkAMYyk_JG-UMy33w/exec",
         { method: "POST", body: formData }
       );
       if (res.ok) {
-        alert("Thank you! Your details have been submitted.");
+        window.location.href = "thankyou.html";
         contactForm.reset();
       } else {
         alert("Submission failed — please try again.");
@@ -183,6 +187,11 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
+window.addEventListener("load", () => {
+  if (contactBtn) contactBtn.addEventListener("click", () => lenis.scrollTo("#contact"));
+  if (projectsBtn) projectsBtn.addEventListener("click", () => lenis.scrollTo("#projects"));
+});
+
 ScrollTrigger.scrollerProxy(document.body, {
   scrollTop(value) {
     return arguments.length ? lenis.scrollTo(value) : lenis.scroll.instance.scroll.y;
@@ -194,4 +203,60 @@ ScrollTrigger.scrollerProxy(document.body, {
 lenis.on("scroll", ScrollTrigger.update);
 ScrollTrigger.addEventListener("refresh", () => lenis.update());
 ScrollTrigger.refresh();
+
+// ---------------------------------------------------
+// CLEAN AWWARDS MOBILE CAROUSEL (FINAL VERSION)
+// ---------------------------------------------------
+if (window.innerWidth < 768) {
+  const grid = document.querySelector(".project-grid");
+  const cards = document.querySelectorAll(".project-card");
+
+  if (grid && cards.length > 0) {
+    function updateCarousel() {
+      const centerX = window.innerWidth / 2;
+
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+        const distance = Math.abs(centerX - cardCenter);
+
+        const scale = Math.max(0.86, 1 - distance / 600);
+        const opacity = Math.max(0.55, 1 - distance / 350);
+
+        card.style.transform = `scale(${scale})`;
+        card.style.opacity = opacity;
+      });
+    }
+
+    grid.addEventListener("scroll", updateCarousel);
+    window.addEventListener("resize", updateCarousel);
+    updateCarousel(); // initial call
+  }
+}
+
+/* Mobile Card Focus Carousel */
+
+
+// -------------------------
+// Mobile Card Focus Carousel
+// -------------------------
+const scroller = document.querySelector(".project-grid");
+
+if (window.innerWidth < 768 && scroller) {
+  scroller.addEventListener("scroll", () => {
+    cards.forEach((card) => {
+      const rect = card.getBoundingClientRect();
+      const center =
+        window.innerWidth / 2 - rect.width / 2;
+
+      const distance = Math.abs(rect.left - center);
+
+      const scale = Math.max(0.85, 1 - distance / 600);
+      const opacity = Math.max(0.4, 1 - distance / 400);
+
+      card.style.transform = `scale(${scale})`;
+      card.style.opacity = opacity;
+    });
+  });
+}
 
