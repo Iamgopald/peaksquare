@@ -1,11 +1,3 @@
-.logo-img {
-  width: 100%;
-  height: 45px;
-  object-fit: contain;
-  display: block;
-}
-
-
 /* -------------------------
 GLOBAL
 --------------------------*/
@@ -63,6 +55,18 @@ header.scrolled {
   justify-content: center;
   align-items: center;
 }
+
+.logo-img {
+  width: auto;
+  height: 45px;
+  object-fit: contain;
+}
+
+.logo-link {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
 /* "PS" TEXT */
 .logo-box h1 {
   margin: 0;
