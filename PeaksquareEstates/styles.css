@@ -1,4 +1,10 @@
-/* styles.css — Dubai Ultra Luxury (safe version) */
+.logo-img {
+  width: 100%;
+  height: 45px;
+  object-fit: contain;
+  display: block;
+}
+
 
 /* -------------------------
 GLOBAL
@@ -43,7 +49,7 @@ header.scrolled {
 .brand {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   opacity: 1;        /* make visible by default */
   transform: none;   /* remove offset so it shows immediately */
 }
@@ -51,19 +57,12 @@ header.scrolled {
 
 /* LOGO CIRCLE */
 .logo-box {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: #000;                   /* black circular badge */
-  border: 2px solid #D4AF37;          /* gold outline */
+  min-width: 50px;  /* Adjust as needed */
+  height: auto;  /* Let height scale automatically */
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 0 12px rgba(212,175,55,0.5);
-  flex-shrink: 0;
 }
-
-
 /* "PS" TEXT */
 .logo-box h1 {
   margin: 0;
@@ -332,7 +331,23 @@ PROJECTS
 .section-title { font-size:2rem; margin-bottom:28px; background:linear-gradient(90deg,#D4AF37,#C9A53E); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
 .project-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px; }
 .project-card { background:#0e0e0e; border:1px solid #1f1f1f; border-radius:14px; padding:12px; transition:transform .35s ease, box-shadow .35s ease; position: relative; z-index: 10;}
-.project-card img { width:100%; height:220px; object-fit:cover; border-radius:10px; display:block; }
+/* Awwwards Aspect-Ratio Image */
+.project-card-image {
+  width: 100%;
+  aspect-ratio: 16 / 10;   /* Cinematic ratio */
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.project-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform .4s ease;
+}
+
 .project-card .meta { margin-top:12px; }
 .project-card h4 { color:#D4AF37; margin:0; font-size:1.15rem; }
 .project-card p { color:#ccc; margin:6px 0 0; font-size:0.95rem; }
@@ -491,6 +506,13 @@ button, .project-card {
     padding-bottom: 80px;       /* Moderate bottom padding */
   }
 }
+.hero-trust {
+  color: #CCCCCC;
+  font-size: 1rem;
+  margin-top: 12px;
+  letter-spacing: 0.3px;
+}
+
 
 /* Extra small phones */
 @media (max-width: 480px) {
@@ -508,33 +530,63 @@ button, .project-card {
     padding: 12px 28px;
   }
 }
-@media (max-width: 768px) {
-  .cursor-lux,
-  .cursor-ripple {
-    display: none !important;
-  }
-  @media (max-width: 768px) {
+/* MOBILE PROJECT CAROUSEL FIX — show next card preview */
+/* --------------------------- */
+/* Awwwards Mobile Carousel    */
+/* --------------------------- */
 
-    .project-grid {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      gap: 16px;
-      padding: 0 20px;
-    }
-  
-    .project-card {
-      min-width: 80%;
-      flex: 0 0 auto;
-      scroll-snap-align: start;
-      border-radius: 20px;
-    }
-  
-    /* Hide scrollbar for a cleaner look */
-    .project-grid::-webkit-scrollbar {
-      display: none;
-    }
+/* -----------------------------------------
+AWWARDS–STYLE MOBILE PROJECT CAROUSEL UPGRADE
+(Depth, peek edges, center scale, fade)
+------------------------------------------*/
+@media (max-width: 768px) {
+
+  /* Remove desktop grid */
+  .project-grid {
+    display: flex !important;
+    gap: 32px;
+    overflow-x: scroll;
+    padding: 40px 0 60px 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+  .project-grid::-webkit-scrollbar { display: none; }
+
+  /* Card look */
+  .project-card {
+    min-width: 78%;
+    scroll-snap-align: center;
+    border-radius: 18px;
+    background: #0d0d0d;
+    transition: transform .45s ease, opacity .45s ease;
+    opacity: 0.55;
+  }
+
+  /* Center card highlight */
+  .project-card.active {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+
+  /* Fade edges to look ultra-premium */
+  .project-grid::before,
+  .project-grid::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 70px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .project-grid::before {
+    left: 0;
+    background: linear-gradient(to right, #000 45%, transparent);
+  }
+  .project-grid::after {
+    right: 0;
+    background: linear-gradient(to left, #000 45%, transparent);
   }
 }
-
-
