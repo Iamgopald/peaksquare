@@ -1,6 +1,6 @@
-/* -------------------------
-GLOBAL
---------------------------*/
+/* =========================================
+   1. GLOBAL RESET & CORE
+========================================= */
 * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
 
 html { 
@@ -16,27 +16,23 @@ body {
     overflow-x: hidden; 
     cursor: none; 
     
-    /* === STICKY FOOTER FIX === */
+    /* === STICKY FOOTER SETUP === */
     display: flex;
     flex-direction: column;
 }
 
-/* This forces the middle content to stretch, pushing footer down */
+/* Forces middle content to stretch, pushing footer down */
 section, .legal-section, #dynamicContent {
     flex: 1; 
 }
 
-/* Page spacing */
+/* Standard Section Spacing */
 .section { padding:100px 6%; }
 
-body, * {
-  cursor: none;
-}
-/* -------------------------
-HEADER / BRAND
---------------------------*/
-/* ===== HEADER + LOGO FIX ===== */
-/* Freeze logo on top while scrolling */
+
+/* =========================================
+   2. HEADER & BRANDING
+========================================= */
 header {
   position: fixed;
   top: 0;
@@ -45,34 +41,30 @@ header {
   padding: 25px 60px;
   display: flex;
   justify-content: center;
-  z-index: 999999; /* Above cursor, particles, everything */
+  z-index: 999999;
   backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.15); 
-  border-bottom: 1px solid rgba(212, 175, 55, 0.25); /* subtle gold line */
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
   transition: 0.3s ease;
 }
 
-/* Shrink logo slightly on scroll for premium feel */
 header.scrolled {
   padding: 12px 60px;
   background: rgba(0,0,0,0.45);
   backdrop-filter: blur(20px);
 }
 
-
 .brand {
   display: flex;
   align-items: center;
   gap: 12px;
-  opacity: 1;        /* make visible by default */
-  transform: none;   /* remove offset so it shows immediately */
+  opacity: 1;
+  transform: none;
 }
 
-
-/* LOGO CIRCLE */
 .logo-box {
-  min-width: 50px;  /* Adjust as needed */
-  height: auto;  /* Let height scale automatically */
+  min-width: 50px;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,32 +81,18 @@ header.scrolled {
   color: inherit !important;
 }
 
-/* "PS" TEXT */
-.logo-box h1 {
-  margin: 0;
-  opacity: 1 !important;
-  font-size: 28px;
-  font-weight: 700;
-  transform: none !important;
-  color: #D4AF37;                     /* pure gold */
-  letter-spacing: 1px;
-}
-
-/* BRAND TEXT */
 .brand-text {
   display: flex;
   flex-direction: column;
   line-height: 1.1;
 }
 
-/* SMALL TOP TEXT */
 .brand-text .sub {
   font-size: 14px;
-  color: #C9A53E;                     /* lighter gold */
+  color: #C9A53E;
   letter-spacing: 3px;
 }
 
-/* BIG MAIN TEXT */
 .brand-text .main {
   font-size: 22px;
   font-weight: 700;
@@ -123,590 +101,20 @@ header.scrolled {
 }
 
 
-/* -------------------------
-HERO
---------------------------*/
-/* AWWWWARDS Ultra Luxury Hero */
+/* =========================================
+   3. HERO SECTION (Desktop Layout)
+========================================= */
 .hero {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
+  flex-direction: row; /* Side by side on Desktop */
   align-items: center;
   justify-content: center;
-  padding: 0 6%;
-  text-align: center;
+  padding: 100px 6% 0;
+  text-align: left;
   overflow: hidden;
-}
-
-.hero-title {
-  display: flex;
-  flex-wrap: wrap; /* words stay inline, wrap if needed */
-  gap: 0.5rem;
-  font-size: 4rem;
-  font-weight: 700;
-  line-height: 1.05;
-  text-transform: uppercase;
-}
-
-.hero-title span {
-  background: linear-gradient(90deg, #D4AF37, #C9A53E);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: block;
-  /* opacity: 1 !important;
-  transform: translateY(0) !important; */
-}
-
-.hero-sub {
-  max-width: 700px;
-  margin: 20px auto 0;
-  color: #cfcfcf;
-  font-size: 1.2rem;
-  z-index: 3;
-}
-
-.hero-cta {
-  position: relative;
-  z-index: 60 !important;
-  margin-top: 2rem;
-  display: flex;      /* arrange buttons horizontally */
-  justify-content: center; /* center them */
-  gap: 1rem; 
-}
-
-
-/* Canvas particle layer */
-#goldCanvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.5;
-}
-
-/* Vignette + grain */
-.hero::after,
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1 !important;
-}
-
-
-
-
-/* LUXURY HERO BUTTONS (AWWWARDS STYLE) */
-.btn {
-  position: relative;
-  padding: 14px 36px;
-  border-radius: 50px;
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  border: none;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* GOLD BUTTON */
-.btn.primary {
-  background: linear-gradient(90deg, #D4AF37, #C9A53E);
-  color: #000;
-  box-shadow: 0 0 15px rgba(212,175,55,0.4);
-}
-
-.btn.primary:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 0 25px rgba(212,175,55,0.6);
-}
-
-/* TRANSPARENT LUX BUTTON */
-.btn.secondary {
-  background: rgba(255, 215, 115, 0.08); /* soft gold tint */
-  border: 1.5px solid rgba(212,175,55,0.85); /* stronger gold border */
-  color: #FFD773 !important; /* brighter gold text */
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 12px rgba(212,175,55,0.25);
-}
-
-.btn.secondary:hover {
-  background: rgba(212,175,55,0.2);
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 0 25px rgba(212,175,55,0.55);
-}
-
-
-/* GOLD LIGHT SWEEP EFFECT */
-.btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255,255,255,0.5) 50%,
-    transparent 100%
-  );
-  transform: skewX(-20deg);
-  transition: 0.6s ease;
-}
-
-.btn:hover::before {
-  left: 120%;
-}
-
-.btn, .btn * {
-  mix-blend-mode: normal !important;
-  z-index: 999999;
-  position: relative;
-}
-
-/* HERO CONTENT MUST BE ABOVE ALL LAYERS */
-.hero-content {
-  position: relative;
-  z-index: 999999  !important;   /* bring ENTIRE hero content above overlays */
-}
-
-/* FINAL HERO BUTTON FIX */
-.hero-cta .btn.primary {
-  background: linear-gradient(90deg, #FFD773, #D4AF37) !important;
-  color: #000 !important;
-  border: none !important;
-}
-
-.hero-cta .btn.secondary {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1.5px solid #D4AF37 !important;
-  color: #FFD773 !important;
-}
-
-/* === BUTTON VISIBILITY FIX === */
-.cursor-lux {
-  mix-blend-mode: normal !important;
-  background: #ffffff !important;
-  opacity: 0;
-}
-
-.btn, .hero-cta, .hero-content {
-  position: relative !important;
-  z-index: 5000 !important;
-}
-#goldCanvas,
-.hero::before,
-.hero::after {
-  z-index: 1 !important;
-  opacity: 0.15 !important;
-}
-
-/* FIX particle visibility */
-.particles {
-  z-index: 999997 !important;
-  opacity: 1 !important;
-}
-.cursor-lux, .cursor-ripple, .particles {
-  position: fixed;
-  pointer-events: none;
-  z-index: 999999;
-  opacity: 1;
-}
-
-
-/* HERO BUTTONS FIX */
-.hero-cta .btn {
-  opacity: 1 !important;
-  color: #000 !important;
-  background: linear-gradient(90deg, #FFD773, #D4AF37) !important;
-  border: 1px solid rgba(255,255,255,0.2) !important;
-  z-index: 9999 !important;
-}
-
-/* When cursor overlaps button, do not invert it */
-.btn:hover ~ .cursor-lux,
-.btn:focus ~ .cursor-lux {
-  mix-blend-mode: normal !important;
-}
-
-/* BOOST VISIBILITY */
-.btn.primary {
-  background: linear-gradient(90deg, #FFD773, #D4AF37);
-  color: #000;
-  font-weight: 700;
-  border: 1px solid rgba(255,255,255,0.2);
-}
-
-.btn.secondary {
-  background: rgba(255,255,255,0.12) !important;
-  border-color: rgba(212,175,55,0.6) !important;
-}
-
-
-/* -------------------------
-PROJECTS
---------------------------*/
-.section-title { font-size:2rem; margin-bottom:28px; background:linear-gradient(90deg,#D4AF37,#C9A53E); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
-.project-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px; }
-.project-card { background:#0e0e0e; border:1px solid #1f1f1f; border-radius:14px; padding:12px; transition:transform .35s ease, box-shadow .35s ease; position: relative; z-index: 10;}
-/* Awwwards Aspect-Ratio Image */
-.project-card-image {
-  width: 100%;
-  aspect-ratio: 16 / 10;   /* Cinematic ratio */
-  overflow: hidden;
-  border-radius: 14px;
-}
-
-.project-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  transition: transform .4s ease;
-}
-
-.project-card .meta { margin-top:12px; }
-.project-card h4 { color:#D4AF37; margin:0; font-size:1.15rem; }
-.project-card p { color:#ccc; margin:6px 0 0; font-size:0.95rem; }
-.project-card:hover { transform:translateY(-8px); box-shadow:0 18px 40px rgba(0,0,0,0.6); border-color:#D4AF37; }
-
-/* -------------------------
-CONTACT FORM
---------------------------*/
-.contact-form { max-width:520px; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
-.field-group { display:flex; flex-direction:column; }
-label { color:#cfcfcf; margin-bottom:6px; font-size:0.9rem; }
-input, select { padding:12px; border-radius:8px; border:1px solid #262626; background:#0b0b0b; color:#fff; font-size:1rem; }
-input:focus, select:focus { outline:none; border-color:#D4AF37; box-shadow:0 0 0 4px rgba(212,175,55,0.06); }
-
-/* -------------------------
-FOOTER
---------------------------*/
-footer { text-align:center; padding:40px 6%; background:#080808; color:#bdbdbd; }
-
-/* -------------------------
-ANIMATION HELPERS (do NOT hide by default)
-We intentionally do NOT set opacity:0 here.
-GSAP will animate FROM opacity:0 -> 1, but if GSAP fails, elements remain visible.
---------------------------*/
-.fade-up { opacity: 1; transform: none; } /* keep visible */
-
-
-
-/* mask reveal */
-.mask-reveal { overflow:hidden; display:inline-block; }
-.mask-reveal span {
-  display: inline-block;
-  transform: translateY(100%);  /* start hidden below */
-  background: linear-gradient(90deg, #D4AF37, #C9A53E);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  opacity: 0;
-}
-
-
-/* shimmer */
-.shimmer { background:linear-gradient(90deg,#D4AF37,#C9A53E,#D4AF37); -webkit-background-clip:text; background-clip:text; color:transparent; background-size:200%; animation:shimmerMove 4s linear infinite; }
-@keyframes shimmerMove { from { background-position:0%; } to { background-position:200%; } }
-
-
-/* Custom Cursor */
-/* MAIN LUXURY CURSOR */
-/* MAIN LUXURY CURSOR */
-.cursor-lux {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ffffff;
-  mix-blend-mode: normal !important;; 
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 999999;
-  transition: width 0.2s ease, height 0.2s ease;
-}
-
-/* HOVER GROW (bigger on fonts too) */
-.cursor-lux.active {
-  width: 40px;
-  height: 40px;
-}
-
-/* RIPPLE EFFECT */
-.cursor-ripple {
-  position: fixed;
-  width: 12px;
-  height: 12px;
-  border: 2px solid #D4AF37;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  z-index: 999998;
-}
-
-/* PARTICLE CONTAINER */
-.particles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: visible;
-  z-index: 999997;
-}
-
-/* GOLD PARTICLES */
-.particle {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #FFD773, #D4AF37);
-  opacity: 0.9;
-  filter: blur(1px);
-}
-
-
-button, .project-card {
-  transition: transform 0.3s ease;
-  will-change: transform;
-}
-
-
-/* Mobile Hero Adjustments */
-@media (max-width: 768px) {
-  
-  .hero {
-    height: auto !important;
-    min-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start !important;
-    align-items: center;
-    
-    /* Padding to clear header */
-    padding-top: 150px; 
-    padding-bottom: 60px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  /* --- 1. TITLE (More Space Below) --- */
-  .hero-title {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    font-size: 10vw; 
-    line-height: 1.1; 
-    letter-spacing: -0.02em;
-    text-align: center;
-    
-    /* ADDED: More breathing room below "PERFECT SPACE" */
-    margin-bottom: 50px; 
-  }
-
-  .mask-reveal, .mask-reveal span {
-    display: block;
-    width: 100%;
-  }
-
-  /* --- 2. FEATURES LIST (Less Space Below) --- */
-  
-  /* Container holding Title + Features */
-  .hero-text-content {
-    width: 100%;
-    text-align: center;
-    /* REDUCED: Pulls the form up closer to the text */
-    margin-bottom: 15px; 
-  }
-
-  /* The actual list (Verified Listings etc) */
-  .hero-features {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    font-size: 0.9rem;
-    list-style: none;
-    padding: 0;
-    margin: 0; /* Remove default margins */
-  }
-
-  /* --- 3. THE FORM (Positioning) --- */
-  .hero-form-wrapper {
-    width: 100%;
-    margin-top: 10px; /* Minimal gap between Features and Form */
-  }
-
-
-  /* Fix for gradient text getting cut off */
-  .mask-reveal span {
-    display: block;
-    width: 100%;
-    padding: 5px 0; /* Adds safe space for letters like 'g' or 'y' */
-  }
-
-  /* --- SUBTITLE & BUTTONS --- */
-  .hero-sub {
-    font-size: 1rem;
-    line-height: 1.6;
-    max-width: 100%;
-    text-align: center;
-    margin-bottom: 30px;
-    color: #ccc; 
-  }
-
-  .hero-cta {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  /* Ensure form wrapper (if visible) stacks correctly */
-  .hero-form-wrapper {
-      margin-top: 40px;
-      width: 100%;
-    
-  }
-
-  /* The Container */
-  .project-grid {
-    display: flex !important; /* Flex allows smooth sliding */
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory; /* Snaps to center */
-    gap: 20px;
-    padding: 0 15% 60px 15%; /* 15% padding centers the cards! */
-    scrollbar-width: none; /* Hide scrollbar Firefox */
-    -webkit-overflow-scrolling: touch; /* Smooth momentum on iOS */
-  }
-  
-  /* Hide scrollbar Chrome/Safari */
-  .project-grid::-webkit-scrollbar { display: none; }
-
-  /* The Cards */
-  .project-card {
-    flex: 0 0 80%;
-    min-width: 80%;
-    scroll-snap-align: center;
-    
-    /* Default state */
-    transform: scale(0.9);
-    opacity: 0.5;
-    transition: none !important; 
-    
-    will-change: transform, opacity; /* Tells browser to use GPU */
-    
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Taller image on mobile for impact */
-  .project-card-image {
-      height: 300px; 
-  }
-}
-
-
-/* Extra small phones */
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: 3rem;
-    line-height: 1.15;
-  }
-
-  .hero-sub {
-    font-size: 0.95rem;
-  }
-
-  .hero-cta .btn {
-    font-size: 1rem;
-    padding: 12px 28px;
-  }
-}
-/* MOBILE PROJECT CAROUSEL FIX — show next card preview */
-/* --------------------------- */
-/* Awwwards Mobile Carousel    */
-/* --------------------------- */
-
-/* -----------------------------------------
-AWWARDS–STYLE MOBILE PROJECT CAROUSEL UPGRADE
-(Depth, peek edges, center scale, fade)
-------------------------------------------*/
-@media (max-width: 768px) {
-
-  /* Remove desktop grid */
-  .project-grid {
-    display: flex !important;
-    gap: 32px;
-    overflow-x: scroll;
-    padding: 40px 0 60px 0;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    position: relative;
-  }
-  .project-grid::-webkit-scrollbar { display: none; }
-
-  /* Card look */
-  .project-card {
-    min-width: 78%;
-    scroll-snap-align: center;
-    border-radius: 18px;
-    background: #0d0d0d;
-    transition: transform .45s ease, opacity .45s ease;
-    opacity: 0.55;
-  }
-
-  /* Center card highlight */
-  .project-card.active {
-    transform: scale(1.06);
-    opacity: 1;
-  }
-
-  /* Fade edges to look ultra-premium */
-  .project-grid::before,
-  .project-grid::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 70px;
-    height: 100%;
-    pointer-events: none;
-    z-index: 2;
-  }
-  .project-grid::before {
-    left: 0;
-    background: linear-gradient(to right, #000 45%, transparent);
-  }
-  .project-grid::after {
-    right: 0;
-    background: linear-gradient(to left, #000 45%, transparent);
-  }
-}
-
-/* --- NEW HERO LANDING LAYOUT --- */
-
-/* Override the old center alignment */
-.hero {
-  flex-direction: row; /* Side by side */
-  align-items: center;
-  justify-content: center;
-  text-align: left; /* Align text to left */
-  padding-top: 100px; /* Space for fixed header */
 }
 
 .hero-container {
@@ -720,15 +128,28 @@ AWWARDS–STYLE MOBILE PROJECT CAROUSEL UPGRADE
   position: relative;
 }
 
-/* LEFT SIDE TEXT */
+/* Left Content */
 .hero-text-content {
   flex: 1;
   max-width: 600px;
 }
 
-.hero-sub {
-  margin: 20px 0 30px 0; /* Reset margins */
-  text-align: left;
+.hero-title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.hero-title span {
+  background: linear-gradient(90deg, #D4AF37, #C9A53E);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
 }
 
 .hero-features {
@@ -741,7 +162,7 @@ AWWARDS–STYLE MOBILE PROJECT CAROUSEL UPGRADE
 }
 .hero-features li { margin-bottom: 8px; }
 
-/* RIGHT SIDE FORM (GLASSMORPHISM) */
+/* Right Form Wrapper */
 .hero-form-wrapper {
   flex: 1;
   max-width: 420px;
@@ -749,9 +170,9 @@ AWWARDS–STYLE MOBILE PROJECT CAROUSEL UPGRADE
 }
 
 .form-glass-box {
-  background: rgba(20, 20, 20, 0.6); /* Dark see-through */
-  backdrop-filter: blur(15px); /* Blur effect */
-  border: 1px solid rgba(212, 175, 55, 0.3); /* Subtle Gold Border */
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
   padding: 30px;
   border-radius: 16px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.4);
@@ -763,29 +184,51 @@ AWWARDS–STYLE MOBILE PROJECT CAROUSEL UPGRADE
   transform: translateY(-5px);
 }
 
-.form-glass-box h3 {
-  color: #fff;
-  font-size: 1.8rem;
-  margin-bottom: 5px;
-  text-align: center;
+.form-glass-box h3 { color: #fff; font-size: 1.8rem; margin-bottom: 5px; text-align: center; }
+.form-sub { color: #888; font-size: 0.9rem; text-align: center; margin-bottom: 20px; }
+
+/* Canvas Background */
+#goldCanvas {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 1; opacity: 0.5;
 }
 
-.form-sub {
-  color: #888;
-  font-size: 0.9rem;
-  text-align: center;
-  margin-bottom: 20px;
+.hero::after, .hero::before {
+  content: ""; position: absolute; inset: 0;
+  pointer-events: none; z-index: 1 !important;
 }
 
-/* FORM INPUT UPDATES */
-.field-group { margin-bottom: 15px; }
-.contact-form input, .contact-form select {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.08); /* Slightly lighter input bg */
-  border: 1px solid #333;
-  color: #fff;
+
+/* =========================================
+   4. UI ELEMENTS (Buttons, Forms, Cards)
+========================================= */
+
+/* Buttons */
+.btn {
+  position: relative;
+  padding: 14px 36px;
+  border-radius: 50px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border: none;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 20;
 }
-.contact-form input::placeholder { color: #666; }
+
+.btn.primary {
+  background: linear-gradient(90deg, #D4AF37, #C9A53E);
+  color: #000;
+  box-shadow: 0 0 15px rgba(212,175,55,0.4);
+}
+
+.btn.primary:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 0 25px rgba(212,175,55,0.6);
+}
 
 .btn.full-width {
   width: 100%;
@@ -793,14 +236,181 @@ AWWARDS–STYLE MOBILE PROJECT CAROUSEL UPGRADE
   justify-content: center;
 }
 
-.privacy-note {
-  text-align: center;
-  font-size: 0.75rem;
-  color: #555;
-  margin-top: 15px;
+/* Sweep Effect */
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -120%;
+  width: 100%; height: 100%;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);
+  transform: skewX(-20deg);
+  transition: 0.6s ease;
+}
+.btn:hover::before { left: 120%; }
+
+/* Form Inputs */
+.contact-form { max-width:520px; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
+.field-group { display:flex; flex-direction:column; margin-bottom: 15px; }
+label { color:#cfcfcf; margin-bottom:6px; font-size:0.9rem; }
+
+input, select {
+  width: 100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #333;
+  background: rgba(255, 255, 255, 0.08);
+  color:#fff;
+  font-size:1rem;
 }
 
-/* --- MOBILE RESPONSIVENESS --- */
+input:focus, select:focus {
+  outline:none;
+  border-color:#D4AF37;
+  box-shadow:0 0 0 4px rgba(212,175,55,0.06);
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Custom Dropdown Arrow */
+select {
+  appearance: none; -webkit-appearance: none; -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D4AF37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 12px;
+  padding-right: 40px;
+  cursor: pointer;
+}
+select option { background-color: #111; color: #fff; padding: 10px; }
+
+.privacy-note { text-align: center; font-size: 0.75rem; color: #555; margin-top: 15px; }
+
+
+/* =========================================
+   5. PROJECT GRID (Desktop Default)
+========================================= */
+.section-title { 
+  font-size:2rem; 
+  margin-bottom:28px; 
+  background:linear-gradient(90deg,#D4AF37,#C9A53E); 
+  -webkit-background-clip:text; 
+  background-clip:text; 
+  -webkit-text-fill-color:transparent; 
+  color:transparent; 
+}
+
+.project-grid { 
+  display:grid; 
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); 
+  gap:24px; 
+}
+
+.project-card { 
+  background:#0e0e0e; 
+  border:1px solid #1f1f1f; 
+  border-radius:14px; 
+  padding:12px; 
+  transition:transform .35s ease, box-shadow .35s ease; 
+  position: relative; 
+  z-index: 10;
+  cursor: pointer;
+}
+
+.project-card-image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.project-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+
+.project-card h4 { color:#D4AF37; margin:12px 0 0 0; font-size:1.15rem; }
+.project-card p { color:#ccc; margin:6px 0 0; font-size:0.95rem; }
+
+.project-card:hover { 
+  transform:translateY(-8px); 
+  box-shadow:0 18px 40px rgba(0,0,0,0.6); 
+  border-color:#D4AF37; 
+}
+
+
+/* =========================================
+   6. FOOTER & EXTRAS
+========================================= */
+footer { text-align:center; padding:40px 6%; background:#080808; color:#bdbdbd; }
+
+.fade-up { opacity: 1; transform: none; } /* GSAP Fallback */
+
+.mask-reveal { overflow:hidden; display:inline-block; }
+.mask-reveal span {
+  display: inline-block;
+  transform: translateY(100%);
+  background: linear-gradient(90deg, #D4AF37, #C9A53E);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+}
+
+/* Custom Cursor */
+.cursor-lux {
+  position: fixed; width: 20px; height: 20px;
+  border-radius: 50%; background: #ffffff;
+  mix-blend-mode: normal !important;
+  pointer-events: none; transform: translate(-50%, -50%);
+  z-index: 999999; transition: width 0.2s ease, height 0.2s ease;
+}
+.cursor-lux.active { width: 40px; height: 40px; }
+
+.cursor-ripple {
+  position: fixed; width: 12px; height: 12px;
+  border: 2px solid #D4AF37; border-radius: 50%;
+  pointer-events: none; transform: translate(-50%, -50%);
+  opacity: 0; z-index: 999998;
+}
+
+.particles {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; overflow: visible; z-index: 999997;
+}
+.particle {
+  position: absolute; width: 6px; height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFD773, #D4AF37);
+  opacity: 0.9; filter: blur(1px);
+}
+
+
+/* =========================================
+   7. LEGAL PAGE STYLES
+========================================= */
+.legal-section {
+    max-width: 900px;
+    margin: 140px auto 80px; 
+    padding: 0 6%;
+}
+.legal-content h1 { font-size: 3rem; color: #D4AF37; margin-bottom: 20px; }
+.legal-content h2 { 
+    font-size: 1.5rem; color: #fff; margin-top: 40px; margin-bottom: 15px; 
+    border-left: 3px solid #D4AF37; padding-left: 15px; 
+}
+.legal-content p { color: #ccc; line-height: 1.8; margin-bottom: 15px; font-size: 1.05rem; }
+.legal-content ul { margin-bottom: 20px; padding-left: 20px; color: #ccc; }
+.legal-content li { margin-bottom: 10px; line-height: 1.6; }
+.last-updated { color: #666; font-size: 0.9rem; margin-bottom: 40px; display: block; }
+
+
+/* =========================================
+   8. MEDIA QUERIES (RESPONSIVE ENGINE)
+========================================= */
+
+/* --- TABLET / SMALL LAPTOP (Max Width 900px) --- */
 @media (max-width: 900px) {
   .hero-container {
     flex-direction: column; /* Stack them */
@@ -815,156 +425,147 @@ AWWARDS–STYLE MOBILE PROJECT CAROUSEL UPGRADE
   .hero-sub { text-align: center; }
   
   .hero-features { 
-    display: flex; 
-    justify-content: center; 
-    gap: 15px; 
-    font-size: 0.9rem;
+    display: flex; justify-content: center; gap: 15px; font-size: 0.9rem;
   }
   
+  .hero-form-wrapper { width: 100%; }
+}
+
+
+/* --- MOBILE MAIN (Max Width 768px) --- */
+@media (max-width: 768px) {
+  
+  /* 1. HERO LAYOUT */
+  .hero {
+    height: auto !important;
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start !important; /* Start from top */
+    align-items: center;
+    /* Clear fixed header */
+    padding-top: 150px; 
+    padding-bottom: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* 2. TYPOGRAPHY (Big, Cinematic) */
+  .hero-title {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    font-size: 10vw; /* Perfect width fit */
+    line-height: 1.1; 
+    letter-spacing: -0.02em;
+    text-align: center;
+    
+    /* Breathing room below "PERFECT SPACE" */
+    margin-bottom: 50px; 
+  }
+
+  .mask-reveal, .mask-reveal span {
+    display: block;
+    width: 100%;
+    padding: 5px 0; /* Prevents text clipping */
+  }
+
+  /* 3. FEATURES LIST (Tighter to Form) */
+  .hero-text-content {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px; 
+  }
+
+  .hero-features {
+    display: flex; justify-content: center; gap: 15px; 
+    font-size: 0.9rem; list-style: none; padding: 0; margin: 0; 
+  }
+
+  /* 4. THE FORM */
   .hero-form-wrapper {
     width: 100%;
+    margin-top: 10px; 
+  }
+
+  /* 5. DROPDOWN TEXT FIX (Fits on one line) */
+  .contact-form select {
+    font-size: 0.85rem !important; 
+    padding: 12px 35px 12px 12px; 
+    max-width: 100%; /* Prevent horizontal overflow */
+  }
+  
+  .contact-form input {
+    font-size: 0.9rem !important;
+  }
+
+  /* 6. AWWWARDS CAROUSEL (Peeking Cards) */
+  .project-grid {
+    display: flex !important;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    gap: 15px; /* Tighter gap */
+    /* Reduced bottom padding from 60px to 25px */
+    padding: 0 10% 25px 10%; 
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .project-grid::-webkit-scrollbar { display: none; }
+
+  .project-card {
+    flex: 0 0 85%; /* Wider cards (85% of screen) for better visibility */
+    min-width: 85%;
+    scroll-snap-align: center;
+    
+    /* Better Aesthetics */
+    background: #111; /* Slightly lighter than black background */
+    border: 1px solid #333; /* Subtle border */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Deep shadow */
+    
+    transform: scale(0.9);
+    opacity: 0.5;
+    transition: none !important; /* Instant swipe response */
+    
+    will-change: transform, opacity;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .project-card-image { 
+      aspect-ratio: 4/3; /* Taller ratio looks better on mobile than 3/2 */
+      width: 100%;
+      height: auto;
+      border-radius: 8px; /* Inner rounding */
+  }
+
+  .project-card h4 {
+      font-size: 1.25rem;
+      margin-top: 15px;
+      color: #fff; /* Brighter title */
+  }
+
+  .project-card p {
+      color: #D4AF37; /* Gold text for type/location */
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
   }
 }
 
-/* ------------------------------------
-   AWWWARDS STYLE DROPDOWN (SELECT)
------------------------------------- */
 
-/* 1. Style the Main Input Box */
-.contact-form select {
-  appearance: none;        /* Hide default arrow (Chrome/Safari) */
-  -webkit-appearance: none; 
-  -moz-appearance: none;   /* Hide default arrow (Firefox) */
-  
-  background-color: rgba(20, 20, 20, 0.6); /* Glassy Dark Background */
-  color: #fff;             /* White Text */
-  border: 1px solid #333;
-  
-  /* 2. Add Custom Gold Arrow (SVG Data URI) */
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D4AF37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-  background-repeat: no-repeat;
-  background-position: right 15px center;
-  background-size: 12px;
-  
-  padding-right: 40px; /* Make space for the new arrow */
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+/* --- EXTRA SMALL PHONES (Max Width 480px) --- */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 3rem; /* Fallback for tiny screens */
+    line-height: 1.15;
+  }
 
-/* 3. Hover & Focus Effects */
-.contact-form select:hover {
-  border-color: #666; /* Lighten border on hover */
-}
+  .hero-sub { font-size: 0.95rem; }
 
-.contact-form select:focus {
-  outline: none;
-  border-color: #D4AF37; /* Gold Border when active */
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.15); /* Subtle Gold Glow */
-  background-color: rgba(0, 0, 0, 0.9); /* Solid black when typing/selecting */
-}
-
-/* 4. Style the Dropdown Options (The List) */
-/* This fixes the "White on White" issue */
-.contact-form select option {
-  background-color: #111; /* Deep Black Background */
-  color: #fff;            /* White Text */
-  padding: 10px;
-}
-
-/* Note: You cannot fully remove the blue hover highlight in standard CSS 
-   as it is controlled by the Operating System, but setting the background 
-   to #111 ensures the un-selected items are readable. */
-
-   /* Add this to your existing style.css */
-
-.project-card {
-    cursor: pointer; /* Shows the hand icon */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
-/* Styles for the Property Details Page */
-.details-container {
-    max-width: 800px;
-    margin: 100px auto; /* pushes it down from header */
-    padding: 20px;
-    background: #111;
-    border: 1px solid #333;
-    border-radius: 12px;
-    color: white;
-}
-
-.details-img {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-.details-title { font-size: 2rem; color: #D4AF37; margin-bottom: 10px; }
-.details-info { font-size: 1.1rem; color: #ccc; margin-bottom: 5px; }
-.back-btn { 
-    display: inline-block; 
-    margin-top: 20px; 
-    padding: 10px 20px; 
-    background: #D4AF37; 
-    color: #000; 
-    text-decoration: none; 
-    font-weight: bold; 
-    border-radius: 4px; 
-}
-
-
-/* -------------------------
-   LEGAL / TEXT PAGES STYLING
---------------------------*/
-.legal-section {
-    max-width: 900px;
-    margin: 140px auto 80px; /* Space from header */
-    padding: 0 6%;
-}
-
-.legal-content h1 {
-    font-size: 3rem;
-    color: #D4AF37;
-    margin-bottom: 20px;
-}
-
-.legal-content h2 {
-    font-size: 1.5rem;
-    color: #fff;
-    margin-top: 40px;
-    margin-bottom: 15px;
-    border-left: 3px solid #D4AF37;
-    padding-left: 15px;
-}
-
-.legal-content p {
-    color: #ccc;
-    line-height: 1.8;
-    margin-bottom: 15px;
-    font-size: 1.05rem;
-}
-
-.legal-content ul {
-    margin-bottom: 20px;
-    padding-left: 20px;
-    color: #ccc;
-}
-
-.legal-content li {
-    margin-bottom: 10px;
-    line-height: 1.6;
-}
-
-.last-updated {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 40px;
-    display: block;
+  .hero-cta .btn {
+    font-size: 1rem;
+    padding: 12px 28px;
+  }
 }
