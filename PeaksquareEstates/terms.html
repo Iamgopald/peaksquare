@@ -4,11 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Terms of Use — Peaksquare Estates</title>
+  
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="icon" href="assets/32_32 logo.png" sizes="32x32" type="image/png">
+  
+  <!-- CSS Link (styles.css) -->
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
+
+  <div class="cursor-lux"></div>
+  <div class="cursor-ripple"></div>
+  <div class="particles"></div>
 
   <header class="header">
     <a href="index.html" class="logo-link">
@@ -30,16 +39,47 @@
       <p>The content, layout, design, data, and graphics on this website are protected by intellectual property laws. You may not copy, reproduce, or redistribute any content without our written permission.</p>
 
       <h2>2. Use of Information</h2>
-      <p>The content provided on this website is for general information purposes only. While we strive to keep information up to date, real estate availability and pricing are subject to change without notice.</p>
+      <p>The content provided on this website is for general information purposes only. While we strive to keep information up to date, real estate availability, pricing, and specifications are subject to change without notice.</p>
 
       <h2>3. Limitation of Liability</h2>
       <p>PeakSquare Estates shall not be held liable for any direct, indirect, or consequential damages arising out of the use or inability to use this website or the information contained herein.</p>
 
       <h2>4. Governing Law</h2>
-      <p>These terms shall be governed by and construed in accordance with the laws of India.</p>
+      <p>These terms shall be governed by and construed in accordance with the laws of India. Any disputes are subject to the exclusive jurisdiction of the courts in Pune, Maharashtra.</p>
     </div>
   </div>
 
-  <footer>© 2025 PEAKSQUARE ESTATES • All Rights Reserved</footer>
+  <footer style="text-align:center; padding:40px 6%; background:#080808; border-top: 1px solid #222; margin-top:50px;">
+    <div style="margin-bottom: 20px; color: #666; font-size: 0.9rem;">
+      <a href="privacy.html" style="color:#888; text-decoration:none; margin:0 10px;">Privacy Policy</a> • 
+      <a href="terms.html" style="color:#D4AF37; text-decoration:none; margin:0 10px;">Terms of Use</a> • 
+      <a href="disclaimer.html" style="color:#888; text-decoration:none; margin:0 10px;">Disclaimer</a>
+    </div>
+    <div style="color: #555; font-size: 0.8rem;">
+      © 2025 PEAKSQUARE ESTATES • All Rights Reserved
+    </div>
+  </footer>
+
+  <script>
+    if (window.innerWidth >= 768) {
+        const lux = document.querySelector(".cursor-lux");
+        const ripple = document.querySelector(".cursor-ripple");
+        if (lux && ripple) {
+            lux.style.display = 'block';
+            ripple.style.display = 'block';
+            let cursorVisible = false;
+            document.addEventListener("mousemove", (e) => {
+                if (!cursorVisible) { lux.style.opacity = 1; ripple.style.opacity = 1; cursorVisible = true; }
+                gsap.to(lux, { x: e.clientX, y: e.clientY, duration: 0.1 });
+                gsap.to(ripple, { x: e.clientX, y: e.clientY, duration: 0.1 });
+            });
+            document.addEventListener('mouseover', (e) => {
+                if(e.target.closest('a') || e.target.closest('button')) { lux.classList.add('active'); } else { lux.classList.remove('active'); }
+            });
+        }
+    } else {
+        document.querySelectorAll('.cursor-lux, .cursor-ripple, .particles').forEach(el => el.style.display = 'none');
+    }
+  </script>
 </body>
 </html>
