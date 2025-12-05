@@ -3,22 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PEAKSQUARE ESTATES — Luxury Real Estate</title>
+  
+  <!-- 1. OPTIMIZED TITLE (60 chars max) -->
+  <title>PeakSquare Estates | Luxury Real Estate in Pune</title>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- 2. PROFESSIONAL DESCRIPTION (160 chars max) -->
+  <!-- This is what replaces the messy text on Google -->
+  <meta name="description" content="Discover verified luxury villas and premium apartments in Pune. Buy, rent, or sell residential and commercial properties with PeakSquare Estates. Zero hassle." />
 
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="styles.css" />
+  <!-- 3. KEYWORDS (Optional, but helpful) -->
+  <meta name="keywords" content="Real Estate Pune, Luxury Villas Charholi, Buy Flat Pune, Rent House Pune, PeakSquare Estates" />
 
-  <!-- Swiper (Mobile Slider) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-
-  <!-- Favicon / Apple Touch Icon -->
+  <!-- 4. LOGO FIX FOR GOOGLE (Must be multiples of 48px) -->
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-<link rel="icon" type="image/png" sizes="192x192" href="assets/192_192_logo.png">
-<link rel="apple-touch-icon" href="assets/180_180 logo.png">
-<link rel="shortcut icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/32_32 logo.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/192_192_logo.png"> <!-- Google loves this one -->
+  <link rel="apple-touch-icon" href="assets/180_180 logo.png">
+
+  <!-- 5. SOCIAL MEDIA CARDS (How it looks when shared on WhatsApp/Facebook) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="PeakSquare Estates — Premium Living" />
+  <meta property="og:description" content="Find your perfect home in Pune. Verified listings, premium villas, and zero-hassle paperwork." />
+  <meta property="og:image" content="https://www.peaksquareestates.com/assets/192_192_logo.png" />
+  <meta property="og:url" content="https://www.peaksquareestates.com" />
+
+  <!-- Fonts & CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
   <!-- JS Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -26,33 +38,25 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js"></script>
 
-  <!-- Structured Data for Google -->
+  <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "RealEstateAgent",
     "name": "PEAKSQUARE ESTATES",
     "url": "https://www.peaksquareestates.com",
     "logo": "https://www.peaksquareestates.com/assets/logo.svg",
-    "sameAs": [
-      "https://www.facebook.com/peaksquareestates",
-      "https://www.instagram.com/peaksquareestates",
-      "https://www.linkedin.com/company/peaksquareestates/"
-    ]
+    "image": "https://www.peaksquareestates.com/assets/192_192_logo.png",
+    "description": "Luxury Real Estate Agency in Pune specializing in Villas and Premium Apartments.",
+    "telephone": "+917276607467",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Pune",
+      "addressRegion": "Maharashtra",
+      "addressCountry": "IN"
+    }
   }
   </script>
-
-  <!-- Open Graph / Twitter -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="PEAKSQUARE ESTATES — Luxury Real Estate" />
-  <meta property="og:description" content="Luxury Properties in Pune. Buy, Rent, or Sell your dream home." />
-  <meta property="og:image" content="https://www.peaksquareestates.com/assets/logo.svg" />
-  <meta property="og:url" content="https://www.peaksquareestates.com" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="PEAKSQUARE ESTATES — Luxury Real Estate" />
-  <meta name="twitter:description" content="Luxury Properties in Pune. Buy, Rent, or Sell your dream home." />
-  <meta name="twitter:image" content="https://www.peaksquareestates.com/assets/logo.svg" />
 </head>
 <body>
     <div class="cursor-lux"></div>
@@ -179,3 +183,4 @@
     </script>
 </body>
 </html>
+
