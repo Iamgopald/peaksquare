@@ -4,11 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Disclaimer — Peaksquare Estates</title>
+  
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="icon" href="assets/32_32 logo.png" sizes="32x32" type="image/png">
+
+  <!-- Link to styles.css -->
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
+
+  <div class="cursor-lux"></div>
+  <div class="cursor-ripple"></div>
+  <div class="particles"></div>
 
   <header class="header">
     <a href="index.html" class="logo-link">
@@ -27,16 +36,47 @@
       <p>The information provided on this website is for informational purposes only and does not constitute an offer to avail of any service. Prices mentioned are subject to change without notice and properties are subject to availability.</p>
 
       <h2>1. Not a Legal Offer</h2>
-      <p>The images used on this website are often artistic impressions or stock images used for representation purposes. They may not represent the actual property. Users are advised to verify details with our sales team before making any decision.</p>
+      <p>The images used on this website are often artistic impressions or stock images used for representation purposes. They may not represent the actual property 100% accurately. Furniture and fixtures shown are for illustrative purposes only. Users are advised to verify details with our sales team before making any decision.</p>
 
       <h2>2. Third-Party Links</h2>
       <p>This website may contain links to other websites. PeakSquare Estates is not responsible for the privacy practices or content of those external sites.</p>
 
       <h2>3. RERA Compliance</h2>
-      <p>We strive to ensure all projects listed are RERA compliant. However, users should independently verify the RERA registration number and details of the project.</p>
+      <p>We strive to ensure all projects listed are RERA compliant. However, users should independently verify the RERA registration number and details of the project on the official government website.</p>
     </div>
   </div>
 
-  <footer>© 2025 PEAKSQUARE ESTATES • All Rights Reserved</footer>
+  <footer style="text-align:center; padding:40px 6%; background:#080808; border-top: 1px solid #222; margin-top:50px;">
+    <div style="margin-bottom: 20px; color: #666; font-size: 0.9rem;">
+      <a href="privacy.html" style="color:#888; text-decoration:none; margin:0 10px;">Privacy Policy</a> • 
+      <a href="terms.html" style="color:#888; text-decoration:none; margin:0 10px;">Terms of Use</a> • 
+      <a href="disclaimer.html" style="color:#D4AF37; text-decoration:none; margin:0 10px;">Disclaimer</a>
+    </div>
+    <div style="color: #555; font-size: 0.8rem;">
+      © 2025 PEAKSQUARE ESTATES • All Rights Reserved
+    </div>
+  </footer>
+
+  <script>
+    if (window.innerWidth >= 768) {
+        const lux = document.querySelector(".cursor-lux");
+        const ripple = document.querySelector(".cursor-ripple");
+        if (lux && ripple) {
+            lux.style.display = 'block';
+            ripple.style.display = 'block';
+            let cursorVisible = false;
+            document.addEventListener("mousemove", (e) => {
+                if (!cursorVisible) { lux.style.opacity = 1; ripple.style.opacity = 1; cursorVisible = true; }
+                gsap.to(lux, { x: e.clientX, y: e.clientY, duration: 0.1 });
+                gsap.to(ripple, { x: e.clientX, y: e.clientY, duration: 0.1 });
+            });
+            document.addEventListener('mouseover', (e) => {
+                if(e.target.closest('a') || e.target.closest('button')) { lux.classList.add('active'); } else { lux.classList.remove('active'); }
+            });
+        }
+    } else {
+        document.querySelectorAll('.cursor-lux, .cursor-ripple, .particles').forEach(el => el.style.display = 'none');
+    }
+  </script>
 </body>
 </html>
