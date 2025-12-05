@@ -3,7 +3,6 @@ GLOBAL
 --------------------------*/
 * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
 
-/* FIX: Do not set html height to 100%, let it grow */
 html { 
     width: 100%;
     overflow-x: hidden;
@@ -12,13 +11,22 @@ html {
 body { 
     width: 100%;
     min-height: 100vh; 
-    background:#000; 
-    color:#fff; 
-    overflow-x:hidden; 
-    cursor: none; /* Keep your custom cursor */
+    background: #000; 
+    color: #fff; 
+    overflow-x: hidden; 
+    cursor: none; 
+    
+    /* === STICKY FOOTER FIX === */
+    display: flex;
+    flex-direction: column;
 }
 
-/* page spacing */
+/* This forces the middle content to stretch, pushing footer down */
+section, .legal-section, #dynamicContent {
+    flex: 1; 
+}
+
+/* Page spacing */
 .section { padding:100px 6%; }
 
 body, * {
