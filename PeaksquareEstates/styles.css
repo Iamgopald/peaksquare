@@ -26,7 +26,7 @@ section, .legal-section, #dynamicContent {
     flex: 1; 
 }
 
-/* Standard Section Spacing */
+/* Standard Section Spacing (Desktop) */
 .section { padding:100px 6%; }
 
 
@@ -435,7 +435,12 @@ footer { text-align:center; padding:40px 6%; background:#080808; color:#bdbdbd; 
 /* --- MOBILE MAIN (Max Width 768px) --- */
 @media (max-width: 768px) {
   
-  /* 1. HERO LAYOUT */
+  /* 1. SECTION SPACING (Tighten up vertical gaps) */
+  .section { 
+      padding: 40px 20px !important; /* Reduced from 100px to 40px */
+  }
+
+  /* 2. HERO LAYOUT */
   .hero {
     height: auto !important;
     min-height: 85vh;
@@ -443,14 +448,14 @@ footer { text-align:center; padding:40px 6%; background:#080808; color:#bdbdbd; 
     flex-direction: column;
     justify-content: flex-start !important; /* Start from top */
     align-items: center;
-    /* Clear fixed header */
+    /* Clear fixed header & Reduce Bottom Padding */
     padding-top: 150px; 
-    padding-bottom: 60px;
+    padding-bottom: 30px; /* Reduced from 60px to remove space below form */
     padding-left: 20px;
     padding-right: 20px;
   }
 
-  /* 2. TYPOGRAPHY (Big, Cinematic) */
+  /* 3. TYPOGRAPHY (Big, Cinematic) */
   .hero-title {
     width: 100%;
     display: flex;
@@ -472,7 +477,7 @@ footer { text-align:center; padding:40px 6%; background:#080808; color:#bdbdbd; 
     padding: 5px 0; /* Prevents text clipping */
   }
 
-  /* 3. FEATURES LIST (Tighter to Form) */
+  /* 4. FEATURES LIST (Tighter to Form) */
   .hero-text-content {
     width: 100%;
     text-align: center;
@@ -484,13 +489,13 @@ footer { text-align:center; padding:40px 6%; background:#080808; color:#bdbdbd; 
     font-size: 0.9rem; list-style: none; padding: 0; margin: 0; 
   }
 
-  /* 4. THE FORM */
+  /* 5. THE FORM */
   .hero-form-wrapper {
     width: 100%;
     margin-top: 10px; 
   }
 
-  /* 5. DROPDOWN TEXT FIX (Fits on one line) */
+  /* 6. DROPDOWN TEXT FIX (Fits on one line) */
   .contact-form select {
     font-size: 0.85rem !important; 
     padding: 12px 35px 12px 12px; 
@@ -501,7 +506,7 @@ footer { text-align:center; padding:40px 6%; background:#080808; color:#bdbdbd; 
     font-size: 0.9rem !important;
   }
 
-  /* 6. AWWWARDS CAROUSEL (Peeking Cards) */
+  /* 7. AWWWARDS CAROUSEL (Peeking Cards) */
   .project-grid {
     display: flex !important;
     overflow-x: scroll;
