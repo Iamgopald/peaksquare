@@ -4,12 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — Peaksquare Estates</title>
+  
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="icon" href="assets/32_32 logo.png" sizes="32x32" type="image/png">
+
+  <!-- Link to your renamed CSS file -->
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
+
+  <!-- Cursor Elements -->
+  <div class="cursor-lux"></div>
+  <div class="cursor-ripple"></div>
+  <div class="particles"></div>
 
   <header class="header">
     <a href="index.html" class="logo-link">
@@ -31,14 +41,14 @@
       <p>We collect information you provide directly to us via our contact forms, including:</p>
       <ul>
         <li>Name</li>
-        <li>Phone Number</li>
-        <li>Property Preferences (Buy/Rent/Sell)</li>
+        <li>Phone Number & Email</li>
+        <li>Property Preferences</li>
       </ul>
 
       <h2>2. How We Use Your Information</h2>
       <p>The information we collect is used solely for the following purposes:</p>
       <ul>
-        <li>To contact you regarding the properties you have inquired about.</li>
+        <li>To contact you regarding properties you inquired about.</li>
         <li>To schedule site visits or consultations.</li>
         <li>To verify your identity as a genuine buyer or seller.</li>
       </ul>
@@ -47,10 +57,54 @@
       <p>We implement strict security measures to ensure your personal details are safe. We do not sell, trade, or rent your personal identification information to outside parties.</p>
 
       <h2>4. Contact Us</h2>
-      <p>If you have questions about this policy, please contact us at sales@peaksquareestates.com.</p>
+      <p>If you have questions about this policy, please contact us.</p>
     </div>
   </div>
 
-  <footer>© 2025 PEAKSQUARE ESTATES • All Rights Reserved</footer>
+  <footer style="text-align:center; padding:40px 6%; background:#080808; border-top: 1px solid #222; margin-top:50px;">
+    <div style="margin-bottom: 20px; color: #666; font-size: 0.9rem;">
+      <a href="privacy.html" style="color:#D4AF37; text-decoration:none; margin:0 10px;">Privacy Policy</a> • 
+      <a href="terms.html" style="color:#888; text-decoration:none; margin:0 10px;">Terms of Use</a> • 
+      <a href="disclaimer.html" style="color:#888; text-decoration:none; margin:0 10px;">Disclaimer</a>
+    </div>
+    <div style="color: #555; font-size: 0.8rem;">
+      © 2025 PEAKSQUARE ESTATES • All Rights Reserved
+    </div>
+  </footer>
+
+  <script>
+    // === SAFE CURSOR SCRIPT ===
+    if (window.innerWidth >= 768) {
+        const lux = document.querySelector(".cursor-lux");
+        const ripple = document.querySelector(".cursor-ripple");
+        
+        if (lux && ripple) {
+            lux.style.display = 'block';
+            ripple.style.display = 'block';
+
+            let cursorVisible = false;
+            document.addEventListener("mousemove", (e) => {
+                if (!cursorVisible) {
+                    lux.style.opacity = 1; 
+                    ripple.style.opacity = 1;
+                    cursorVisible = true;
+                }
+                gsap.to(lux, { x: e.clientX, y: e.clientY, duration: 0.1 });
+                gsap.to(ripple, { x: e.clientX, y: e.clientY, duration: 0.1 });
+            });
+
+            document.addEventListener('mouseover', (e) => {
+                if(e.target.closest('a') || e.target.closest('button')) {
+                    lux.classList.add('active');
+                } else {
+                    lux.classList.remove('active');
+                }
+            });
+        }
+    } else {
+        // Mobile: Force hide cursor elements so they don't get stuck at top-left
+        document.querySelectorAll('.cursor-lux, .cursor-ripple, .particles').forEach(el => el.style.display = 'none');
+    }
+  </script>
 </body>
 </html>
