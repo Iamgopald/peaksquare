@@ -16,9 +16,9 @@
 
   <!-- Favicon / Apple Touch Icon -->
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-  <link rel="icon" href="assets/32_32 logo.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="assets/16_16 logo.png" sizes="16x16" type="image/png">
-  <link rel="apple-touch-icon" href="assets/180_180 logo.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/192_192_logo.png">
+<link rel="apple-touch-icon" href="assets/180_180 logo.png">
+<link rel="shortcut icon" href="favicon.ico" />
 
   <!-- JS Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -77,105 +77,88 @@
   
 
   <!-- HERO SECTION -->
-  <!-- HERO SECTION — Awwwards Luxury Version -->
-<section class="hero section">
+  <section class="hero section" id="hero">
+    
+    <canvas id="goldCanvas"></canvas>
 
-  <!-- Cinematic Particle Canvas -->
-  <canvas id="goldCanvas"></canvas>
+    <div class="hero-container">
+      
+      <div class="hero-text-content">
+        <h1 class="hero-title">
+          <span class="mask-reveal"><span>FIND YOUR</span></span>
+          <span class="mask-reveal"><span>PERFECT SPACE</span></span>
+        </h1>
 
-  <div class="hero-content">
+        <ul class="hero-features fade-up">
+            <li>✨ Verified Listings</li>
+            <li>✨ Zero-Hassle Paperwork</li>
+            <li>✨ Instant Call Back</li>
+        </ul>
+      </div>
 
-    <h1 class="hero-title">
-      <span class="mask-reveal"><span>FIND</span></span>
-      <span class="mask-reveal"><span>YOUR</span></span>
-      <span class="mask-reveal"><span>FUTURE</span></span>
-      <span class="mask-reveal"><span>Home</span></span>
-    </h1>
-    <div class="hero-cta fade-up">
-      <button class="btn primary" id="contactScroll">Book a Site Visit</button>
-      <button class="btn secondary" id="projectScroll">Explore Listings</button>
+      <div class="hero-form-wrapper fade-up">
+        <div class="form-glass-box">
+          <h3>Get Started</h3>
+          <p class="form-sub">We'll find the property for you.</p>
+
+          <form class="contact-form" id="contactForm">
+            
+            <div class="field-group">
+              <label>I am interested in</label>
+              <select name="type" required>
+                <option value="Buy_New_Luxury" selected>Buying a New Luxury Home</option>
+                
+                <option value="Buy_Resale">Buying a Resale Property</option>
+                
+                <option value="Rent_Flat">Renting a Premium Flat</option>
+    
+                <option value="Owner_Rent">Owner: Renting out my Property</option>
+                <option value="Owner_Sell">Owner: Selling my Property</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <input type="text" name="name" placeholder="Your Name" required />
+            </div>
+
+            <div class="field-group">
+              <input type="tel" name="phone" placeholder="Phone Number" required />
+            </div>
+
+            <button type="submit" class="btn primary full-width">Get Verified Listings</button>
+            <p class="privacy-note">🔒 Your details are kept private.</p>
+          </form>
+        </div>
+      </div>
+
     </div>
-
-  </div>
-
-</section>
+  </section>
 
 
+  <!-- FEATURED PROPERTIES -->
   <!-- FEATURED PROPERTIES -->
   <section class="projects section" id="projects">
     <h3 class="section-title fade-up">Featured Luxury Properties</h3>
 
-    <div class="project-grid">
-      <div class="project-card fade-up">
-        <div class="project-card-image">
-        <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=1200" alt="Property" />
-       </div>
-        <div class="meta">
-          <h4>Charholi</h4>
-          <p>Buy • Rent • sell</p>
-        </div>
-      </div>
-
-      <div class="project-card fade-up">
-        <div class="project-card-image">
-        <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200" alt="Property" />
-      </div>
-        <div class="meta">
-          <h4>Moshi</h4>
-          <p>Buy • Rent • sell</p>
-        </div>
-      </div>
-
-      <div class="project-card fade-up">
-        <div class="project-card-image">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200" alt="Property" />
-      </div>
-        <div class="meta">
-          <h4>All Over Pune</h4>
-          <p>coming soon...</p>
-        </div>
-      </div>
+    <div class="project-grid" id="propertyGrid">
+        <p style="color:#888; text-align:center; width:100%; margin-top: 20px;">Loading properties...</p>
     </div>
   </section>
 
-  <!-- CONTACT SECTION -->
-  <section class="contact section" id="contact">
-    <h3 class="section-title fade-up">Get in Touch</h3>
-
-    <!-- ZOHO INTEGRATED FORM -->
-    <form class="contact-form fade-up" id="contactForm">
-      
-      <div class="field-group">
-        <label>Name</label>
-        <input type="text" name="name" required />
-      </div>
-
-      <div class="field-group">
-        <label>Phone</label>
-        <input type="text" name="phone" required />
-      </div>
-
-      <div class="field-group">
-        <label>Email</label>
-        <input type="email" name="email" required />
-      </div>
-
-      <div class="field-group">
-        <label>Type</label>
-        <select name="type" required>
-          <option value="Buy">Buy</option>
-          <option value="Rent">Rent</option>
-          <option value="Sell">Sell</option>
-        </select>
-      </div>
-
-      <button class="btn primary">Submit</button>
-    </form>
-  </section>
 
   <!-- FOOTER -->
-  <footer>
-    © 2025 PEAKSQUARE ESTATES • All Rights Reserved
+  <footer style="text-align:center; padding:40px 6%; background:#080808; border-top: 1px solid #222; margin-top:50px;">
+  
+    <div style="margin-bottom: 20px; color: #666; font-size: 0.9rem;">
+      <a href="privacy.html" style="color:#888; text-decoration:none; margin:0 10px;">Privacy Policy</a> • 
+      <a href="terms.html" style="color:#888; text-decoration:none; margin:0 10px;">Terms of Use</a> • 
+      <a href="disclaimer.html" style="color:#888; text-decoration:none; margin:0 10px;">Disclaimer</a>
+    </div>
+  
+    <div style="color: #555; font-size: 0.8rem;">
+      © 2025 PEAKSQUARE ESTATES • All Rights Reserved
+    </div>
+    
   </footer>
 
   <!-- Main Script -->
@@ -193,7 +176,3 @@
     </script>
 </body>
 </html>
-
-
-
-

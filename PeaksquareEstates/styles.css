@@ -2,11 +2,25 @@
 GLOBAL
 --------------------------*/
 * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
-html,body { height:100%; }
-body { background:#000; color:#fff; overflow-x:hidden; }
+
+/* FIX: Do not set html height to 100%, let it grow */
+html { 
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body { 
+    width: 100%;
+    min-height: 100vh; 
+    background:#000; 
+    color:#fff; 
+    overflow-x:hidden; 
+    cursor: none; /* Keep your custom cursor */
+}
 
 /* page spacing */
 .section { padding:100px 6%; }
+
 body, * {
   cursor: none;
 }
@@ -465,56 +479,137 @@ button, .project-card {
 
 /* Mobile Hero Adjustments */
 @media (max-width: 768px) {
+  
   .hero {
-    height: auto;              /* Let hero shrink if content is smaller */
-    min-height: 80vh;          /* Still occupy most of the screen */
+    height: auto !important;
+    min-height: 85vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;    /* Center content vertically */
-    align-items: center;        /* Center horizontally */
-    text-align: center;
-    padding: 40px 20px;         /* Reduce top/bottom padding */
+    justify-content: flex-start !important;
+    align-items: center;
+    
+    /* Padding to clear header */
+    padding-top: 150px; 
+    padding-bottom: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
+  /* --- 1. TITLE (More Space Below) --- */
   .hero-title {
-    font-size: 3.5rem;         /* Keep title bold and big */
-    line-height: 1.1;
-    margin-bottom: 1rem;       /* Keep space for subtitle */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    font-size: 10vw; 
+    line-height: 1.1; 
+    letter-spacing: -0.02em;
+    text-align: center;
+    
+    /* ADDED: More breathing room below "PERFECT SPACE" */
+    margin-bottom: 50px; 
   }
 
+  .mask-reveal, .mask-reveal span {
+    display: block;
+    width: 100%;
+  }
+
+  /* --- 2. FEATURES LIST (Less Space Below) --- */
+  
+  /* Container holding Title + Features */
+  .hero-text-content {
+    width: 100%;
+    text-align: center;
+    /* REDUCED: Pulls the form up closer to the text */
+    margin-bottom: 15px; 
+  }
+
+  /* The actual list (Verified Listings etc) */
+  .hero-features {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 0.9rem;
+    list-style: none;
+    padding: 0;
+    margin: 0; /* Remove default margins */
+  }
+
+  /* --- 3. THE FORM (Positioning) --- */
+  .hero-form-wrapper {
+    width: 100%;
+    margin-top: 10px; /* Minimal gap between Features and Form */
+  }
+
+
+  /* Fix for gradient text getting cut off */
+  .mask-reveal span {
+    display: block;
+    width: 100%;
+    padding: 5px 0; /* Adds safe space for letters like 'g' or 'y' */
+  }
+
+  /* --- SUBTITLE & BUTTONS --- */
   .hero-sub {
     font-size: 1rem;
-    max-width: 90%;
-    margin: 0 auto 1.5rem auto;
+    line-height: 1.6;
+    max-width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ccc; 
   }
 
-  .hero-cta .btn {
-    font-size: 1.15rem;         /* Bigger text for buttons */
-    padding: 14px 36px;         /* Slightly bigger button */
-    margin-top: 1rem;
-    border-radius: 50px;        /* Premium feel */
-    background: linear-gradient(90deg, #FFD773, #D4AF37);
-    color: #000;
-    box-shadow: 0 8px 20px rgba(212,175,55,0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  .hero-cta {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Ensure form wrapper (if visible) stacks correctly */
+  .hero-form-wrapper {
+      margin-top: 40px;
+      width: 100%;
+    
   }
 
-  .hero-cta .btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 12px 28px rgba(212,175,55,0.6);
+  /* The Container */
+  .project-grid {
+    display: flex !important; /* Flex allows smooth sliding */
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory; /* Snaps to center */
+    gap: 20px;
+    padding: 0 15% 60px 15%; /* 15% padding centers the cards! */
+    scrollbar-width: none; /* Hide scrollbar Firefox */
+    -webkit-overflow-scrolling: touch; /* Smooth momentum on iOS */
   }
+  
+  /* Hide scrollbar Chrome/Safari */
+  .project-grid::-webkit-scrollbar { display: none; }
 
-  /* Reduce extra gap before next section */
-  .section {
-    padding-top: 60px;          /* Less top padding */
-    padding-bottom: 80px;       /* Moderate bottom padding */
+  /* The Cards */
+  .project-card {
+    flex: 0 0 80%;
+    min-width: 80%;
+    scroll-snap-align: center;
+    
+    /* Default state */
+    transform: scale(0.9);
+    opacity: 0.5;
+    transition: none !important; 
+    
+    will-change: transform, opacity; /* Tells browser to use GPU */
+    
+    display: flex;
+    flex-direction: column;
   }
-}
-.hero-trust {
-  color: #CCCCCC;
-  font-size: 1rem;
-  margin-top: 12px;
-  letter-spacing: 0.3px;
+  
+  /* Taller image on mobile for impact */
+  .project-card-image {
+      height: 300px; 
+  }
 }
 
 
@@ -593,4 +688,275 @@ AWWARDS–STYLE MOBILE PROJECT CAROUSEL UPGRADE
     right: 0;
     background: linear-gradient(to left, #000 45%, transparent);
   }
+}
+
+/* --- NEW HERO LANDING LAYOUT --- */
+
+/* Override the old center alignment */
+.hero {
+  flex-direction: row; /* Side by side */
+  align-items: center;
+  justify-content: center;
+  text-align: left; /* Align text to left */
+  padding-top: 100px; /* Space for fixed header */
+}
+
+.hero-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  z-index: 10;
+  position: relative;
+}
+
+/* LEFT SIDE TEXT */
+.hero-text-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+.hero-sub {
+  margin: 20px 0 30px 0; /* Reset margins */
+  text-align: left;
+}
+
+.hero-features {
+  list-style: none;
+  margin-top: 20px;
+  padding: 0;
+  color: #D4AF37;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.hero-features li { margin-bottom: 8px; }
+
+/* RIGHT SIDE FORM (GLASSMORPHISM) */
+.hero-form-wrapper {
+  flex: 1;
+  max-width: 420px;
+  min-width: 320px;
+}
+
+.form-glass-box {
+  background: rgba(20, 20, 20, 0.6); /* Dark see-through */
+  backdrop-filter: blur(15px); /* Blur effect */
+  border: 1px solid rgba(212, 175, 55, 0.3); /* Subtle Gold Border */
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease;
+}
+
+.form-glass-box:hover {
+  border-color: rgba(212, 175, 55, 0.6);
+  transform: translateY(-5px);
+}
+
+.form-glass-box h3 {
+  color: #fff;
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.form-sub {
+  color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* FORM INPUT UPDATES */
+.field-group { margin-bottom: 15px; }
+.contact-form input, .contact-form select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08); /* Slightly lighter input bg */
+  border: 1px solid #333;
+  color: #fff;
+}
+.contact-form input::placeholder { color: #666; }
+
+.btn.full-width {
+  width: 100%;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.privacy-note {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #555;
+  margin-top: 15px;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 900px) {
+  .hero-container {
+    flex-direction: column; /* Stack them */
+    text-align: center;
+  }
+  
+  .hero-text-content {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .hero-sub { text-align: center; }
+  
+  .hero-features { 
+    display: flex; 
+    justify-content: center; 
+    gap: 15px; 
+    font-size: 0.9rem;
+  }
+  
+  .hero-form-wrapper {
+    width: 100%;
+  }
+}
+
+/* ------------------------------------
+   AWWWARDS STYLE DROPDOWN (SELECT)
+------------------------------------ */
+
+/* 1. Style the Main Input Box */
+.contact-form select {
+  appearance: none;        /* Hide default arrow (Chrome/Safari) */
+  -webkit-appearance: none; 
+  -moz-appearance: none;   /* Hide default arrow (Firefox) */
+  
+  background-color: rgba(20, 20, 20, 0.6); /* Glassy Dark Background */
+  color: #fff;             /* White Text */
+  border: 1px solid #333;
+  
+  /* 2. Add Custom Gold Arrow (SVG Data URI) */
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D4AF37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 12px;
+  
+  padding-right: 40px; /* Make space for the new arrow */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* 3. Hover & Focus Effects */
+.contact-form select:hover {
+  border-color: #666; /* Lighten border on hover */
+}
+
+.contact-form select:focus {
+  outline: none;
+  border-color: #D4AF37; /* Gold Border when active */
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.15); /* Subtle Gold Glow */
+  background-color: rgba(0, 0, 0, 0.9); /* Solid black when typing/selecting */
+}
+
+/* 4. Style the Dropdown Options (The List) */
+/* This fixes the "White on White" issue */
+.contact-form select option {
+  background-color: #111; /* Deep Black Background */
+  color: #fff;            /* White Text */
+  padding: 10px;
+}
+
+/* Note: You cannot fully remove the blue hover highlight in standard CSS 
+   as it is controlled by the Operating System, but setting the background 
+   to #111 ensures the un-selected items are readable. */
+
+   /* Add this to your existing style.css */
+
+.project-card {
+    cursor: pointer; /* Shows the hand icon */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Styles for the Property Details Page */
+.details-container {
+    max-width: 800px;
+    margin: 100px auto; /* pushes it down from header */
+    padding: 20px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: white;
+}
+
+.details-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.details-title { font-size: 2rem; color: #D4AF37; margin-bottom: 10px; }
+.details-info { font-size: 1.1rem; color: #ccc; margin-bottom: 5px; }
+.back-btn { 
+    display: inline-block; 
+    margin-top: 20px; 
+    padding: 10px 20px; 
+    background: #D4AF37; 
+    color: #000; 
+    text-decoration: none; 
+    font-weight: bold; 
+    border-radius: 4px; 
+}
+
+
+/* -------------------------
+   LEGAL / TEXT PAGES STYLING
+--------------------------*/
+.legal-section {
+    max-width: 900px;
+    margin: 140px auto 80px; /* Space from header */
+    padding: 0 6%;
+}
+
+.legal-content h1 {
+    font-size: 3rem;
+    color: #D4AF37;
+    margin-bottom: 20px;
+}
+
+.legal-content h2 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    border-left: 3px solid #D4AF37;
+    padding-left: 15px;
+}
+
+.legal-content p {
+    color: #ccc;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+}
+
+.legal-content ul {
+    margin-bottom: 20px;
+    padding-left: 20px;
+    color: #ccc;
+}
+
+.legal-content li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.last-updated {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 40px;
+    display: block;
 }
