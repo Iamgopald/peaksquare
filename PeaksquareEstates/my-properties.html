@@ -1,369 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K4646LWSGW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-K4646LWSGW');
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Property Details — Peaksquare</title>
   
-  <!-- FAVICON -->
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="icon" href="assets/32_32 logo.png" sizes="32x32" type="image/png">
   <link rel="icon" href="assets/16_16 logo.png" sizes="16x16" type="image/png">
   <link rel="apple-touch-icon" href="assets/180_180 logo.png">
 
-  <!-- CSS & FONTS -->
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  
-  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js"></script>
+  <script src="script.js" defer></script> 
 
-  <style>
-    /* --- PREMIUM DETAILS PAGE STYLES --- */
-    
-    .details-wrapper {
-        max-width: 1200px;
-        margin: 140px auto 100px; 
-        padding: 0 5%;
-        display: grid;
-        grid-template-columns: 1fr 1fr; 
-        gap: 60px;
-        align-items: start;
-        opacity: 0; 
-        animation: fadeInPage 0.8s ease forwards;
-    }
-
-    .image-container {
-        position: relative;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        border: 1px solid #333;
-        aspect-ratio: 4/5; 
-        background: #111; 
-    }
-
-    .image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.6s ease;
-    }
-
-    .image-container:hover img {
-        transform: scale(1.05);
-    }
-
-    .info-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding-top: 20px;
-    }
-
-    .prop-type {
-        color: #D4AF37;
-        font-size: 0.9rem;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        font-weight: 600;
-        margin-bottom: 10px;
-    }
-
-    .prop-title {
-        font-size: 3rem;
-        line-height: 1.1;
-        margin-bottom: 20px;
-        background: linear-gradient(90deg, #fff, #aaa);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-    }
-
-    .prop-location {
-        font-size: 1.2rem;
-        color: #888;
-        margin-bottom: 40px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .specs-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin-bottom: 40px;
-        border-top: 1px solid #222;
-        border-bottom: 1px solid #222;
-        padding: 20px 0;
-    }
-
-    .spec-item h4 { color: #666; font-size: 0.85rem; font-weight: 400; }
-    .spec-item p { color: #fff; font-size: 1.1rem; font-weight: 600; }
-
-    .action-area {
-        display: flex;
-        flex-direction: column; 
-        gap: 15px;
-        align-items: flex-start;
-        margin-top: 10px;
-    }
-
-    .btn-whatsapp {
-        width: 100%;
-        max-width: 300px;
-        padding: 16px 20px;
-        background: #25D366; 
-        color: #fff;
-        font-weight: 700;
-        border-radius: 50px;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        transition: transform 0.2s;
-        border: none;
-        cursor: pointer;
-    }
-    
-    .btn-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); }
-
-    .btn-call {
-        width: 100%;
-        max-width: 300px;
-        padding: 16px 20px;
-        background: transparent;
-        border: 1px solid #D4AF37;
-        color: #D4AF37;
-        font-weight: 600;
-        border-radius: 50px;
-        text-decoration: none;
-        display: flex;
-        justify-content: center;
-        transition: background 0.3s;
-        cursor: pointer;
-    }
-
-    .btn-call:hover { background: rgba(212,175,55,0.1); }
-
-    .btn-back {
-        margin-top: 10px;
-        color: #666;
-        text-decoration: none;
-        font-size: 0.9rem;
-        cursor: pointer;
-    }
-    .btn-back:hover { color: #fff; text-decoration: underline; }
-
-    .loading-msg { text-align: center; color: #666; margin-top: 150px; }
-
-    @keyframes fadeInPage { to { opacity: 1; } }
-
-    /* === MOBILE FIXES === */
-    @media (max-width: 900px) {
-        .details-wrapper { 
-            display: flex;
-            flex-direction: column;
-            gap: 30px; 
-            margin-top: 100px; 
-            margin-bottom: 100px;
-            padding-bottom: 50px; 
-        }
-        
-        .image-container { 
-            width: 100%;
-            aspect-ratio: 16/10; 
-        } 
-        
-        .prop-title { font-size: 2.2rem; }
-        
-        .action-area {
-            width: 100%;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .btn-whatsapp, .btn-call { 
-            width: 100%; 
-            max-width: 100%; 
-            display: flex !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- 1. CURSOR ELEMENTS -->
-    <div class="cursor-lux"></div>
-    <div class="cursor-ripple"></div>
-
-    <!-- 2. HEADER -->
-    <header class="header">
-      <a href="index.html" class="logo-link">
-        <div class="brand">
-          <div class="logo-box">
-            <img src="assets/logo.svg" class="logo-img" alt="Logo">
-          </div>
-          <div class="brand-text">
-            <span class="sub">PEAKSQUARE</span>
-            <span class="main">ESTATES</span>
-          </div>
-        </div>
-      </a>
-    </header>
+  <header class="header fade-up">
+    <a href="/" class="logo-link">
+      <div class="brand">
+        <div class="logo-box"><img src="assets/logo.svg" class="logo-img" alt="Logo"></div>
+        <div class="brand-text"><span class="sub">PEAKSQUARE</span><span class="main">ESTATES</span></div>
+      </div>
+    </a>
     
-    <!-- 3. MAIN CONTENT -->
+    <button id="themeToggle" class="theme-btn" title="Switch Theme">☀</button>
+  </header>
+    
     <div id="dynamicContent">
         <p class="loading-msg">Loading Luxury Details...</p>
     </div>
 
-    <!-- 4. FOOTER -->
     <footer style="text-align:center; padding:40px 6%; background:#080808; border-top: 1px solid #222; margin-top:50px;">
-    
         <div style="margin-bottom: 20px; color: #666; font-size: 0.9rem;">
           <a href="privacy.html" style="color:#888; text-decoration:none; margin:0 10px;">Privacy Policy</a> • 
           <a href="terms.html" style="color:#888; text-decoration:none; margin:0 10px;">Terms of Use</a> • 
           <a href="disclaimer.html" style="color:#888; text-decoration:none; margin:0 10px;">Disclaimer</a>
         </div>
-    
-        <div style="color: #555; font-size: 0.8rem;">
-          © 2025 PEAKSQUARE ESTATES • All Rights Reserved
-        </div>
-        
-      </footer>
+        <div style="color: #555; font-size: 0.8rem;">© 2025 PEAKSQUARE ESTATES • All Rights Reserved</div>
+    </footer>
 
-    <!-- 5. LOGIC -->
-    <script>
-      const API_URL = "https://script.google.com/macros/s/AKfycbzdsftNssnmWHAO5ioiyKTGhJkgJ8ubf1rmEYr56xOk7X-gtIfn_4HTAowBq3id_lL3/exec"; 
-
-      // === SAFE CURSOR INIT (Mobile Fix Included) ===
-      function initSafeCursor() {
-          const lux = document.querySelector(".cursor-lux");
-          const ripple = document.querySelector(".cursor-ripple");
-
-          // CRITICAL FIX: If on mobile, hide them and STOP.
-          if (window.innerWidth < 768) {
-              if (lux) lux.style.display = 'none';
-              if (ripple) ripple.style.display = 'none';
-              return; 
-          }
-
-          // If on Desktop, show them and add listeners
-          if (lux && ripple) {
-              lux.style.display = 'block';
-              ripple.style.display = 'block';
-
-              let cursorVisible = false;
-              document.addEventListener("mousemove", (e) => {
-                  if (!cursorVisible) {
-                      lux.style.opacity = 1; 
-                      ripple.style.opacity = 1;
-                      cursorVisible = true;
-                  }
-                  gsap.to(lux, { x: e.clientX, y: e.clientY, duration: 0.1 });
-                  gsap.to(ripple, { x: e.clientX, y: e.clientY, duration: 0.1 });
-              });
-
-              document.addEventListener('mouseover', (e) => {
-                  if(e.target.closest('a') || e.target.closest('button')) {
-                      lux.classList.add('active');
-                  } else {
-                      lux.classList.remove('active');
-                  }
-              });
-          }
-      }
-
-      async function loadDetails() {
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get('id');
-        const container = document.getElementById('dynamicContent');
-
-        if (id === null) {
-          window.location.href = "index.html"; 
-          return;
-        }
-
-        try {
-          const response = await fetch(API_URL);
-          const properties = await response.json();
-          const prop = properties[id];
-
-          if (!prop) {
-              container.innerHTML = "<p class='loading-msg'>Property not found.</p>";
-              return;
-          }
-
-          let cleanImage = prop.ImageURL;
-          if (cleanImage.includes('drive.google.com')) {
-              const idMatch = cleanImage.match(/id=([^&]+)/);
-              if (idMatch && idMatch[1]) {
-                  cleanImage = `https://lh3.googleusercontent.com/d/${idMatch[1]}`;
-              }
-          }
-
-          const message = `Hi, I am interested in ${prop.Title} located at ${prop.Location}. Please share more details.`;
-          const whatsappLink = `https://wa.me/917276607467?text=${encodeURIComponent(message)}`;
-
-          container.innerHTML = `
-            <div class="details-wrapper">
-                
-                <div class="image-container">
-                    <img src="${cleanImage}" alt="${prop.Title}">
-                </div>
-
-                <div class="info-container">
-                    <div class="prop-type">${prop.Type}</div>
-                    <h1 class="prop-title">${prop.Title}</h1>
-                    <div class="prop-location">📍 ${prop.Location}</div>
-
-                    <div class="specs-grid">
-                        <div class="spec-item">
-                            <h4>Status</h4>
-                            <p>Available</p>
-                        </div>
-                        <div class="spec-item">
-                            <h4>Listing ID</h4>
-                            <p>#${id}</p>
-                        </div>
-                    </div>
-
-                    <p style="color:#aaa; line-height:1.6; margin-bottom:40px;">
-                        Experience luxury living in ${prop.Location}. 
-                        This property is verified by PeakSquare Estates.
-                        Connect with us directly for a site visit.
-                    </p>
-
-                    <div class="action-area">
-                        <a href="${whatsappLink}" target="_blank" class="btn-whatsapp">
-                           <span>💬 Chat on WhatsApp</span>
-                        </a>
-
-                        <a href="tel:+917276607467" class="btn-call">
-                           📞 Call Agent
-                        </a>
-                        
-                        <a href="index.html#projects" class="btn-back">← Back to Listings</a>
-                    </div>
-                </div>
-            </div>
-          `;
-
-          initSafeCursor();
-
-        } catch (error) {
-          console.error(error);
-          container.innerHTML = "<p class='loading-msg'>Error loading details.</p>";
-        }
-      }
-
-      loadDetails();
-      initSafeCursor(); 
-    </script>
 </body>
 </html>

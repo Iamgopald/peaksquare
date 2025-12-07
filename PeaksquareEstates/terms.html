@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K4646LWSGW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-K4646LWSGW');
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Terms of Use — Peaksquare Estates</title>
@@ -8,16 +17,14 @@
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="icon" href="assets/32_32 logo.png" sizes="32x32" type="image/png">
   
-  <!-- CSS Link (styles.css) -->
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-
-  <div class="cursor-lux"></div>
-  <div class="cursor-ripple"></div>
-  <div class="particles"></div>
 
   <header class="header">
     <a href="index.html" class="logo-link">
@@ -26,6 +33,7 @@
         <div class="brand-text"><span class="sub">PEAKSQUARE</span><span class="main">ESTATES</span></div>
       </div>
     </a>
+    <button id="themeToggle" class="theme-btn" title="Switch Theme">☀</button>
   </header>
 
   <div class="legal-section">
@@ -60,26 +68,5 @@
     </div>
   </footer>
 
-  <script>
-    if (window.innerWidth >= 768) {
-        const lux = document.querySelector(".cursor-lux");
-        const ripple = document.querySelector(".cursor-ripple");
-        if (lux && ripple) {
-            lux.style.display = 'block';
-            ripple.style.display = 'block';
-            let cursorVisible = false;
-            document.addEventListener("mousemove", (e) => {
-                if (!cursorVisible) { lux.style.opacity = 1; ripple.style.opacity = 1; cursorVisible = true; }
-                gsap.to(lux, { x: e.clientX, y: e.clientY, duration: 0.1 });
-                gsap.to(ripple, { x: e.clientX, y: e.clientY, duration: 0.1 });
-            });
-            document.addEventListener('mouseover', (e) => {
-                if(e.target.closest('a') || e.target.closest('button')) { lux.classList.add('active'); } else { lux.classList.remove('active'); }
-            });
-        }
-    } else {
-        document.querySelectorAll('.cursor-lux, .cursor-ripple, .particles').forEach(el => el.style.display = 'none');
-    }
-  </script>
 </body>
 </html>
