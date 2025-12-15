@@ -1,156 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K4646LWSGW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-K4646LWSGW');
-</script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thank You — PeakSquare Estates</title>
-  
-  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-  <link rel="icon" href="assets/32_32 logo.png" sizes="32x32" type="image/png">
-
-  <link rel="stylesheet" href="styles.css" />
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js"></script>
-  
-  <script src="script.js" defer></script>
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    /* PAGE SPECIFIC STYLES */
-    
-    html, body { 
-        height: 100%; 
-        width: 100%; 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K4646LWSGW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-K4646LWSGW');
         
-        /* FIX: Use Variables instead of fixed colors */
-        background: var(--bg-gradient); 
-        color: var(--text-main);
+        // Track the "Generate Lead" event automatically on page load
+        gtag('event', 'generate_lead', {
+            'currency': 'INR',
+            'value': 100 // Arbitrary value for lead scoring
+        });
+    </script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Thank You | PeakSquare Estates</title>
+    <meta name="robots" content="noindex, follow" /> <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/32_32 logo.png">
+    <link rel="apple-touch-icon" href="assets/180_180 logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="styles.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js" defer></script>
+    <script src="script.js" defer></script>
+
+    <style>
+        html, body { 
+            height: 100%; 
+            width: 100%; 
+            overflow: hidden; /* Prevent scrolling */
+            display: flex;
+            flex-direction: column;
+        }
         
-        /* Keep centering logic */
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        text-align: center; 
-        
-        /* Ensure no scrollbars on this simple page */
-        overflow: hidden;
-    }
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+        }
 
-    h1 {
-      font-family: 'Manrope', sans-serif; /* Match Main Site */
-      font-size: 3.5rem;
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-      
-      /* Gold Gradient Text */
-      background: linear-gradient(90deg, #FFD773, #D4AF37);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      
-      opacity: 0;
-      animation: fadeIn 1s forwards 0.5s;
-    }
+        h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            
+            /* Gold Gradient Text */
+            background: linear-gradient(90deg, #FFD773, #D4AF37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.5s;
+        }
 
-    p {
-      font-family: 'Manrope', sans-serif;
-      font-size: 1.25rem;
-      
-      /* FIX: Use variable so it turns Dark Gray in Light Mode */
-      color: var(--text-muted); 
-      
-      margin-top: 0.5rem;
-      opacity: 0;
-      animation: fadeIn 1s forwards 1s;
-    }
+        p {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.25rem;
+            color: var(--text-muted); 
+            margin-top: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1s;
+        }
 
-    /* Luxury button */
-    .btn {
-      position: relative;
-      display: inline-block;
-      margin-top: 2rem;
-      padding: 14px 36px;
-      border-radius: 50px;
-      font-family: 'Manrope', sans-serif;
-      font-weight: 600;
-      text-decoration: none;
-      color: #000; /* Always black text on gold button */
-      background: linear-gradient(90deg, #FFD773, #D4AF37);
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: none; 
-      opacity: 0;
-      animation: fadeIn 1s forwards 1.2s; /* Added delay for button */
-    }
+        .btn {
+            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1.2s;
+        }
 
-    .btn:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 0 25px rgba(212,175,55,0.6);
-    }
-
-    .btn::before {
-      content: "";
-      position: absolute;
-      top: 0; left: -120%;
-      width: 100%; height: 100%;
-      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
-      transform: skewX(-20deg);
-      transition: left 0.6s ease;
-      animation: sweep 3s ease-in-out infinite;
-    }
-
-    @keyframes sweep {
-      0% { left: -120%; }
-      20% { left: 120%; } /* Fast sweep */
-      100% { left: 120%; } /* Wait before next sweep */
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-    
-    /* Ensure Header sits on top */
-    header {
-        position: fixed;
-        top: 0; width: 100%;
-        z-index: 100;
-    }
-
-  </style>
+        @keyframes fadeIn { to { opacity: 1; } }
+    </style>
 </head>
 
 <body>
-  
-  <header class="header">
-    <a href="index.html" class="logo-link">
-      <div class="brand">
-        <div class="logo-box"><img src="assets/logo.svg" class="logo-img" alt="Logo"></div>
-        <div class="brand-text"><span class="sub">PEAKSQUARE</span><span class="main">ESTATES</span></div>
-      </div>
-    </a>
-    
-    <button id="themeToggle" class="theme-btn" title="Switch Theme">☀</button>
-  </header>
 
-  <div>
-    <h1>Thank You!</h1>
-    <p>Your details have been received.<br>Our team will contact you shortly.</p>
-    <a href="index.html" class="btn">Back to Home</a>
-  </div>
+    <header class="header">
+        <a href="/" class="logo-link" aria-label="PeakSquare Estates Home">
+            <div class="brand">
+                <div class="logo-box">
+                    <img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40">
+                </div>
+                <div class="brand-text">
+                    <span class="sub">PEAKSQUARE</span>
+                    <span class="main">ESTATES</span>
+                </div>
+            </div>
+        </a>
 
-  <div class="cursor-outline"></div>
+        <div class="header-controls">
+            <button id="themeToggle" class="icon-btn" title="Switch Theme" style="border:none;">☀</button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Request Received</h1>
+        <p>Your details have been securely logged.<br>Our private client team will contact you shortly.</p>
+        <a href="index.html" class="btn primary">Return to Home</a>
+    </main>
 
 </body>
 </html>

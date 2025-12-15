@@ -1,82 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K4646LWSGW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K4646LWSGW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-K4646LWSGW');
+    </script>
 
-  gtag('config', 'G-K4646LWSGW');
-</script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — Peaksquare Estates</title>
-  
-  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-  <link rel="icon" href="assets/32_32 logo.png" sizes="32x32" type="image/png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Privacy Policy | PeakSquare Estates</title>
+    <meta name="description" content="Read how PeakSquare Estates collects, uses, and protects your personal data. Your privacy is our priority." />
+    <meta name="robots" content="noindex, follow" /> <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/32_32 logo.png">
+    <link rel="apple-touch-icon" href="assets/180_180 logo.png">
 
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js"></script>
-  <script src="script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="styles.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
+
 <body>
 
-  <header class="header">
-    <a href="index.html" class="logo-link">
-      <div class="brand">
-        <div class="logo-box"><img src="assets/logo.svg" class="logo-img" alt="Logo"></div>
-        <div class="brand-text"><span class="sub">PEAKSQUARE</span><span class="main">ESTATES</span></div>
-      </div>
-    </a>
-    <button id="themeToggle" class="theme-btn" title="Switch Theme">☀</button>
-  </header>
+    <header class="header">
+        <a href="/" class="logo-link" aria-label="PeakSquare Estates Home">
+            <div class="brand">
+                <div class="logo-box">
+                    <img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40">
+                </div>
+                <div class="brand-text">
+                    <span class="sub">PEAKSQUARE</span>
+                    <span class="main">ESTATES</span>
+                </div>
+            </div>
+        </a>
 
-  <div class="legal-section">
-    <div class="legal-content">
-      <h1>Privacy Policy</h1>
-      <span class="last-updated">Last Updated: January 2025</span>
+        <nav class="desktop-nav">
+            <a href="index.html#projects" class="nav-item">Properties</a>
+            <a href="blog.html" class="nav-item">Market Pulse</a>
+            <a href="index.html#contactForm" class="nav-item">Contact</a>
+        </nav>
 
-      <p>At PeakSquare Estates, we value your trust and are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data.</p>
+        <div class="header-controls">
+            <button id="searchTrigger" class="icon-btn" aria-label="Open Search">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+            <button id="menuTrigger" class="icon-btn" aria-label="Open Menu">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
 
-      <h2>1. Information We Collect</h2>
-      <p>We collect information you provide directly to us via our contact forms, including:</p>
-      <ul>
-        <li>Name</li>
-        <li>Phone Number & Email</li>
-        <li>Property Preferences</li>
-      </ul>
+        <div class="search-overlay" id="searchOverlay">
+            <button class="search-close" id="searchClose" aria-label="Close Search">✕</button>
+            <div class="search-container">
+                <div class="search-bar-wrapper">
+                    <input type="text" class="search-input" placeholder="Search locations, projects..." id="searchInput" autocomplete="off">
+                </div>
+                <div id="searchResults" class="search-results-list"></div>
+            </div>
+        </div>
+    </header>
 
-      <h2>2. How We Use Your Information</h2>
-      <p>The information we collect is used solely for the following purposes:</p>
-      <ul>
-        <li>To contact you regarding properties you inquired about.</li>
-        <li>To schedule site visits or consultations.</li>
-        <li>To verify your identity as a genuine buyer or seller.</li>
-      </ul>
+    <main style="padding-top: 140px; padding-bottom: 80px;">
+        
+        <section class="section" style="padding-top: 0;">
+            <div class="hero-container" style="display: block; max-width: 800px; margin: 0 auto; text-align: left;">
+                
+                <div style="margin-bottom: 60px; text-align: center;">
+                    <h1 class="hero-title">
+                        <span class="block-text fade-in-up" style="color:var(--text-main); font-size: 2.5rem;">PRIVACY POLICY</span>
+                    </h1>
+                    <div class="hero-separator fade-in-up" style="margin: 20px auto;"></div>
+                    <p style="color:var(--text-muted); font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;">Last Updated: January 2025</p>
+                </div>
 
-      <h2>3. Data Protection</h2>
-      <p>We implement strict security measures to ensure your personal details are safe. We do not sell, trade, or rent your personal identification information to outside parties.</p>
+                <article class="article-body fade-in-up" style="animation-delay: 0.2s; font-family: 'Manrope', sans-serif; font-size: 1.1rem; line-height: 1.8; color: var(--text-muted);">
+                    
+                    <p style="margin-bottom: 30px;">
+                        At PeakSquare Estates, we value your trust and are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data when you visit our website or interact with our services.
+                    </p>
 
-      <h2>4. Contact Us</h2>
-      <p>If you have questions about this policy, please contact us.</p>
+                    <h3 style="color: var(--text-main); font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-top: 40px; margin-bottom: 15px;">1. Information We Collect</h3>
+                    <p style="margin-bottom: 15px;">
+                        We may collect personal information that you voluntarily provide to us when you fill out contact forms or subscribe to our market updates. This includes:
+                    </p>
+                    <ul style="list-style-type: disc; margin-left: 20px; margin-bottom: 20px;">
+                        <li>Name</li>
+                        <li>Phone Number & Email Address</li>
+                        <li>Property Preferences (Location, Budget, Configuration)</li>
+                    </ul>
+
+                    <h3 style="color: var(--text-main); font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-top: 40px; margin-bottom: 15px;">2. How We Use Your Information</h3>
+                    <p style="margin-bottom: 15px;">
+                        The information we collect is used strictly for professional purposes to deliver the services you requested:
+                    </p>
+                    <ul style="list-style-type: disc; margin-left: 20px; margin-bottom: 20px;">
+                        <li>To contact you regarding specific properties you inquired about.</li>
+                        <li>To schedule private site visits or consultations.</li>
+                        <li>To verify your identity as a genuine buyer or seller to maintain the exclusivity of our network.</li>
+                    </ul>
+
+                    <h3 style="color: var(--text-main); font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-top: 40px; margin-bottom: 15px;">3. Data Protection</h3>
+                    <p style="margin-bottom: 20px;">
+                        We implement industry-standard security measures to ensure your personal details are safe from unauthorized access. We strictly do not sell, trade, or rent your personal identification information to third-party marketing agencies.
+                    </p>
+
+                    <h3 style="color: var(--text-main); font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-top: 40px; margin-bottom: 15px;">4. Contact Us</h3>
+                    <p style="margin-bottom: 20px;">
+                        If you have any questions about this policy or wish to update your preferences, please contact us directly via the contact form on our homepage.
+                    </p>
+
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-links">
+            <a href="blog.html" class="footer-link">Market Insights</a> • 
+            <a href="privacy.html" class="footer-link">Privacy Policy</a> • 
+            <a href="terms.html" class="footer-link">Terms</a>
+        </div>
+        <div class="footer-copyright">
+            © 2025 PEAKSQUARE ESTATES • Pune, MH
+        </div>
+    </footer>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">✕</button>
+        <nav class="menu-nav">
+            <span class="menu-label">Menu</span>
+            <a href="index.html" class="menu-link">Home</a>
+            <a href="index.html#projects" class="menu-link">Properties</a>
+            <a href="blog.html" class="menu-link">Insights</a>
+            <a href="index.html#contactForm" class="menu-link">Contact</a>
+        </nav>
+        <div class="menu-footer">
+            <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
+        </div>
     </div>
-  </div>
-
-  <footer style="text-align:center; padding:40px 6%; background:#080808; border-top: 1px solid #222; margin-top:50px;">
-    <div style="margin-bottom: 20px; color: #666; font-size: 0.9rem;">
-      <a href="privacy.html" style="color:#D4AF37; text-decoration:none; margin:0 10px;">Privacy Policy</a> • 
-      <a href="terms.html" style="color:#888; text-decoration:none; margin:0 10px;">Terms of Use</a> • 
-      <a href="disclaimer.html" style="color:#888; text-decoration:none; margin:0 10px;">Disclaimer</a>
-    </div>
-    <div style="color: #555; font-size: 0.8rem;">
-      © 2025 PEAKSQUARE ESTATES • All Rights Reserved
-    </div>
-  </footer>
 
 </body>
 </html>

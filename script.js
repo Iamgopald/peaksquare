@@ -1,251 +1,520 @@
 // ===================================================
-// 1. THEME MANAGER (Runs Immediately)
-// ===================================================
-(function() {
-  const toggleBtn = document.getElementById('themeToggle');
-  const body = document.body;
-  const savedTheme = localStorage.getItem('theme');
-
-  // CHANGE: Default to 'light' if no theme is saved yet
-  if (!savedTheme || savedTheme === 'light') {
-      body.classList.add('light-mode');
-      if (toggleBtn) toggleBtn.textContent = '☾'; // Shows Moon (click to go dark)
-  } else {
-      // If 'dark' is saved, do nothing (CSS defaults to dark)
-      if (toggleBtn) toggleBtn.textContent = '☀'; // Shows Sun (click to go light)
-  }
-
-  if (toggleBtn) {
-      toggleBtn.addEventListener('click', () => {
-          body.classList.toggle('light-mode');
-          
-          if (body.classList.contains('light-mode')) {
-              localStorage.setItem('theme', 'light');
-              toggleBtn.textContent = '☾';
-          } else {
-              localStorage.setItem('theme', 'dark');
-              toggleBtn.textContent = '☀';
-          }
-      });
-  }
-})();
-
-// ===================================================
-// 2. MAIN LOGIC
+// 1. INITIALIZATION & CORE SETUP
 // ===================================================
 document.addEventListener("DOMContentLoaded", () => {
-    // Smooth Scroll
-    if (typeof Lenis !== "undefined") {
-        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true, touchMultiplier: 2 });
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
-        if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
-            lenis.on('scroll', ScrollTrigger.update);
-            ScrollTrigger.config({ ignoreMobileResize: true });
-        }
+    initThemeManager();
+    initSmoothScroll();
+    initScrollAnimations();
+    initDataLoading();      
+    initGlobalInteractions(); 
+    initProgressiveForm(); 
+    
+    // Check if we are on the Property Detail Page
+    if(document.getElementById('property-main')) {
+        initPropertyDetails();
     }
-    initHeroAnimations();
-    loadData();
 });
 
+// Global API Config
+const API_URL = "https://script.google.com/macros/s/AKfycbzdsftNssnmWHAO5ioiyKTGhJkgJ8ubf1rmEYr56xOk7X-gtIfn_4HTAowBq3id_lL3/exec";
+const CACHE_DURATION = 3600000; // 1 Hour Cache
+
 // ===================================================
-// 3. CMS LOADER (Fixed Images & Crash Proof)
+// 2. THEME MANAGER
 // ===================================================
-const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzdsftNssnmWHAO5ioiyKTGhJkgJ8ubf1rmEYr56xOk7X-gtIfn_4HTAowBq3id_lL3/exec"; 
-const CACHE_KEY = 'peaksquare_data';
-const CACHE_TIME = 3600000; // 1 Hour
+function initThemeManager() {
+    const toggleBtn = document.getElementById('themeToggle');
+    const menuToggleBtn = document.querySelector('.theme-btn-menu');
+    const body = document.body;
+    const savedTheme = localStorage.getItem('theme');
 
-async function loadData() {
-  const grid = document.getElementById('propertyGrid');
-  const detailContainer = document.getElementById('dynamicContent');
+    const updateText = (isLight) => {
+        const text = isLight ? '☾ Switch Theme' : '☀ Switch Theme';
+        if(toggleBtn) toggleBtn.innerHTML = text;
+        if(menuToggleBtn) menuToggleBtn.innerHTML = text;
+    };
 
-  // Clear cache to fix previous errors
-  localStorage.removeItem(CACHE_KEY); 
+    if (savedTheme === 'light') {
+        body.classList.add('light-mode');
+        updateText(true);
+    }
 
-  try {
-      const response = await fetch(SHEET_API_URL);
-      if (!response.ok) throw new Error(`Google Blocked Request: ${response.status}`);
-      
-      const properties = await response.json();
-      
-      if (!properties || properties.length === 0) {
-          if (grid) grid.innerHTML = `<p style="color:var(--text-muted); text-align:center;">No properties found.</p>`;
-          return;
-      }
+    const switchTheme = () => {
+        body.classList.toggle('light-mode');
+        const isLight = body.classList.contains('light-mode');
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        updateText(isLight);
+    };
 
-      localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), properties: properties }));
-
-      if (grid) renderGrid(properties);
-      if (detailContainer) renderDetail(properties);
-
-  } catch (error) {
-      console.error(error);
-      if (grid) grid.innerHTML = `<p style="color:var(--text-muted); text-align:center;">Unable to load properties.</p>`; 
-  }
+    if (toggleBtn) toggleBtn.addEventListener('click', switchTheme);
+    if (menuToggleBtn) menuToggleBtn.addEventListener('click', switchTheme);
 }
 
-function renderGrid(properties) {
-    const grid = document.getElementById('propertyGrid');
-    if (!grid) return;
-    grid.innerHTML = '';
+// ===================================================
+// 3. PERFORMANCE: SCROLL & ANIMATIONS
+// ===================================================
+function initSmoothScroll() {
+    if (typeof Lenis !== "undefined") {
+        const lenis = new Lenis({ 
+            duration: 1.2, 
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+            smoothWheel: true 
+        });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+    }
+}
 
-    properties.forEach((prop, index) => {
-        let imgUrl = prop.ImageURL || '';
-        let imgHtml = `<img src="${imgUrl}" loading="lazy" alt="Property">`;
-
-        // FIXED: Added $ symbol below
-        if (imgUrl.includes('drive.google.com')) {
-            const idMatch = imgUrl.match(/id=([^&]+)/);
-            if (idMatch && idMatch[1]) {
-                const baseUrl = `https://lh3.googleusercontent.com/d/${idMatch[1]}`;
-                imgHtml = `<img src="${baseUrl}=w800" srcset="${baseUrl}=w400 400w, ${baseUrl}=w800 800w" sizes="(max-width: 768px) 90vw, 400px" loading="lazy" class="fade-up" alt="Property">`;
+function initScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+                observer.unobserve(entry.target);
             }
-        }
+        });
+    }, { threshold: 0.1 });
 
-        const card = document.createElement('div');
-        card.className = 'project-card fade-up';
-        card.onclick = function() { window.location.href = `my-properties.html?id=${index}`; };
-        
-        card.innerHTML = `
-            <div class="project-card-image">${imgHtml}</div>
-            <div class="meta">
-                <h4>${prop.Location}</h4>
-                <p>${prop.Type}</p>
-                <p style="font-size:0.85rem;margin-top:5px;color:#888;">${prop.Title}</p>
-            </div>
-        `;
-        grid.appendChild(card);
+    document.querySelectorAll('.fade-in-up, .fade-in-scroll').forEach(el => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(30px)";
+        el.style.transition = "opacity 0.8s ease-out, transform 0.8s ease-out";
+        observer.observe(el);
     });
-    
-    if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
 }
 
-function renderDetail(properties) {
-    const detailContainer = document.getElementById('dynamicContent');
-    if (!detailContainer) return;
+// ===================================================
+// 4. DATA ENGINE (Robust & Cached)
+// ===================================================
+async function initDataLoading() {
+    // Only run on Homepage
+    if(document.getElementById('propertyGrid')) {
+        renderSkeleton('propertyGrid', 3);
+        renderSkeleton('featured-blog-container', 2);
+        
+        // Fetch Data
+        await loadContent('peaksquare_data', 'propertyGrid', renderProperties);
+        await loadContent('peaksquare_blog_data', 'featured-blog-container', renderBlogs, "?action=getBlogList");
+        
+        initSearchLogic(); 
+    }
+}
 
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-    if (id === null) { window.location.href = "index.html"; return; }
+function renderSkeleton(containerId, count) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    let html = '';
+    for(let i=0; i<count; i++) {
+        html += `
+        <div class="skeleton-card">
+            <div class="skeleton-box sk-img"></div>
+            <div class="skeleton-box sk-title"></div>
+            <div class="skeleton-box sk-text"></div>
+        </div>`;
+    }
+    container.innerHTML = html;
+}
 
-    const prop = properties[id];
-    if (!prop) { detailContainer.innerHTML = "<p class='loading-msg'>Property not found.</p>"; return; }
-
-    let imgUrl = prop.ImageURL || '';
-    let imgHtml = `<img src="${imgUrl}" alt="Property">`;
-
-    // FIXED: Added $ symbol below
-    if (imgUrl.includes('drive.google.com')) {
-        const idMatch = imgUrl.match(/id=([^&]+)/);
-        if (idMatch && idMatch[1]) {
-            const baseUrl = `https://lh3.googleusercontent.com/d/${idMatch[1]}`;
-            imgHtml = `<img src="${baseUrl}=w1600" srcset="${baseUrl}=w800 800w, ${baseUrl}=w1600 1600w" sizes="(max-width: 768px) 100vw, 800px" alt="${prop.Title}" />`;
-        }
+async function loadContent(key, containerId, renderFn, queryParam = "") {
+    const cached = localStorage.getItem(key);
+    
+    if (cached) {
+        try {
+            const { timestamp, data } = JSON.parse(cached);
+            if (Array.isArray(data) && Date.now() - timestamp < CACHE_DURATION) {
+                if(containerId && renderFn) renderFn(data, document.getElementById(containerId));
+                if (key === 'peaksquare_data') injectRealEstateSchema(data); 
+                return data; 
+            }
+        } catch(e) { localStorage.removeItem(key); }
     }
 
-    const possessionDate = prop.Possession || "Immediate"; 
-    const priceValue = prop.Price || "On Request";
-    const message = `Hi, I am interested in ${prop.Title} located at ${prop.Location}.`;
-    const whatsappLink = `https://wa.me/917276607467?text=${encodeURIComponent(message)}`;
+    try {
+        const res = await fetch(API_URL + queryParam);
+        const jsonResponse = await res.json();
+        
+        let finalData = [];
+        if (Array.isArray(jsonResponse)) finalData = jsonResponse;
+        else if (jsonResponse.data && Array.isArray(jsonResponse.data)) finalData = jsonResponse.data;
 
-    detailContainer.innerHTML = `
-        <div class="details-wrapper">
-            <div class="image-container">${imgHtml}</div>
-            <div class="info-container">
-                <div class="prop-type">${prop.Type}</div>
-                <h1 class="prop-title">${prop.Title}</h1>
-                <div class="prop-location">📍 ${prop.Location}</div>
-                <div class="specs-grid">
-                    <div class="spec-item"><h4>Possession</h4><p>${possessionDate}</p></div>
-                    <div class="spec-item"><h4>Price</h4><p>${priceValue}</p></div>
-                </div>
-                <p style="color:var(--text-muted);line-height:1.6;margin-bottom:40px;">Experience luxury living in ${prop.Location}. This property is verified by PeakSquare Estates.</p>
-                <div class="action-area">
-                    <a href="${whatsappLink}" target="_blank" class="btn-whatsapp"><span>💬 Chat on WhatsApp</span></a>
-                    <a href="tel:+917276607467" class="btn-call">📞 Call Agent</a>
-                    <a href="index.html#projects" class="btn-back">← Back to Listings</a>
+        if (finalData.length > 0) {
+            localStorage.setItem(key, JSON.stringify({ timestamp: Date.now(), data: finalData }));
+            if(containerId && renderFn) renderFn(finalData, document.getElementById(containerId));
+            if (key === 'peaksquare_data') injectRealEstateSchema(finalData);
+            return finalData;
+        }
+    } catch (err) {
+        console.error(`[Error] Failed to load ${key}:`, err);
+    }
+    return [];
+}
+
+// ===================================================
+// 5. PROPERTY DETAIL LOGIC (Clean & Dynamic)
+// ===================================================
+async function initPropertyDetails() {
+    const container = document.getElementById('dynamicContent');
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+
+    if (id === null) {
+        window.location.href = 'index.html'; 
+        return;
+    }
+
+    let properties = await loadContent('peaksquare_data', null, null);
+    
+    if (!properties || properties.length === 0) return;
+
+    const property = properties[id];
+
+    if (!property) {
+        container.innerHTML = "<h2 style='text-align:center; padding:100px; color:var(--text-main);'>Property Not Found.</h2>";
+        return;
+    }
+
+    renderSingleProperty(property, container);
+}
+
+function renderSingleProperty(p, container) {
+    // 1. Data Prep
+    const title = p.Title || "Luxury Residence";
+    const loc = p.Location || "Pune";
+    const price = p.Price || "Price on Request";
+    const img = optimizeDriveImage(p.ImageURL);
+    const type = p.Type || "Premium Property";
+    const possession = p.Possession || "Ready to Move";
+    
+    // Auto-description
+    const desc = `Discover this exclusive <strong>${type}</strong> located in the prime area of <strong>${loc}</strong>. This premium property is listed at <strong>${price}</strong> with a possession status of <strong>${possession}</strong>. Verified by PeakSquare Estates.`;
+    
+    // SEO Update
+    document.title = `${title} | PeakSquare Estates`;
+    
+    const waLink = document.getElementById('whatsappCta');
+    if(waLink) waLink.href = `https://wa.me/917276607467?text=Hi, I am interested in ${encodeURIComponent(title)} at ${encodeURIComponent(loc)}`;
+
+    // 2. Clean HTML Injection (No inline CSS!)
+    container.innerHTML = `
+        <section class="hero property-hero">
+            <div class="hero-bg">
+                <div class="hero-overlay"></div>
+                <img src="${img}" class="hero-bg-img" alt="${title}">
+            </div>
+            <div class="hero-container">
+                <div class="hero-text-content" style="text-align:center; width:100%;">
+                    <span style="color:var(--gold-main); letter-spacing:2px; text-transform:uppercase; font-size:0.9rem; font-weight:700;">${loc}</span>
+                    <h1 class="hero-title" style="margin-top:15px;">
+                        <span class="block-text fade-in-up property-title-large">${title}</span>
+                    </h1>
+                    <div class="hero-separator fade-in-up"></div>
+                    <h2 class="fade-in-up property-price-tag">${price}</h2>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <section class="section" style="background:var(--card-bg); border-bottom:1px solid var(--card-border);">
+            <div style="max-width:1000px; margin:0 auto; padding:0 5%;">
+                
+                <div class="property-meta-grid fade-in-up">
+                    <div class="meta-item meta-divider">
+                        <span class="meta-label">Type</span>
+                        <strong class="meta-value">${type}</strong>
+                    </div>
+                    <div class="meta-item meta-divider">
+                        <span class="meta-label">Possession</span>
+                        <strong class="meta-value">${possession}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Location</span>
+                        <strong class="meta-value">${loc}</strong>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header" style="text-align:left; max-width:800px; margin:0 auto;">
+                <h3 class="section-title">Property Overview</h3>
+                <div class="blog-body-content" style="margin-top:30px;">
+                    <p>${desc}</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section" style="padding-top:0;">
+            <div class="section-header">
+                <h3 class="section-title">Gallery</h3>
+            </div>
+            <div class="project-grid" style="padding-bottom:0;">
+                <div class="project-card" style="width:100%; min-width:300px;">
+                    <div class="project-card-image"><img src="${img}" alt="Gallery View"></div>
+                </div>
+            </div>
+        </section>
     `;
+    
+    initScrollAnimations();
 }
 
 // ===================================================
-// 4. ANIMATIONS & FORM
+// 6. RENDERERS
 // ===================================================
-function initHeroAnimations() {
-    if (!document.querySelector(".hero")) return;
-    if (typeof gsap !== "undefined") {
-        gsap.registerPlugin(ScrollTrigger);
-        const tl = gsap.timeline();
-        tl.from(".brand", { opacity: 0, y: -20, duration: 0.8, ease: "power3.out" })
-          .from(".header", { opacity: 1, y: -10, duration: 0.8, ease: "power3.out" }, "-=0.6")
-          .from(".hero-form-wrapper", { opacity: 0, x: 40, duration: 1, ease: "power3.out" }, "-=0.6");
-        gsap.utils.toArray(".fade-up").forEach((el, i) => {
-            gsap.from(el, { opacity: 0, y: 30, duration: 0.6, delay: i * 0.05, ease: "power3.out", scrollTrigger: { trigger: el, scroller: document.body, start: "top 95%" } });
-        });
-        gsap.fromTo(".mask-reveal span", { y: "100%", opacity: 0 }, { y: "0%", opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out", delay: 0.3 });
+function renderProperties(props, container) {
+    if(!props || props.length === 0) {
+        container.innerHTML = "<p style='text-align:center; opacity:0.6; color:var(--text-muted);'>No properties found.</p>";
+        return;
     }
-    const contactForm = document.getElementById("contactForm");
-    if (contactForm) {
-        contactForm.addEventListener("submit", async (e) => {
+
+    container.innerHTML = props.map((p, idx) => {
+        const title = p.Title || "Luxury Property";
+        const loc = p.Location || "Pune";
+        const type = p.Type || "Premium Residence";
+        const img = optimizeDriveImage(p.ImageURL);
+        
+        return `
+            <div class="project-card" onclick="window.location.href='my-properties.html?id=${idx}'" style="cursor:pointer;">
+                <div class="project-card-image"><img src="${img}" alt="${title}" loading="lazy"></div>
+                <div class="meta">
+                    <h4>${loc}</h4>
+                    <p>${type}</p>
+                    <span style="font-size:0.9rem; color:var(--text-muted); display:block; margin-top:5px;">${title}</span>
+                </div>
+            </div>`;
+    }).join('');
+}
+
+function renderBlogs(blogs, container) {
+    if(!blogs || blogs.length === 0) {
+        container.innerHTML = "<p style='text-align:center; opacity:0.6; color:var(--text-muted);'>No insights available.</p>";
+        return;
+    }
+    
+    const featured = blogs
+        .filter(b => b.featured === true || b.featured === "true") 
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 5);
+    
+    if(featured.length === 0) {
+        container.innerHTML = "<p style='text-align:center; opacity:0.6; color:var(--text-muted);'>No featured insights.</p>";
+        return;
+    }
+
+    container.innerHTML = featured.map((b, idx) => {
+        const title = b.title || "Market Insight";
+        const summary = b.summary || "Read the latest trends.";
+        const dateStr = new Date(b.date).toDateString();
+        const linkId = b.id ? b.id : idx;
+        
+        return `
+            <div class="featured-blog-card" onclick="window.location.href='blog.html?id=${linkId}'" style="cursor:pointer;">
+                <div class="featured-content">
+                    <span class="featured-date">${dateStr}</span>
+                    <h4 class="featured-title" style="color:var(--text-main);">${title}</h4>
+                    <p class="featured-summary" style="font-size:0.95rem; color:var(--text-muted);">${summary}</p>
+                </div>
+                <div class="blog-btn-wrapper">
+                    <span class="read-more-link" style="color:var(--gold-main); font-weight:600;">Read Article →</span>
+                </div>
+            </div>`;
+    }).join('');
+}
+
+function optimizeDriveImage(url) {
+    if (!url) return 'assets/logo.svg';
+    if (url.includes('drive.google.com')) {
+        const idMatch = url.match(/id=([^&]+)/);
+        if (idMatch) return `https://lh3.googleusercontent.com/d/${idMatch[1]}=s1600`;
+    }
+    return url;
+}
+
+// ===================================================
+// 7. UNIFIED OVERLAY MANAGER
+// ===================================================
+function initGlobalInteractions() {
+    const overlays = {
+        'search': document.getElementById('searchOverlay'),
+        'menu': document.getElementById('menuOverlay')
+    };
+    const stickyBar = document.querySelector('.mobile-sticky-bar');
+    const searchInput = document.getElementById('searchInput');
+
+    const toggleOverlay = (id, show) => {
+        const overlay = overlays[id];
+        if(!overlay) return;
+
+        if(show) {
+            Object.values(overlays).forEach(el => el.classList.remove('active'));
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; 
+            if(stickyBar) stickyBar.classList.add('hidden');
+            if(id === 'search' && searchInput) setTimeout(() => searchInput.focus(), 100);
+        } else {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            if(stickyBar) stickyBar.classList.remove('hidden');
+            if(id === 'search' && searchInput) searchInput.blur();
+        }
+    };
+
+    const searchBtn = document.getElementById('searchTrigger');
+    const menuBtn = document.getElementById('menuTrigger');
+    if(searchBtn) searchBtn.addEventListener('click', () => toggleOverlay('search', true));
+    if(menuBtn) menuBtn.addEventListener('click', () => toggleOverlay('menu', true));
+
+    const searchClose = document.getElementById('searchClose');
+    const menuClose = document.getElementById('menuClose');
+    if(searchClose) searchClose.addEventListener('click', () => toggleOverlay('search', false));
+    if(menuClose) menuClose.addEventListener('click', () => toggleOverlay('menu', false));
+
+    document.querySelectorAll('.menu-link').forEach(link => {
+        link.addEventListener('click', () => toggleOverlay('menu', false));
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            toggleOverlay('search', false);
+            toggleOverlay('menu', false);
+        }
+    });
+}
+
+// ===================================================
+// 8. SEARCH LOGIC
+// ===================================================
+function initSearchLogic() {
+    const input = document.getElementById('searchInput');
+    const resultsBox = document.getElementById('searchResults');
+    if(!input) return;
+
+    input.addEventListener('input', (e) => {
+        const q = e.target.value.toLowerCase().trim();
+        if(q.length < 2) { resultsBox.innerHTML = ''; return; }
+
+        let hits = [];
+        const pRaw = localStorage.getItem('peaksquare_data');
+        const bRaw = localStorage.getItem('peaksquare_blog_data');
+        const pData = pRaw ? JSON.parse(pRaw).data : [];
+        const bData = bRaw ? JSON.parse(bRaw).data : [];
+
+        if(Array.isArray(pData)) {
+            pData.forEach((p, idx) => {
+                const text = ((p.Title||'') + (p.Location||'') + (p.Type||'')).toLowerCase();
+                if(text.includes(q)) {
+                    hits.push({ 
+                        type: 'PROPERTY', 
+                        title: p.Title, 
+                        sub: p.Location, 
+                        img: optimizeDriveImage(p.ImageURL), 
+                        link: `my-properties.html?id=${idx}` 
+                    });
+                }
+            });
+        }
+        if(Array.isArray(bData)) {
+            bData.forEach((b, idx) => {
+                const text = ((b.title||'') + (b.summary||'')).toLowerCase();
+                if(text.includes(q)) {
+                    hits.push({ 
+                        type: 'INSIGHT', 
+                        title: b.title, 
+                        sub: 'Market Trend', 
+                        img: optimizeDriveImage(b.image), 
+                        link: `blog.html?id=${b.id || idx}` 
+                    });
+                }
+            });
+        }
+
+        if(hits.length === 0) {
+            resultsBox.innerHTML = '<div style="padding:20px; text-align:center; opacity:0.6; color:var(--text-muted);">No results found.</div>';
+        } else {
+            resultsBox.innerHTML = hits.map(h => `
+                <a href="${h.link}" class="search-result-item">
+                    <img src="${h.img}" class="search-thumb">
+                    <div>
+                        <span style="font-size:0.7rem; color:var(--gold-main); font-weight:700;">${h.type}</span>
+                        <h4 style="font-size:1rem; margin-bottom:4px; color:var(--text-main);">${h.title}</h4>
+                        <p style="font-size:0.8rem; color:var(--text-muted); line-height:1.2;">${h.sub}</p>
+                    </div>
+                </a>
+            `).join('');
+        }
+    });
+}
+
+// ===================================================
+// 9. PROGRESSIVE FORM
+// ===================================================
+function initProgressiveForm() {
+    const select = document.getElementById('interestType');
+    const fields = document.querySelector('.progressive-fields');
+    const form = document.getElementById('contactForm');
+    
+    if(select && fields) {
+        select.addEventListener('change', () => {
+            fields.classList.add('active');
+            fields.style.display = 'block'; 
+            setTimeout(() => fields.style.opacity = '1', 50);
+        });
+    }
+
+    if(form) {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = contactForm.querySelector('button[type="submit"]');
-            const originalText = btn.textContent; 
-            btn.textContent = "Processing..."; 
+            if(fields && !fields.classList.contains('active')) {
+                fields.classList.add('active');
+                fields.style.display = 'block';
+                fields.style.opacity = '1';
+                if(select && !select.value) { select.focus(); return; }
+            }
+
+            const btn = form.querySelector('button');
+            const originalText = btn.textContent;
+            btn.textContent = "Securing Access...";
             btn.disabled = true;
+            btn.style.opacity = "0.7";
+            
             try {
-                const res = await fetch("https://script.google.com/macros/s/AKfycbyoRil7QPM5Fuo59C8-sDZ4biUYNVonjY3UJMrV9Qq2FUFDt4psuMkAMYyk_JG-UMy33w/exec", { method: "POST", body: new FormData(contactForm) });
-                if (res.ok) { window.location.href = "thankyou.html"; contactForm.reset(); } else { throw new Error("Server error"); }
-            } catch (err) { alert("Network error."); btn.textContent = originalText; btn.disabled = false; }
+                await fetch(API_URL, { method: "POST", body: new FormData(form), mode: 'no-cors' });
+                window.location.href = "thankyou.html";
+            } catch (err) {
+                console.error("Form Error:", err);
+                alert("Connection issue. Please use WhatsApp.");
+                btn.textContent = originalText;
+                btn.disabled = false;
+                btn.style.opacity = "1";
+            }
         });
     }
 }
 
 // ===================================================
-// 5. LUXURY CURSOR (Morphing Logic)
+// 10. SEO SCHEMA
 // ===================================================
-(function initCursor() {
-  if (window.innerWidth < 992) return;
-  
-  let ring = document.querySelector(".cursor-outline");
-  if (!ring) {
-    ring = document.createElement("div");
-    ring.classList.add("cursor-outline");
-    document.body.appendChild(ring);
-  }
-  
-  // Follow Movement
-  if (typeof gsap !== "undefined") {
-      window.addEventListener("mousemove", (e) => {
-        gsap.to(ring, { x: e.clientX, y: e.clientY, duration: 0.1, ease: "power2.out" });
-      });
-  }
-
-  const resetClasses = () => {
-      ring.classList.remove("hovered", "reading", "text-mode", "pointer-mode");
-      ring.style.opacity = 1;
-  };
-
-  document.addEventListener("mouseover", (e) => {
-    const target = e.target;
-    resetClasses();
-
-    // 1. INPUTS & TEXTAREAS -> Morph into 'Tall Gold Bar'
-    if (target.closest("input, textarea")) {
-      ring.classList.add("text-mode");
-    } 
-
-    else if (target.closest("select")) {
-      ring.classList.add("pointer-mode");
-    }
-    // 3. INTERACTIVE (Buttons, Links, Cards) -> Glow Effect
-    else if (target.closest("a, button, .project-card, .btn, label, select")) {
-      ring.classList.add("hovered");
-    }
-    // 4. READING (Text) -> Big Lens Effect
-    else if (target.closest("p, h1, h2, h3, h4, span, li")) {
-      ring.classList.add("reading");
-    }
-  });
-})();
+function injectRealEstateSchema(properties) {
+    if (!properties || !Array.isArray(properties)) return;
+    const schema = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": properties.map((p, i) => ({
+            "@type": "ListItem",
+            "position": i + 1,
+            "item": {
+                "@type": "RealEstateListing",
+                "name": p.Title,
+                "url": window.location.href.split('?')[0] + `?id=${i}`,
+                "image": optimizeDriveImage(p.ImageURL),
+                "address": { "@type": "PostalAddress", "addressLocality": p.Location }
+            }
+        }))
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(schema);
+    document.head.appendChild(script);
+}
