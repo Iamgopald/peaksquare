@@ -1,6 +1,21 @@
 // CONFIGURATION
 const BLOG_API_URL = "https://script.google.com/macros/s/AKfycbzdsftNssnmWHAO5ioiyKTGhJkgJ8ubf1rmEYr56xOk7X-gtIfn_4HTAowBq3id_lL3/exec";
 
+// HELPER: Convert Drive links and check if image exists
+function getValidImage(url) {
+    if (!url || typeof url !== 'string' || url.length < 10 || url.toLowerCase() === "n/a") {
+        return null;
+    }
+    // Convert Drive "view" link to "direct" link
+    if (url.includes('drive.google.com')) {
+        const idMatch = url.match(/\/d\/(.+?)\//) || url.match(/id=(.+?)(&|$)/);
+        if (idMatch && idMatch[1]) {
+            return `https://lh3.googleusercontent.com/u/0/d/${idMatch[1]}=s1600`;
+        }
+    }
+    return url;
+}
+
 // DOM ELEMENTS
 const listWrapper = document.getElementById('blogDynamicContent');
 const gridContainer = document.getElementById('blogGridSkeleton');
@@ -41,16 +56,21 @@ function loadBlogList() {
                     });
                 } catch(e) { dateStr = blog.date; }
 
+                // IMAGE LOGIC: Check if image available
+                const imgUrl = getValidImage(blog.image);
+                const imageHTML = imgUrl ? `
+                    <div class="project-card-image">
+                        <img src="${imgUrl}" alt="${blog.title}" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                ` : '';
+
                 const card = document.createElement('div');
-                // We use your existing CSS class 'project-card' so it picks up the Dark Mode background
                 card.className = 'project-card fade-in-up'; 
                 card.style.cursor = "pointer";
                 card.onclick = function() { window.location.href = `?id=${blog.id}`; };
                 
                 card.innerHTML = `
-                    <div class="project-card-image">
-                        <img src="${blog.image}" alt="${blog.title}" style="width:100%; height:100%; object-fit:cover;">
-                    </div>
+                    ${imageHTML}
                     <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
                         <span style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; display:block;">${dateStr}</span>
                         <h3 style="font-family: 'Manrope', sans-serif; font-size: 1.2rem; margin-bottom: 10px; color: var(--text-main); line-height: 1.4;">${blog.title}</h3>
@@ -91,27 +111,52 @@ function loadSinglePost(id) {
                 });
             } catch(e) { dateStr = post.date; }
 
-            // Using var(--text-main) ensures it is White in Dark Mode and Black in Light Mode
+            // IMAGE LOGIC: Check if hero image available
+            const heroImgUrl = getValidImage(post.image);
+            const heroImageHTML = heroImgUrl ? `
+                <div class="blog-hero-image-wrapper">
+                    <img src="${heroImgUrl}" alt="${post.title}" class="blog-main-img">
+                </div>
+            ` : '';
+
             singlePostContainer.innerHTML = `
-                <div class="section" style="padding-top: 40px; max-width: 800px; margin: 0 auto;">
-                    <button onclick="window.location.href='blog.html'" style="background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1rem; margin-bottom: 20px; display: flex; align-items: center; gap: 5px;">
-                        &larr; Back to Articles
-                    </button>
+                <div class="blog-nav-bar">
+                    <div class="container">
+                        <a href="blog.html" class="back-link">
+                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                             Back to Insights
+                        </a>
+                    </div>
+                </div>
+
+                <article class="blog-post-content">
+                    <header class="blog-header">
+                        <span class="category-badge">Market Analysis</span>
+                        <h1 class="blog-title-large">${post.title}</h1>
+                        <div class="blog-meta">
+                            <span class="date">Published: ${dateStr}</span>
+                            <span class="read-time"> • 5 min read</span>
+                        </div>
+                    </header>
                     
-                    <h1 style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; line-height: 1.2; margin-bottom: 15px; color: var(--text-main);">${post.title}</h1>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px;">Published on ${dateStr}</p>
+                    ${heroImageHTML}
                     
-                    <img src="${post.image}" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 40px; border: 1px solid var(--glass-border);" alt="${post.title}">
-                    
-                    <div class="blog-body-content" style="font-family: 'Manrope', sans-serif; font-size: 1.1rem; line-height: 1.8; color: var(--text-main);">
+                    <div class="blog-body-text">
                         ${post.content}
                     </div>
                     
-                     <div style="margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--glass-border); text-align: center;">
-                        <h4 style="margin-bottom: 15px; color: var(--text-main);">Interested in Pune Real Estate?</h4>
-                        <a href="index.html#contactForm" class="btn primary" style="display: inline-block; padding: 12px 30px; background: var(--gold-gradient); color: #000; text-decoration: none; border-radius: 50px;">Contact Us</a>
+                    <div class="blog-footer-cta">
+                        <div class="cta-glass-box">
+                            <h3>Seeking Personalized Advice?</h3>
+                            <p>Connect with our expert advisors for a private consultation regarding properties</p>
+                            <div class="cta-buttons">
+                                <a href="mailto:sales@peaksquareestates.com?subject=Inquiry: ${encodeURIComponent(post.title)}" class="btn secondary blog-cta-btn">
+                                    Private Email Enquiry
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </article>
             `;
         })
         .catch(error => {

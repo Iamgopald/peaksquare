@@ -8,87 +8,142 @@
         gtag('js', new Date());
         gtag('config', 'G-K4646LWSGW');
         
-        // Track the "Generate Lead" event automatically on page load
         gtag('event', 'generate_lead', {
             'currency': 'INR',
-            'value': 100 // Arbitrary value for lead scoring
+            'value': 100 
         });
     </script>
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Thank You | PeakSquare Estates</title>
-    <meta name="robots" content="noindex, follow" /> <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/32_32 logo.png">
-    <link rel="apple-touch-icon" href="assets/180_180 logo.png">
+    <title>Inquiry Received | PeakSquare Estates</title>
+    
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+    <link rel="apple-touch-icon" href="assets/favicon-180.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="styles.css" />
 
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js" defer></script>
-    <script src="script.js" defer></script>
-
     <style>
-        html, body { 
-            height: 100%; 
-            width: 100%; 
-            overflow: hidden; /* Prevent scrolling */
+        .success-wrapper {
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-        }
-        
-        main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            padding: 120px 5% 60px;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+        }
+
+        .success-card {
+            max-width: 600px;
+            width: 100%;
             text-align: center;
-            padding: 0 5%;
+            padding: 60px 40px;
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
         }
 
-        h1 {
-            font-family: 'Manrope', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            
-            /* Gold Gradient Text */
-            background: linear-gradient(90deg, #FFD773, #D4AF37);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            
-            opacity: 0;
-            animation: fadeIn 1s forwards 0.5s;
-        }
-
-        p {
-            font-family: 'Manrope', sans-serif;
-            font-size: 1.25rem;
-            color: var(--text-muted); 
-            margin-top: 0.5rem;
-            opacity: 0;
-            animation: fadeIn 1s forwards 1s;
-        }
-
+        /* --- BUTTON BOX STYLING --- */
         .btn {
-            margin-top: 2rem;
-            opacity: 0;
-            animation: fadeIn 1s forwards 1.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 35px;
+            border-radius: 4px; /* Professional sharp edges */
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+            text-decoration: none;
+            min-width: 200px;
         }
 
-        @keyframes fadeIn { to { opacity: 1; } }
+        /* Primary Gold Box */
+        .btn.primary {
+            background: #D4AF37;
+            color: #050505;
+            border: 1px solid #D4AF37;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
+            background: #e5be4a;
+        }
+
+        /* Secondary Ghost Box */
+        .btn.secondary {
+            background: transparent;
+            color: #D4AF37;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            margin-left: 10px;
+        }
+
+        .btn.secondary:hover {
+            background: rgba(212, 175, 55, 0.05);
+            border-color: #D4AF37;
+            transform: translateY(-3px);
+        }
+
+        /* Mobile adjustments for buttons */
+        @media (max-width: 480px) {
+            .btn { width: 100%; margin-left: 0 !important; margin-bottom: 10px; }
+        }
+
+        /* Icon & Text Styling */
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            border: 1px solid #D4AF37;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #D4AF37;
+        }
+
+        .success-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .success-message {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .success-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #D4AF37;
+        }
+
+        .fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 
-<body>
-
+<body class="dark-mode"> 
     <header class="header">
-        <a href="/" class="logo-link" aria-label="PeakSquare Estates Home">
+        <a href="/" class="logo-link">
             <div class="brand">
                 <div class="logo-box">
                     <img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40">
@@ -99,17 +154,36 @@
                 </div>
             </div>
         </a>
-
-        <div class="header-controls">
-            <button id="themeToggle" class="icon-btn" title="Switch Theme" style="border:none;">☀</button>
-        </div>
     </header>
 
-    <main>
-        <h1>Request Received</h1>
-        <p>Your details have been securely logged.<br>Our private client team will contact you shortly.</p>
-        <a href="index.html" class="btn primary">Return to Home</a>
+    <main class="success-wrapper">
+        <div class="success-card fade-in-up">
+            <div class="success-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            
+            <h1 class="success-title">Inquiry Received</h1>
+            
+            <p class="success-message">
+                Thank you for reaching out to PeakSquare Estates. <br>
+                Your request for private access has been logged. Our property concierge will review your requirements and contact you within 24 hours.
+            </p>
+
+            <div class="cta-container">
+                <a href="index.html" class="btn primary">Return Home</a>
+                <a href="blog.html" class="btn secondary">Read Market Pulse</a>
+            </div>
+
+            <div class="success-footer" style="margin-top: 40px;">
+                Direct Contact: +91 72766 07467
+            </div>
+        </div>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

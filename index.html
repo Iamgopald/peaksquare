@@ -21,9 +21,10 @@
     <meta property="og:image" content="https://www.peaksquareestates.com/assets/og-image.jpg">
     <meta property="og:url" content="https://www.peaksquareestates.com/">
 
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/32_32 logo.png">
-    <link rel="apple-touch-icon" href="assets/180_180 logo.png">
+    <link rel="icon" href="https://www.peaksquareestates.com/assets/favicon-32.png" sizes="32x32">
+    <link rel="icon" href="https://www.peaksquareestates.com/assets/favicon-48.png" sizes="48x48">
+    <link rel="icon" href="https://www.peaksquareestates.com/assets/logo.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="https://www.peaksquareestates.com/assets/favicon-180.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,9 +39,9 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "RealEstateAgent",
+      "@type": "Organization",
       "name": "PeakSquare Estates",
-      "image": "https://www.peaksquareestates.com/assets/logo.svg",
+      "logo": "https://www.peaksquareestates.com/assets/favicon-180.png",
       "url": "https://www.peaksquareestates.com/",
       "telephone": "+917276607467",
       "address": {
@@ -75,7 +76,7 @@
         </nav>
 
         <div class="header-controls">
-            <a href="https://wa.me/917276607467" class="btn primary desktop-cta" style="padding: 10px 24px; font-size: 0.85rem; width: auto; margin-right: 15px; display: none;">Enquire Now</a>
+            <a href="https://wa.me/917276607467" class="btn secondary desktop-cta" style="padding: 10px 24px; font-size: 0.85rem; width: auto; margin-right: 15px; display: none;">Enquire Now</a>
             <style> @media(min-width: 992px) { .desktop-cta { display: inline-flex !important; } } </style>
 
             <button id="searchTrigger" class="icon-btn" aria-label="Open Search">
@@ -101,34 +102,50 @@
         <section class="hero" id="hero">
             <div class="hero-bg">
                 <div class="hero-overlay"></div> 
-                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1600&auto=format&fit=crop" 
-                     srcset="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=600&auto=format&fit=crop 600w, 
-                             https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1600&auto=format&fit=crop 1200w"
-                     sizes="100vw"
-                     alt="Luxury Estate at Dusk" 
+                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2000&auto=format&fit=crop" 
+                     alt="Luxury Architectural Estate" 
                      class="hero-bg-img"
                      fetchpriority="high">
             </div>
-
+        
             <div class="hero-container">
-                <div class="hero-text-content">
+                <div class="hero-content-left">
+                    <div class="hero-badge fade-in-up">Est. 2025 • Pune's Premier Collection</div>
                     <h1 class="hero-title">
-                        <span class="block-text fade-in-up">FIND YOUR</span>
-                        <span class="script-text fade-in-up" style="animation-delay: 0.1s;">future home</span>
+                        <span class="line-1 fade-in-up">Curating the</span>
+                        <span class="line-2 fade-in-up">Art of <i class="script-text">Living</i></span>
                     </h1>
-                    <div class="hero-separator fade-in-up" style="animation-delay: 0.2s;"></div>
-                    <ul class="hero-features fade-in-up" style="animation-delay: 0.3s;">
-                        <li>Verified</li><li>Curated</li><li>Support</li>
-                    </ul>
+                    <div class="hero-description fade-in-up">
+                        Unlock exclusive access to verified luxury villas and off-market residences in Charholi, Moshi, and Dudulgaon.
+                    </div>
+                    
+                    <div class="hero-stats-wrapper fade-in-up">
+                        <div class="stat-item">
+                            <strong>100%</strong>
+                            <span>Verified</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <strong>Private</strong>
+                            <span>Inventory</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <strong>Premium</strong>
+                            <span>Concierge</span>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="hero-form-wrapper fade-in-up" style="animation-delay: 0.4s;">
+        
+                <div class="hero-form-wrapper fade-in-up">
                     <div class="form-glass-box">
-                        <h3>Private Access</h3>
-                        <p class="form-sub">Get the list before it hits the market.</p>
+                        <div class="form-header">
+                            <h3>Private Access</h3>
+                            <p>Get the list before it hits the market.</p>
+                        </div>
                         <form class="contact-form" id="contactForm">
                             <div class="field-group">
-                                <label for="interestType">I am interested in...</label>
+                                <label>I am interested in...</label>
                                 <select name="type" id="interestType" required>
                                     <option value="" disabled selected>Select an option...</option>
                                     <option value="Buy_New_Luxury">New Luxury Home</option>
@@ -138,17 +155,27 @@
                                 </select>
                             </div>
                             
-                            <div class="progressive-fields">
-                                <div class="field-group"><input type="text" name="name" placeholder="Your Name" required /></div>
-                                <div class="field-group"><input type="tel" name="phone" placeholder="Phone Number" required /></div>
-                                <div class="field-group"><input type="email" name="email" placeholder="Email Address" required /></div>
+                            <div class="progressive-fields active"> <div class="field-group">
+                                    <input type="text" name="name" placeholder="Full Name" required />
+                                </div>
+                                <div class="field-group">
+                                    <input type="email" name="email" placeholder="Email Address" required />
+                                </div>
+                                <div class="field-group">
+                                    <input type="tel" name="phone" placeholder="Phone Number" required />
+                                </div>
                             </div>
                             
-                            <button type="submit" class="btn primary full-width">Unlock Private Inventory</button>
-                            <p class="privacy-note">🔒 Zero spam. Strictly confidential.</p>
+                            <button type="submit" class="btn primary full-width">Unlock Portfolio</button>
+                            <p class="privacy-note">🔒 Strictly Confidential. No Spam.</p>
                         </form>
                     </div>
                 </div>
+            </div>
+        
+            <div class="scroll-indicator">
+                <span class="scroll-text">Explore Collection</span>
+                <div class="scroll-line"></div>
             </div>
         </section>
 
@@ -183,7 +210,7 @@
                     <span class="market-pulse-label">Market Pulse</span>
                     <h3 class="section-title">Latest Insights</h3>
                 </div>
-                <a href="blog.html" class="btn primary desktop-only" style="padding:10px 25px; width:auto; display:none;">View All</a>
+                <a href="blog.html" class="btn secondary desktop-only" style="padding:10px 25px; width:auto; display:none;">View All</a>
                 <style> @media(min-width: 992px) { #market-pulse .desktop-only { display: inline-flex !important; } } </style>
             </div>
 
@@ -206,9 +233,11 @@
             <a href="blog.html" class="footer-link">Market Insights</a> • 
             <a href="privacy.html" class="footer-link">Privacy Policy</a> • 
             <a href="terms.html" class="footer-link">Terms</a>
+            <span class="footer-desktop-sep"> • </span>
+        <button id="themeToggleFooter" class="theme-btn-footer">☀ Switch Theme</button>
         </div>
         <div class="footer-copyright">
-            © 2025 PEAKSQUARE ESTATES • Pune, MH
+            © 2025 PEAKSQUARE ESTATES
         </div>
     </footer>
 
@@ -219,7 +248,7 @@
             <a href="index.html" class="menu-link">Home</a>
             <a href="#projects" class="menu-link">Properties</a>
             <a href="blog.html" class="menu-link">Insights</a>
-            <a href="#contactForm" class="menu-link">Contact</a>
+            <a href="#contactForm" class="menu-link">Email us</a>
         </nav>
         <div class="menu-footer">
             <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>

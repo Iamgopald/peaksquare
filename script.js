@@ -20,11 +20,13 @@ const API_URL = "https://script.google.com/macros/s/AKfycbzdsftNssnmWHAO5ioiyKTG
 const CACHE_DURATION = 3600000; // 1 Hour Cache
 
 // ===================================================
-// 2. THEME MANAGER
+// 2. THEME MANAGER (Fixed for Footer Support)
 // ===================================================
 function initThemeManager() {
-    const toggleBtn = document.getElementById('themeToggle');
-    const menuToggleBtn = document.querySelector('.theme-btn-menu');
+    const toggleBtn = document.getElementById('themeToggle'); // Mobile Menu Button
+    const menuToggleBtn = document.querySelector('.theme-btn-menu'); // Alternate Mobile Button
+    const footerToggleBtn = document.getElementById('themeToggleFooter'); // NEW: Desktop Footer Button
+    
     const body = document.body;
     const savedTheme = localStorage.getItem('theme');
 
@@ -32,8 +34,10 @@ function initThemeManager() {
         const text = isLight ? '☾ Switch Theme' : '☀ Switch Theme';
         if(toggleBtn) toggleBtn.innerHTML = text;
         if(menuToggleBtn) menuToggleBtn.innerHTML = text;
+        if(footerToggleBtn) footerToggleBtn.innerHTML = text; // Update footer text too
     };
 
+    // Load saved preference
     if (savedTheme === 'light') {
         body.classList.add('light-mode');
         updateText(true);
@@ -46,8 +50,10 @@ function initThemeManager() {
         updateText(isLight);
     };
 
+    // Attach listeners to ALL theme buttons
     if (toggleBtn) toggleBtn.addEventListener('click', switchTheme);
     if (menuToggleBtn) menuToggleBtn.addEventListener('click', switchTheme);
+    if (footerToggleBtn) footerToggleBtn.addEventListener('click', switchTheme); // Attached inside scope
 }
 
 // ===================================================
@@ -179,24 +185,22 @@ async function initPropertyDetails() {
 }
 
 function renderSingleProperty(p, container) {
-    // 1. Data Prep
     const title = p.Title || "Luxury Residence";
     const loc = p.Location || "Pune";
     const price = p.Price || "Price on Request";
-    const img = optimizeDriveImage(p.ImageURL);
+    const isMobile = window.innerWidth < 768;
+    const img = optimizeDriveImage(p.ImageURL, isMobile ? 800 : 1600);
     const type = p.Type || "Premium Property";
     const possession = p.Possession || "Ready to Move";
     
-    // Auto-description
     const desc = `Discover this exclusive <strong>${type}</strong> located in the prime area of <strong>${loc}</strong>. This premium property is listed at <strong>${price}</strong> with a possession status of <strong>${possession}</strong>. Verified by PeakSquare Estates.`;
     
-    // SEO Update
     document.title = `${title} | PeakSquare Estates`;
     
     const waLink = document.getElementById('whatsappCta');
     if(waLink) waLink.href = `https://wa.me/917276607467?text=Hi, I am interested in ${encodeURIComponent(title)} at ${encodeURIComponent(loc)}`;
 
-    // 2. Clean HTML Injection (No inline CSS!)
+    // Corrected Injection Logic to match the Designer Layout
     container.innerHTML = `
         <section class="hero property-hero">
             <div class="hero-bg">
@@ -204,20 +208,16 @@ function renderSingleProperty(p, container) {
                 <img src="${img}" class="hero-bg-img" alt="${title}">
             </div>
             <div class="hero-container">
-                <div class="hero-text-content" style="text-align:center; width:100%;">
-                    <span style="color:var(--gold-main); letter-spacing:2px; text-transform:uppercase; font-size:0.9rem; font-weight:700;">${loc}</span>
-                    <h1 class="hero-title" style="margin-top:15px;">
-                        <span class="block-text fade-in-up property-title-large">${title}</span>
-                    </h1>
-                    <div class="hero-separator fade-in-up"></div>
-                    <h2 class="fade-in-up property-price-tag">${price}</h2>
+                <div class="hero-text-content">
+                    <span class="hero-badge" style="display:block; opacity:1;">${loc}</span>
+                    <h1 class="hero-title property-title-large fade-in-up">${title}</h1>
+                    <h2 class="property-price-tag fade-in-up">${price}</h2>
                 </div>
             </div>
         </section>
 
-        <section class="section" style="background:var(--card-bg); border-bottom:1px solid var(--card-border);">
-            <div style="max-width:1000px; margin:0 auto; padding:0 5%;">
-                
+        <section class="property-specs-section">
+            <div class="container">
                 <div class="property-meta-grid fade-in-up">
                     <div class="meta-item meta-divider">
                         <span class="meta-label">Type</span>
@@ -232,7 +232,6 @@ function renderSingleProperty(p, container) {
                         <strong class="meta-value">${loc}</strong>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -244,19 +243,20 @@ function renderSingleProperty(p, container) {
                 </div>
             </div>
         </section>
-        
+
         <section class="section" style="padding-top:0;">
             <div class="section-header">
                 <h3 class="section-title">Gallery</h3>
             </div>
-            <div class="project-grid" style="padding-bottom:0;">
-                <div class="project-card" style="width:100%; min-width:300px;">
+            <div class="project-grid">
+                <div class="project-card" style="width:100%; grid-column: span 12;">
                     <div class="project-card-image"><img src="${img}" alt="Gallery View"></div>
                 </div>
             </div>
         </section>
     `;
     
+    // Re-initialize animations after injection
     initScrollAnimations();
 }
 
@@ -323,15 +323,16 @@ function renderBlogs(blogs, container) {
     }).join('');
 }
 
-function optimizeDriveImage(url) {
+function optimizeDriveImage(url, width = 1600) {
     if (!url) return 'assets/logo.svg';
     if (url.includes('drive.google.com')) {
         const idMatch = url.match(/id=([^&]+)/);
-        if (idMatch) return `https://lh3.googleusercontent.com/d/${idMatch[1]}=s1600`;
+        // We add =s{width} to the end. Google will resize it on their server!
+        // Desktop: 1600, Mobile: 800
+        if (idMatch) return `https://lh3.googleusercontent.com/u/0/d/${idMatch[1]}=s${width}`;
     }
     return url;
 }
-
 // ===================================================
 // 7. UNIFIED OVERLAY MANAGER
 // ===================================================
@@ -518,3 +519,6 @@ function injectRealEstateSchema(properties) {
     script.text = JSON.stringify(schema);
     document.head.appendChild(script);
 }
+
+const footerBtn = document.getElementById('themeToggleFooter');
+if (footerBtn) footerBtn.addEventListener('click', switchTheme);

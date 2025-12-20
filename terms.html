@@ -13,14 +13,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Terms of Use | PeakSquare Estates</title>
     <meta name="description" content="Terms and conditions governing the use of PeakSquare Estates' website and services." />
-    <meta name="robots" content="noindex, follow" /> <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/32_32 logo.png">
-    <link rel="apple-touch-icon" href="assets/180_180 logo.png">
+    <meta name="robots" content="noindex, follow" />
+    
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+    <link rel="apple-touch-icon" href="assets/favicon-180.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="styles.css" />
+
+    <style>
+        .legal-page-wrapper {
+            padding: 160px 5% 100px;
+            background: radial-gradient(circle at top right, #1a1a1a 0%, #050505 100%);
+            min-height: 100vh;
+        }
+
+        .legal-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 60px;
+            border-radius: 12px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .legal-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .legal-header h1 {
+            font-size: 3rem;
+            color: #ffffff;
+            font-family: 'Cormorant Garamond', serif;
+            margin-bottom: 10px;
+        }
+
+        .legal-label {
+            color: #D4AF37;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        .legal-body h3 {
+            color: #D4AF37;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .legal-body p {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #a0a0a0;
+            margin-bottom: 25px;
+        }
+
+        /* --- EXPLICIT BUTTON BOX STYLING --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 35px;
+            border-radius: 4px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+            text-decoration: none;
+            min-width: 200px;
+        }
+
+        .btn.secondary {
+            background: transparent;
+            color: #D4AF37;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        .btn.secondary:hover {
+            background: rgba(212, 175, 55, 0.05);
+            border-color: #D4AF37;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .legal-container { padding: 40px 20px; }
+            .legal-header h1 { font-size: 2.2rem; }
+            .btn { width: 100%; }
+        }
+    </style>
 
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js" defer></script>
     <script src="script.js" defer></script>
@@ -29,7 +124,7 @@
 <body>
 
     <header class="header">
-        <a href="/" class="logo-link" aria-label="PeakSquare Estates Home">
+        <a href="/" class="logo-link">
             <div class="brand">
                 <div class="logo-box">
                     <img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40">
@@ -40,103 +135,48 @@
                 </div>
             </div>
         </a>
-
-        <nav class="desktop-nav">
-            <a href="index.html#projects" class="nav-item">Properties</a>
-            <a href="blog.html" class="nav-item">Market Pulse</a>
-            <a href="index.html#contactForm" class="nav-item">Contact</a>
-        </nav>
-
-        <div class="header-controls">
-            <button id="searchTrigger" class="icon-btn" aria-label="Open Search">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </button>
-            <button id="menuTrigger" class="icon-btn" aria-label="Open Menu">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            </button>
-        </div>
-
-        <div class="search-overlay" id="searchOverlay">
-            <button class="search-close" id="searchClose" aria-label="Close Search">✕</button>
-            <div class="search-container">
-                <div class="search-bar-wrapper">
-                    <input type="text" class="search-input" placeholder="Search locations, projects..." id="searchInput" autocomplete="off">
-                </div>
-                <div id="searchResults" class="search-results-list"></div>
-            </div>
-        </div>
     </header>
 
-    <main style="padding-top: 140px; padding-bottom: 80px;">
-        
-        <section class="section" style="padding-top: 0;">
-            <div class="hero-container" style="display: block; max-width: 800px; margin: 0 auto; text-align: left;">
-                
-                <div style="margin-bottom: 60px; text-align: center;">
-                    <h1 class="hero-title">
-                        <span class="block-text fade-in-up" style="color:var(--text-main); font-size: 2.5rem;">TERMS OF USE</span>
-                    </h1>
-                    <div class="hero-separator fade-in-up" style="margin: 20px auto;"></div>
-                    <p style="color:var(--text-muted); font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;">Last Updated: January 2025</p>
-                </div>
+    <main class="legal-page-wrapper">
+        <div class="legal-container fade-in-up">
+            
+            <header class="legal-header">
+                <span class="legal-label">Regulatory Agreement</span>
+                <h1>Terms of Use</h1>
+            </header>
 
-                <article class="article-body fade-in-up" style="animation-delay: 0.2s; font-family: 'Manrope', sans-serif; font-size: 1.1rem; line-height: 1.8; color: var(--text-muted);">
-                    
-                    <p style="margin-bottom: 30px;">
-                        Welcome to PeakSquare Estates. By accessing this website, you agree to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern PeakSquare Estates' relationship with you in relation to this website.
-                    </p>
+            <article class="legal-body">
+                <p>
+                    Welcome to <strong>PeakSquare Estates</strong>. By accessing this website, you agree to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern PeakSquare Estates' relationship with you.
+                </p>
 
-                    <h3 style="color: var(--text-main); font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-top: 40px; margin-bottom: 15px;">1. Intellectual Property</h3>
-                    <p style="margin-bottom: 20px;">
-                        The content, layout, design, data, and graphics on this website are protected by intellectual property laws. You may not copy, reproduce, or redistribute any content without our explicit written permission. All trademarks reproduced in this website which are not the property of, or licensed to, the operator are acknowledged on the website.
-                    </p>
+                <h3>1. Intellectual Property</h3>
+                <p>
+                    The content, layout, design, and graphics on this website are protected by Indian and International intellectual property laws. You may not copy, reproduce, or redistribute any materials without explicit written consent from PeakSquare Estates.
+                </p>
 
-                    <h3 style="color: var(--text-main); font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-top: 40px; margin-bottom: 15px;">2. Use of Information</h3>
-                    <p style="margin-bottom: 20px;">
-                        The content provided on this website is for general information purposes only. While we strive to keep information up to date, real estate availability, pricing, and specifications are subject to change without notice. Your use of any information or materials on this website is entirely at your own risk, for which we shall not be liable.
-                    </p>
+                <h3>2. Information Disclaimer</h3>
+                <p>
+                    Real estate availability, pricing, and project specifications are subject to change without notice. Your use of any information on this website is entirely at your own risk. We shall not be liable for any inaccuracies regarding property inventory or market insights provided.
+                </p>
 
-                    <h3 style="color: var(--text-main); font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-top: 40px; margin-bottom: 15px;">3. Limitation of Liability</h3>
-                    <p style="margin-bottom: 20px;">
-                        PeakSquare Estates shall not be held liable for any direct, indirect, or consequential damages arising out of the use or inability to use this website or the information contained herein. We do not provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness, or suitability of the information found or offered on this website for any particular purpose.
-                    </p>
+                <h3>3. Governing Law</h3>
+                <p>
+                    These terms are governed by the laws of India. Any disputes arising in connection with this website are subject to the exclusive jurisdiction of the courts in <strong>Pune, Maharashtra</strong>.
+                </p>
+            </article>
 
-                    <h3 style="color: var(--text-main); font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-top: 40px; margin-bottom: 15px;">4. Governing Law</h3>
-                    <p style="margin-bottom: 20px;">
-                        These terms shall be governed by and construed in accordance with the laws of India. Any disputes arising in connection with this website are subject to the exclusive jurisdiction of the courts in Pune, Maharashtra.
-                    </p>
-
-                </article>
-
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="index.html" class="btn secondary">Back to Home</a>
             </div>
-        </section>
-
+        </div>
     </main>
 
     <footer class="main-footer">
-        <div class="footer-links">
-            <a href="blog.html" class="footer-link">Market Insights</a> • 
-            <a href="privacy.html" class="footer-link">Privacy Policy</a> • 
-            <a href="terms.html" class="footer-link">Terms</a>
-        </div>
         <div class="footer-copyright">
-            © 2025 PEAKSQUARE ESTATES • Pune, MH
+            © 2025 PEAKSQUARE ESTATES • Pune, India
         </div>
     </footer>
-
-    <div class="menu-overlay" id="menuOverlay">
-        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">✕</button>
-        <nav class="menu-nav">
-            <span class="menu-label">Menu</span>
-            <a href="index.html" class="menu-link">Home</a>
-            <a href="index.html#projects" class="menu-link">Properties</a>
-            <a href="blog.html" class="menu-link">Insights</a>
-            <a href="index.html#contactForm" class="menu-link">Contact</a>
-        </nav>
-        <div class="menu-footer">
-            <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
-        </div>
-    </div>
 
 </body>
 </html>

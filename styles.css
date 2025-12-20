@@ -9,7 +9,7 @@
     
     /* Luxury Accents */
     --gold-main: #D4AF37;       /* Classic Metallic Gold */
-    --gold-dim: rgba(212, 175, 55, 0.15);
+    --gold-dim: #bfbfbf;
     --gold-gradient: linear-gradient(135deg, #D4AF37, #C5A059);
     
     /* Glassmorphism */
@@ -29,21 +29,21 @@
 }
 
 /* --- LIGHT THEME --- */
+/* --- LIGHT THEME (Refined for Contrast) --- */
 body.light-mode {
     --bg-body: #FAFAFA;
-    --text-main: #111111;
-    --text-muted: #555555;
-    --gold-main: #9E7C30; 
-    --glass-bg: rgba(255, 255, 255, 0.95);
-    --glass-border: rgba(0, 0, 0, 0.05);
+    --text-main: #0A0A0A;      /* Pure rich black */
+    --text-muted: #666666;     /* Darkened from #555 to #333 for readability */
+    --gold-main: #8E6B1D;      /* Slightly deeper gold for white backgrounds */
+    --glass-bg: rgba(255, 255, 255, 0.98);
+    --glass-border: rgba(0, 0, 0, 0.08);
     --card-bg: #ffffff;
-    --input-bg: #f0f0f0;
-    --input-border: #e0e0e0;
-    
+    --input-bg: #f9f9f9;
+    --input-border: #dcdcdc;
+    --gold-dim: rgba(142, 107, 29, 0.1);
     --overlay-bg: rgba(255, 255, 255, 0.98);
     --search-box-bg: #ffffff;
 }
-
 /* --- RESET & PERFORMANCE --- */
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
@@ -69,7 +69,7 @@ ul { list-style: none; }
 
 /* Noise Texture (Premium Feel) */
 body::after {
-    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+    content: ""; position: fixed; inset: 0; pointer-events: none; 
     background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
     opacity: 0.4;
 }
@@ -112,86 +112,255 @@ body::after {
 
 
 /* =========================================
-   3. HERO SECTION
+    3. DESIGNER HERO SECTION (ISOLATED)
 ========================================= */
 .hero {
-    position: relative; min-height: 100vh; width: 100%;
-    display: flex; align-items: center; justify-content: center;
-    padding: 100px 5% 40px;
+    position: relative; 
+    min-height: 100dvh; /* Better for mobile browsers */
+    width: 100%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    padding: 120px 5% 60px;
+    overflow: hidden;
 }
-.hero-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
-/* Slight blur on the image itself to reduce noise behind text */
-.hero-bg-img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); filter: blur(2px); animation: kenBurns 30s ease-in-out infinite alternate; }
 
-/* Scrim Gradient overlay */
+/* Cinematic Background */
+.hero-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+.hero-bg-img { 
+    width: 100%; height: 100%; object-fit: cover; 
+    filter: brightness(0.7) contrast(1.1);
+    object-position: center 30%;
+    transform: scale(1.1); 
+    animation: proKenBurns 25s linear infinite alternate; 
+}
+@keyframes proKenBurns { 0% { transform: scale(1); } 100% { transform: scale(1.15) translate(-1%, -1%); } }
+
+/* Designer Scrim: Darkens text area on the left, keeps image clear on the right */
 .hero-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(
-        to bottom, 
-        rgba(0,0,0,0.7) 0%, 
-        rgba(0,0,0,0.3) 50%, 
-        var(--bg-body) 100% 
-    );
+    background: radial-gradient(circle at 20% 50%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.8) 100%);
+    z-index: 1;
 }
-@keyframes kenBurns { from { transform: scale(1); } to { transform: scale(1.15); } }
 
+/* Grid Layout for Pro Look */
 .hero-container {
-    width: 100%; max-width: 1200px;
-    display: flex; flex-direction: column; gap: 40px;
-    position: relative; z-index: 2;
+    width: 100%; 
+    max-width: 1300px;
+    display: grid; 
+    grid-template-columns: 1.2fr 0.8fr; /* Splits text and form */
+    align-items: center; 
+    gap: 60px;
+    position: relative; 
+    z-index: 2;
+    text-align: left; /* Pro Alignment */
 }
-.hero-text-content { text-align: center; }
 
-.hero-title .block-text { font-family: 'Manrope', sans-serif; font-size: 3rem; font-weight: 800; letter-spacing: -0.02em; display: block; color: #ffffff; }
-.hero-title .script-text { display: block; font-style: italic; font-size: 3.5rem; color: var(--gold-main); margin-top: -10px; }
-.hero-separator { width: 60px; height: 2px; background: var(--gold-main); margin: 20px auto; }
+/* Typography Editorial Styles */
+.hero-badge {
+    font-size: 0.75rem; 
+    letter-spacing: 4px; 
+    text-transform: uppercase;
+    color: var(--gold-main); 
+    margin-bottom: 20px; 
+    font-weight: 700;
+}
 
-.hero-features { display: flex; justify-content: center; gap: 15px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #ffffff; font-weight: 600; }
-.hero-features li::before { content: "•"; color: var(--gold-main); margin-right: 8px; }
+.hero-title {
+    font-size: clamp(2.8rem, 6vw, 5rem); 
+    line-height: 1.05; 
+    margin-bottom: 30px; 
+    color: #fff;
+    font-family: 'Cormorant Garamond', serif;
+}
 
-/* Lead Form */
-.hero-form-wrapper { width: 100%; max-width: 450px; margin: 0 auto; }
+.hero-title span { display: block; }
+.hero-title .script-text {
+    font-family: 'Cormorant Garamond', serif; 
+    font-weight: 400; 
+    font-style: italic; 
+    color: var(--gold-main);
+}
+
+.hero-description {
+    font-size: 1.15rem; 
+    color: rgba(255,255,255,0.75); 
+    max-width: 520px;
+    margin-bottom: 40px; 
+    line-height: 1.6; 
+    border-left: 2px solid var(--gold-main); 
+    padding-left: 25px;
+}
+
+/* Hero Stats Section */
+.hero-stats-wrapper { 
+    display: flex; 
+    align-items: center; 
+    gap: 30px; 
+}
+.stat-item strong { 
+    display: block; 
+    font-size: 1.4rem; 
+    color: var(--gold-main); 
+    font-family: 'Cormorant Garamond', serif; 
+}
+.stat-item span { 
+    font-size: 0.7rem; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    color: var(--text-muted); 
+}
+.stat-divider { width: 1px; height: 30px; background: rgba(255,255,255,0.15); }
+
+/* DESIGNER GLASS FORM (Uses your glass variables) */
 .form-glass-box {
-    background: rgba(20, 20, 20, 0.65); backdrop-filter: blur(25px);
-    border: 1px solid var(--glass-border); border-radius: 16px;
-    padding: 30px 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    background: rgba(15, 15, 15, 0.6); /* Deep glass tint */
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    
+    /* THE RIM LIGHT: High-end border physics */
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid rgba(255, 255, 255, 0.25); 
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    
+    padding: 45px 35px;
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
+    border-radius: 12px;
 }
 
-/* Light Mode Visibility Override */
+.form-header { text-align: center; margin-bottom: 30px; }
+.form-header h3 { 
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.75rem; 
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px; 
+    color: #fff; 
+}
+.form-header p { 
+    font-size: 0.9rem; 
+    color: var(--text-muted); 
+    letter-spacing: 0.02em;
+}
+
+/* Field Group & Label Refinement */
+.field-group { margin-bottom: 22px; position: relative; }
+.field-group label { 
+    display: block; 
+    font-size: 0.65rem; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    color: var(--gold-main); 
+    margin-bottom: 10px; 
+    font-weight: 800;
+    opacity: 0.9;
+}
+
+/* The High-End Input Engine */
+.form-glass-box input, 
+.form-glass-box select {
+    width: 100%; 
+    padding: 16px 20px; 
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff; 
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.95rem;
+    border-radius: 8px; 
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    outline: none;
+}
+
+/* Focus State: Kinetic Feedback */
+.form-glass-box input:focus, 
+.form-glass-box select:focus {
+    border-color: var(--gold-main);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15); /* Soft gold bloom */
+    transform: translateY(-2px); /* Slight lift on interaction */
+}
+
+.form-glass-box option {
+    background-color: #121212; /* Solid dark background for the list */
+    color: #ffffff;            /* Pure white text */
+    padding: 10px;
+}
+/* Customizing the Dropdown Arrow for Selects */
+.form-glass-box select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23D4AF37' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 20px) center;
+    cursor: pointer;
+    
+    /* ADD THIS LINE BELOW */
+    color-scheme: dark; 
+}
+
+/* Privacy Note Styling */
+.privacy-note { 
+    font-size: 0.7rem; 
+    color: var(--text-muted); 
+    text-align: center; 
+    margin-top: 20px; 
+    opacity: 0.6; 
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+/* Light Mode Overrides for Form Components */
 body.light-mode .form-glass-box {
-    background: rgba(255, 255, 255, 0.95); border-color: rgba(0, 0, 0, 0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    color-scheme: light;
 }
-body.light-mode .form-glass-box h3, body.light-mode .form-glass-box p, body.light-mode .form-glass-box label { color: #000; }
-body.light-mode .form-glass-box input, body.light-mode .form-glass-box select { background: #f4f4f4; border-color: #ddd; color: #000; }
-body.light-mode .form-glass-box input:focus, body.light-mode .form-glass-box select:focus { border-color: var(--gold-main); background: #fff; }
+body.light-mode .form-header h3, 
+body.light-mode .form-header p { color: #111; }
+body.light-mode input, 
+body.light-mode select {
+    background: #f4f4f4;
+    border-color: #e0e0e0;
+    color: #111;
+}
 
-.form-glass-box h3 { font-family: 'Manrope', sans-serif; font-size: 1.5rem; margin-bottom: 5px; text-align: center; }
-.form-sub { text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; }
-.field-group { margin-bottom: 15px; }
-label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
-input, select {
-    width: 100%; padding: 12px 16px; border-radius: 8px;
-    background: var(--input-bg); border: 1px solid var(--input-border);
-    color: var(--text-main); font-family: 'Manrope', sans-serif; transition: border-color 0.3s;
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 15px; opacity: 0.6;
+    color: var(--gold-dim);
 }
-input:focus, select:focus { outline: none; border-color: var(--gold-main); }
-.progressive-fields { display: none; opacity: 0; transition: opacity 0.4s ease; }
-.progressive-fields.active { display: block; opacity: 1; }
+.scroll-text { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 4px; }
+.scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold-main), transparent); position: relative; overflow: hidden; }
+.scroll-line::after {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: #fff; animation: scrollAnim 2s infinite cubic-bezier(.7,0,.3,1);
+}
+@keyframes scrollAnim { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
 
-.btn {
-    width: 100%; padding: 14px; border: none; border-radius: 50px;
-    font-weight: 700; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
-    font-family: 'Manrope', sans-serif; transition: transform 0.2s, box-shadow 0.2s;
+/* Responsive Adjustments for Hero */
+@media (max-width: 992px) {
+    .hero-container { 
+        grid-template-columns: 1fr; 
+        text-align: center; 
+        gap: 40px; 
+    }
+    .hero-content-left { text-align: center; }
+    .hero-description { 
+        display: none;
+    }
+    .hero-stats-wrapper { justify-content: center; }
+    .hero-badge {
+        display: none;
+    }
+    
 }
-.btn.primary { background: var(--gold-gradient); color: #000; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3); }
-.btn.primary:active { transform: scale(0.98); }
-.privacy-note { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 15px; display: block; opacity: 0.7; }
 
 
 /* =========================================
    4. SECTIONS & GRIDS
 ========================================= */
-.section { padding: 80px 0; }
+.section { padding: 2% 0; }
 .section-header, .market-pulse-header { padding: 0 5%; margin-bottom: 30px; }
 .section-title { font-size: 2.2rem; color: var(--text-main); }
 .section-subtitle { color: var(--text-muted); margin-top: 5px; }
@@ -307,6 +476,10 @@ body.light-mode .skeleton-box::after { background: linear-gradient(90deg, transp
     font-family: 'Manrope', sans-serif; font-size: 0.95rem; font-weight: 600;
     cursor: pointer; transition: all 0.3s ease;
 }
+.theme-btn-footer, 
+.footer-desktop-sep {
+    display: none;
+}
 
 /* Close Button */
 .menu-close-btn, .search-close { 
@@ -410,8 +583,64 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
     .nav-item { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); transition: color 0.3s; }
     .nav-item:hover { color: var(--gold-main); }
 
-    .hero-container { flex-direction: row; text-align: left; justify-content: space-between; padding-top: 50px;}
-    .hero-text-content { text-align: left; max-width: 600px; }
+    .hero-container {
+        width: 100%; 
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 5%;
+        display: flex; 
+        flex-direction: row;      /* Parallel alignment */
+        justify-content: space-between; /* Pushes text left, form right */
+        align-items: center;      /* Vertically centers them to each other */
+        gap: 60px;
+        position: relative; 
+        z-index: 2;
+    }
+
+   .hero-text-content {
+        max-width: 650px; 
+        flex: 1.2;               /* Takes up slightly more space than the form */
+        text-align: left;
+    }
+    .hero-form-wrapper {
+        flex: 0.8;               /* Takes up slightly less space */
+        max-width: 450px;
+        margin: 0;
+    }
+    .hero-badge {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 0.75rem;
+        letter-spacing: 3px;
+        color: var(--gold-main);
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+    .property-specs-section .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 5%;
+    }
+    .property-meta-grid {
+        width: 100%;
+        margin-top: 0; /* Ensures no weird shifting */
+    }
+
+    .property-title-large {
+        font-size: 2.5rem !important; /* Adjusted for mobile readability */
+        line-height: 1.1;
+        margin: 10px 0 !important;
+        color: #ffffff;
+    }
+
+    /* 4. Style the Price (Rs. 1,00,00,000) */
+    .property-price-tag {
+        font-size: 1.5rem !important;
+        font-weight: 400;
+        color: var(--gold-main);
+        margin: 0 !important;
+    }
+    
     .hero-features { justify-content: flex-start; }
     .hero-separator { margin: 20px 0; }
     
@@ -431,6 +660,67 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
     .search-input { height: 80px; padding-left: 70px; }
     .search-bar-wrapper::before { left: 25px; width: 30px; height: 30px; }
     .search-close { top: 40px; right: 40px; width: 60px; height: 60px; font-size: 2rem; }
+    .footer-desktop-sep {
+        display: inline;
+    }
+    .theme-btn-footer {
+        display: inline-flex;
+        align-items: center;
+        background: transparent;
+        border: 1px solid var(--glass-border);
+        color: var(--text-muted);
+        padding: 6px 16px;
+        border-radius: 30px;
+        font-family: 'Manrope', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-left: 10px;
+        vertical-align: middle;
+    }
+
+    .theme-btn-footer:hover {
+        color: var(--gold-main);
+        border-color: var(--gold-main);
+        background: rgba(212, 175, 55, 0.05);
+    }
+    #property-main .project-card-image {
+        aspect-ratio: 21/9; /* Cinematic wide crop for desktop */
+        max-height: 500px; /* Prevents it from pushing content too far down */
+    }
+    .form-glass-box .btn.primary {
+        /* 1. Reset width from 100% to fit the content */
+        width: fit-content !important; 
+        min-width: 240px; /* Ensures the button doesn't look too tiny */
+        
+        /* 2. Push it to the center using horizontal auto margins */
+        margin: 0 auto !important; 
+        
+        /* 3. Ensure it behaves like a block element so margins work */
+        display: flex !important; 
+
+        /* --- Keep your refined styles from before --- */
+        background: var(--gold-main) !important;
+        border: 1px solid var(--gold-main) !important;
+        color: #050505 !important;
+        border-radius: 4px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 3px !important;
+        font-size: 0.75rem !important;
+        font-weight: 800 !important;
+        padding: 18px 40px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    
+    .form-glass-box .btn.primary:hover {
+        background: var(--gold-main) !important;
+        color: #000 !important;
+        letter-spacing: 5px !important; /* Subtle expansion effect */
+    }
 }
 
 /* Add to bottom of styles.css */
@@ -451,75 +741,469 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
 }
 
 /* =========================================
-   10. PROPERTY DETAILS PAGE (Dynamic)
+   10. PROPERTY DETAILS PAGE (Dynamic Styling)
 ========================================= */
 
-/* The Hero Section specific to Property Details */
-.property-hero {
-    min-height: 70vh;
+/* A. THE IMMERSIVE HERO */
+/* This targets the top section of your property detail */
+#property-main .property-hero {
+    height: 85vh; /* Taller, more cinematic height */
     display: flex;
-    align-items: flex-end; /* Text at bottom */
+    align-items: flex-end;
     padding-bottom: 80px;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Fix for "Font on Image" - Makes it readable on any photo */
+/* Ensure the title inside the detail page stands out */
 .property-title-large {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.1;
-    color: var(--text-main); /* Adapts to Dark/Light mode */
-    text-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Pop against busy images */
+    font-size: clamp(3rem, 8vw, 5.5rem) !important; /* Massive, elegant typography */
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
 
 .property-price-tag {
     font-family: 'Manrope', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--text-main);
-    text-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--gold-main);
+    margin-top: 15px;
+    letter-spacing: 1px;
 }
 
-/* The Grid for Beds/Baths/Area */
+/* B. THE ARCHITECTURAL SPEC GRID */
+/* Refined Bed/Bath/Area specs to look like a luxury brochure */
 .property-meta-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    text-align: center;
-    border: 1px solid var(--glass-border);
-    padding: 30px;
-    border-radius: 12px;
+    gap: 0; /* Clean lines */
     background: var(--glass-bg);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 4px; /* Sharp, sophisticated edges */
+    overflow: hidden;
+    margin-top: -60px; /* Overlap the hero for depth */
+    position: relative;
+    z-index: 10;
 }
 
 .meta-item {
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.meta-item:hover {
+    background: rgba(212, 175, 55, 0.05);
 }
 
 .meta-label {
-    display: block;
-    color: var(--text-muted);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
+    letter-spacing: 3px;
+    color: var(--gold-main);
+    margin-bottom: 10px;
+    font-weight: 700;
 }
 
 .meta-value {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: var(--text-main);
     font-family: 'Cormorant Garamond', serif;
     font-weight: 600;
 }
 
-.meta-divider {
-    border-right: 1px solid var(--glass-border);
+/* C. THE CONTENT & OVERVIEW */
+#property-main .section-header .section-title {
+    font-size: 2.5rem;
+    border-bottom: 1px solid var(--gold-dim);
+    display: inline-block;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
 }
 
-/* Fix Hero Title Color Globally if needed */
-.hero-title .block-text {
-    /* Was hardcoded #ffffff, changed to variable for Light Mode support */
-    color: var(--text-main); 
-    text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+.blog-body-content p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+/* D. THE GALLERY GRID (Immersive Layout) */
+#property-main .project-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* Advanced grid */
+    gap: 20px;
+    overflow: visible; /* Disable the horizontal scroll for details */
+}
+
+#property-main .project-card {
+    grid-column: span 12; /* Large main image */
+    border-radius: 4px;
+    border: 1px solid var(--glass-border);
+}
+
+#property-main .project-card-image {
+    aspect-ratio: 21/9; /* Cinematic wide format */
+}
+
+/* Mobile Adjustments for Detail Page */
+@media (max-width: 768px) {
+    #property-main .property-hero {
+        height: 70vh;
+    }
+    
+    .property-meta-grid {
+        grid-template-columns: 1fr; /* Stack on mobile */
+        margin-top: -30px;
+    }
+    
+    .meta-item {
+        padding: 25px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+    
+    .meta-divider {
+        border-right: none;
+    }
+    .property-hero {
+        min-height: 50vh !important; /* Reduce the height so it's not "too big" */
+    }
+    .hero-bg-img {
+        /* On mobile, center the crop perfectly */
+        object-position: center center; 
+    }
+    .project-card-image {
+        aspect-ratio: 16/10; /* Slightly taller for better mobile presence */
+    }
+    
+    .blog-title-large { font-size: 2.2rem; }
+    .blog-footer-cta {
+        padding: 0 5%;
+    }
+
+  
+
+}
+
+
+/* 3. THE LOADING SPINNER SYSTEM */
+.blog-cta-btn.is-loading {
+    color: transparent !important; /* Hide text while loading */
+    pointer-events: none;
+    position: relative;
+}
+
+.blog-cta-btn.is-loading::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -10px;
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-top-color: var(--gold-main);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 4. LIGHT MODE SPECIFIC FIX */
+body.light-mode .blog-cta-btn.secondary {
+    color: #0A0A0A !important;
+    border-color: rgba(0,0,0,0.15) !important;
+}
+/* 6. INTERACTIVE STATES */
+
+/* Hover: The "Uplift" Effect */
+.btn.primary:hover {
+    transform: translateY(-4px) scale(1.02); /* Slight lift and grow */
+    filter: brightness(1.05); /* Gentle glow boost */
+    box-shadow: 
+        0 8px 15px rgba(0, 0, 0, 0.2), 
+        0 25px 50px rgba(212, 175, 55, 0.5), 
+        inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+/* Active: The "Tactile Click" Effect */
+.btn.primary:active {
+    transform: translateY(-1px) scale(0.98); /* Physical button feel */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.1s ease;
+}
+
+.btn.secondary {
+    background: rgba(255, 255, 255, 0.03); /* Subtle glass tint */
+    color: var(--gold-main);
+    border: 1px solid rgba(212, 175, 55, 0.3); /* Muted gold border */
+    backdrop-filter: blur(10px); /* Consistency with your glass theme */
+    box-shadow: none;
+}
+
+/* Hover: The "Gold Fill" Effect */
+.btn.secondary:hover {
+     /* Text turns dark for contrast on gold */
+    border-color: transparent;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+}
+
+/* Active State */
+.btn.secondary:active {
+    transform: translateY(-1px) scale(0.98);
+    transition: all 0.1s ease;
+}
+
+.breadcrumb-nav {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 0 5%;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--gold-main);
+}
+
+.property-specs-section {
+    padding: 0 5%;
+    position: relative;
+    z-index: 20;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Specific Light Mode Readability Fixes */
+body.light-mode .privacy-note,
+body.light-mode .section-subtitle,
+body.light-mode .meta-label {
+    opacity: 1 !important;     /* Remove transparency in light mode */
+    color: var(--text-muted);   /* Use the rich grey we defined above */
+    font-weight: 600;           /* Slightly thicker for crispness */
+}
+
+body.light-mode .hero-description {
+    color: #bfbfbf;            /* Ensures hero text is dark on light mode */
+    border-left-color: var(--gold-main);
+}
+
+/* =========================================
+   BLOG POST DESIGN SYSTEM
+========================================= */
+
+/* A. Sticky Breadcrumb Bar */
+.blog-nav-bar {
+    position: sticky;
+    top: var(--nav-height);
+    background: var(--bg-body);
+    padding: 15px 5%;
+    border-bottom: 1px solid var(--glass-border);
+    z-index: 100;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+/* B. Editorial Typography */
+.blog-post-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 5% 100px;
+}
+
+.blog-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.category-badge {
+    color: var(--gold-main);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.blog-title-large {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem); /* Responsive fluid sizing */
+    line-height: 1.1;                     /* Tighter lines look more expensive */
+    margin-bottom: 20px;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+    max-width: 800px;                     /* Prevents lines from getting too long */
+}
+
+.blog-meta {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* C. Immersive Imagery */
+.blog-hero-image-wrapper {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 60px;
+    border: 1px solid var(--glass-border);
+}
+
+.blog-main-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* D. The Content Flow */
+.blog-body-text {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text-main);
+}
+
+.blog-body-text p { margin-bottom: 25px; }
+
+/* E. The "End of Article" CTA */
+.blog-footer-cta {
+    margin-top: 60px;
+    padding-bottom: 100px;
+}
+
+.cta-glass-box {
+    background: var(--card-bg);
+    border: 1px solid var(--gold-main);
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+.cta-glass-box h3 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.cta-glass-box p {
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center; /* Centers buttons horizontally on desktop */
+    align-items: center;
+    margin-top: 35px;
+    width: 100%;
+}
+
+/* 2. Base Button Styling (Restoring the Style) */
+.blog-cta-btn {
+    width: fit-content !important; /* Prevents stretching */
+    min-width: 220px;
+    padding: 18px 30px !important;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 4px !important; /* Sharp, premium edges */
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 3. Primary (Gold) Button Style */
+.blog-cta-btn.primary {
+    background: var(--gold-main) !important;
+    color: #050505 !important;
+    border: 1px solid var(--gold-main) !important;
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+}
+
+.blog-cta-btn.primary:hover {
+    background: #b8952d !important;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.3);
+}
+
+/* 4. Secondary (Ghost) Button Style */
+.blog-cta-btn.secondary {
+    background: transparent !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--glass-border) !important;
+}
+
+.blog-cta-btn.secondary:hover {
+    border-color: var(--gold-main) !important;
+    color: var(--gold-main) !important;
+    background: rgba(212, 175, 55, 0.05) !important;
+    transform: translateY(-3px);
+}
+
+.form-glass-box .btn.primary {
+    /* 1. Reset width from 100% to fit the content */
+    width: fit-content !important; 
+    min-width: 240px; /* Ensures the button doesn't look too tiny */
+    
+    /* 2. Push it to the center using horizontal auto margins */
+    margin: 0 auto !important; 
+    
+    /* 3. Ensure it behaves like a block element so margins work */
+    display: flex !important; 
+
+    /* --- Keep your refined styles from before --- */
+    background: var(--gold-main) !important;
+    border: 1px solid var(--gold-main) !important;
+    color: #050505 !important;
+    border-radius: 4px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 3px !important;
+    font-size: 0.75rem !important;
+    font-weight: 800 !important;
+    padding: 18px 40px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.form-glass-box .btn.primary:hover {
+    background: var(--gold-main) !important;
+    color: #000 !important;
+    letter-spacing: 5px !important; /* Subtle expansion effect */
 }
