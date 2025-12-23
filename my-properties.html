@@ -33,7 +33,7 @@
         <nav class="desktop-nav">
             <a href="index.html#projects" class="nav-item">Properties</a>
             <a href="blog.html" class="nav-item">Market Pulse</a>
-            <a href="index.html#contactForm" class="nav-item">Contact</a>
+            <a href="mailto:sales@peaksquareestates.com" class="nav-item">Email Us</a>
         </nav>
         <div class="header-controls">
             <a href="https://wa.me/917276607467" class="btn primary desktop-cta" style="padding: 10px 24px; font-size: 0.85rem; width: auto; margin-right: 15px; display: none;">Enquire Now</a>
@@ -95,14 +95,41 @@
             <a href="blog.html" class="footer-link">Market Insights</a> • 
             <a href="privacy.html" class="footer-link">Privacy Policy</a> • 
             <a href="terms.html" class="footer-link">Terms</a>
+            <span class="footer-desktop-sep"> • </span>
+            <button id="themeToggleFooter" class="theme-btn-footer">☀ Switch Theme</button>
         </div>
-        <div class="footer-copyright">© 2025 PEAKSQUARE ESTATES • Pune, MH</div>
+        <div class="footer-copyright">
+            © 2025 PEAKSQUARE ESTATES
+        </div>
     </footer>
+
+    <div class="search-overlay" id="searchOverlay">
+        <button class="search-close" id="searchClose" aria-label="Close Search">✕</button>
+        <div class="search-container">
+            <div class="search-bar-wrapper">
+                <input type="text" class="search-input" placeholder="Search locations, projects..." id="searchInput" autocomplete="off">
+            </div>
+            <div id="searchResults" class="search-results-list"></div>
+        </div>
+    </div>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">✕</button>
+        <nav class="menu-nav">
+            <span class="menu-label">Menu</span>
+            <a href="index.html" class="menu-link">Home</a>
+            <a href="index.html#projects" class="menu-link">Properties</a>
+            <a href="blog.html" class="menu-link">Insights</a>
+            <a href="index.html#contactForm" class="menu-link">Email us</a>
+        </nav>
+        <div class="menu-footer">
+            <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
+        </div>
+    </div>
 
     <div class="mobile-sticky-bar">
         <a id="whatsappCta" href="#" class="sticky-btn whatsapp">WhatsApp</a>
         <a href="tel:+917276607467" class="sticky-btn call">Call Agent</a>
     </div>
-
 </body>
 </html>

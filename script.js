@@ -1,6 +1,7 @@
 // ===================================================
 // 1. INITIALIZATION & CORE SETUP
 // ===================================================
+
 document.addEventListener("DOMContentLoaded", () => {
     initThemeManager();
     initSmoothScroll();
@@ -9,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initGlobalInteractions(); 
     initProgressiveForm(); 
     
-    // Check if we are on the Property Detail Page
     if(document.getElementById('property-main')) {
         initPropertyDetails();
     }
@@ -19,43 +19,56 @@ document.addEventListener("DOMContentLoaded", () => {
 const API_URL = "https://script.google.com/macros/s/AKfycbzdsftNssnmWHAO5ioiyKTGhJkgJ8ubf1rmEYr56xOk7X-gtIfn_4HTAowBq3id_lL3/exec";
 const CACHE_DURATION = 3600000; // 1 Hour Cache
 
+
 // ===================================================
 // 2. THEME MANAGER (Fixed for Footer Support)
 // ===================================================
-function initThemeManager() {
-    const toggleBtn = document.getElementById('themeToggle'); // Mobile Menu Button
-    const menuToggleBtn = document.querySelector('.theme-btn-menu'); // Alternate Mobile Button
-    const footerToggleBtn = document.getElementById('themeToggleFooter'); // NEW: Desktop Footer Button
-    
-    const body = document.body;
-    const savedTheme = localStorage.getItem('theme');
 
-    const updateText = (isLight) => {
-        const text = isLight ? '☾ Switch Theme' : '☀ Switch Theme';
+function initThemeManager() {
+    const toggleBtn = document.getElementById('themeToggle');
+    const menuToggleBtn = document.querySelector('.theme-btn-menu');
+    const footerToggleBtn = document.getElementById('themeToggleFooter');
+    const body = document.body;
+    
+    const savedTheme = localStorage.getItem('theme');
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+    const updateUI = (isLight) => {
+        const text = isLight ? '☾ Dark Mode' : '☀ Light Mode';
         if(toggleBtn) toggleBtn.innerHTML = text;
-        if(menuToggleBtn) menuToggleBtn.innerHTML = text;
-        if(footerToggleBtn) footerToggleBtn.innerHTML = text; // Update footer text too
+        if(menuToggleBtn) menuToggleBtn.innerHTML = text; // Added this line
+        if(footerToggleBtn) footerToggleBtn.innerHTML = text;
     };
 
-    // Load saved preference
-    if (savedTheme === 'light') {
+    if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
         body.classList.add('light-mode');
-        updateText(true);
+        updateUI(true);
+    } else {
+        body.classList.remove('light-mode');
+        updateUI(false);
     }
 
     const switchTheme = () => {
-        body.classList.toggle('light-mode');
-        const isLight = body.classList.contains('light-mode');
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
-        updateText(isLight);
+        const isCurrentlyLight = body.classList.toggle('light-mode');
+        localStorage.setItem('theme', isCurrentlyLight ? 'light' : 'dark');
+        updateUI(isCurrentlyLight);
     };
 
-    // Attach listeners to ALL theme buttons
+    // Keep these INSIDE this function
     if (toggleBtn) toggleBtn.addEventListener('click', switchTheme);
     if (menuToggleBtn) menuToggleBtn.addEventListener('click', switchTheme);
-    if (footerToggleBtn) footerToggleBtn.addEventListener('click', switchTheme); // Attached inside scope
+    if (footerToggleBtn) footerToggleBtn.addEventListener('click', switchTheme);
 }
 
+function optimizeDriveImage(url, width = 1600) {
+    if (!url) return 'assets/logo.svg';
+    if (url.includes('drive.google.com')) {
+        const idMatch = url.match(/id=([^&]+)/);
+        // FIXED: Added $ and updated domain
+        if (idMatch) return `https://lh3.googleusercontent.com/u/0/d/${idMatch[1]}=s${width}`;
+    }
+    return url;
+}
 // ===================================================
 // 3. PERFORMANCE: SCROLL & ANIMATIONS
 // ===================================================
@@ -361,16 +374,23 @@ function initGlobalInteractions() {
             if(id === 'search' && searchInput) searchInput.blur();
         }
     };
+    document.getElementById('searchTrigger')?.addEventListener('click', () => toggleOverlay('search', true));
+    document.getElementById('menuTrigger')?.addEventListener('click', () => toggleOverlay('menu', true));
+    document.getElementById('searchClose')?.addEventListener('click', () => toggleOverlay('search', false));
+    document.getElementById('menuClose')?.addEventListener('click', () => toggleOverlay('menu', false));
 
+    document.querySelectorAll('.menu-link').forEach(link => {
+        link.addEventListener('click', () => toggleOverlay('menu', false));
+    });
     const searchBtn = document.getElementById('searchTrigger');
     const menuBtn = document.getElementById('menuTrigger');
-    if(searchBtn) searchBtn.addEventListener('click', () => toggleOverlay('search', true));
-    if(menuBtn) menuBtn.addEventListener('click', () => toggleOverlay('menu', true));
+    if(searchBtn) searchBtn?.addEventListener('click', () => toggleOverlay('search', true));
+    if(menuBtn) menuBtn?.addEventListener('click', () => toggleOverlay('menu', true));
 
     const searchClose = document.getElementById('searchClose');
     const menuClose = document.getElementById('menuClose');
-    if(searchClose) searchClose.addEventListener('click', () => toggleOverlay('search', false));
-    if(menuClose) menuClose.addEventListener('click', () => toggleOverlay('menu', false));
+    if(searchClose) searchClose?.addEventListener('click', () => toggleOverlay('search', false));
+    if(menuClose) menuClose?.addEventListener('click', () => toggleOverlay('menu', false));
 
     document.querySelectorAll('.menu-link').forEach(link => {
         link.addEventListener('click', () => toggleOverlay('menu', false));
@@ -455,7 +475,7 @@ function initProgressiveForm() {
     const select = document.getElementById('interestType');
     const fields = document.querySelector('.progressive-fields');
     const form = document.getElementById('contactForm');
-    
+    if(!form) return;
     if(select && fields) {
         select.addEventListener('change', () => {
             fields.classList.add('active');
@@ -522,3 +542,4 @@ function injectRealEstateSchema(properties) {
 
 const footerBtn = document.getElementById('themeToggleFooter');
 if (footerBtn) footerBtn.addEventListener('click', switchTheme);
+

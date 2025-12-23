@@ -34,7 +34,9 @@
             align-items: center;
             justify-content: center;
             padding: 120px 5% 60px;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+            /* ADAPTIVE BACKGROUND */
+            background: radial-gradient(circle at center, var(--card-bg) 0%, var(--bg-body) 100%);
+            transition: background 0.4s ease;
         }
 
         .success-card {
@@ -42,20 +44,22 @@
             width: 100%;
             text-align: center;
             padding: 60px 40px;
-            background: rgba(20, 20, 20, 0.85);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* ADAPTIVE CARD */
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
             border-radius: 12px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.3);
         }
 
-        /* --- BUTTON BOX STYLING --- */
+        /* --- THE BOXED BUTTON STYLING (RESTORED & THEMED) --- */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             padding: 18px 35px;
-            border-radius: 4px; /* Professional sharp edges */
+            border-radius: 4px;
             font-family: 'Manrope', sans-serif;
             font-weight: 800;
             font-size: 0.75rem;
@@ -69,85 +73,88 @@
 
         /* Primary Gold Box */
         .btn.primary {
-            background: #D4AF37;
+            background: var(--gold-main);
             color: #050505;
-            border: 1px solid #D4AF37;
+            border: 1px solid var(--gold-main);
             box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
         }
 
         .btn.primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
-            background: #e5be4a;
+            filter: brightness(1.1);
         }
 
         /* Secondary Ghost Box */
         .btn.secondary {
             background: transparent;
-            color: #D4AF37;
-            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: var(--gold-main);
+            border: 1px solid var(--gold-main); /* Restored explicit box border */
             margin-left: 10px;
         }
 
         .btn.secondary:hover {
             background: rgba(212, 175, 55, 0.05);
-            border-color: #D4AF37;
             transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        /* Mobile adjustments for buttons */
-        @media (max-width: 480px) {
-            .btn { width: 100%; margin-left: 0 !important; margin-bottom: 10px; }
+        @media (max-width: 600px) {
+            .btn { width: 100%; margin-left: 0 !important; margin-bottom: 15px; }
+            .success-card { padding: 40px 20px; }
         }
 
-        /* Icon & Text Styling */
+        /* TEXT THEMING */
         .success-icon {
             width: 80px;
             height: 80px;
             margin: 0 auto 30px;
-            border: 1px solid #D4AF37;
+            border: 1px solid var(--gold-main);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #D4AF37;
+            color: var(--gold-main);
         }
 
         .success-title {
             font-family: 'Cormorant Garamond', serif;
             font-size: clamp(2.2rem, 5vw, 3.5rem);
             margin-bottom: 20px;
-            color: #ffffff;
+            color: var(--text-main);
         }
 
         .success-message {
             font-size: 1.1rem;
-            color: #a0a0a0;
+            color: var(--text-muted);
             line-height: 1.8;
             margin-bottom: 40px;
         }
 
         .success-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--glass-border);
             padding-top: 30px;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #D4AF37;
+            color: var(--gold-main);
+            font-weight: 700;
         }
 
         .fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; transform: translateY(20px); }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
 
-<body class="dark-mode"> 
+<body>
+
     <header class="header">
         <a href="/" class="logo-link">
             <div class="brand">
-                <div class="logo-box">
-                    <img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40">
-                </div>
+                <div class="logo-box"><img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40"></div>
                 <div class="brand-text">
                     <span class="sub">PEAKSQUARE</span>
                     <span class="main">ESTATES</span>
@@ -169,7 +176,7 @@
             
             <p class="success-message">
                 Thank you for reaching out to PeakSquare Estates. <br>
-                Your request for private access has been logged. Our property concierge will review your requirements and contact you within 24 hours.
+                Your request for private access has been logged. Our property concierge will contact you within 24 hours.
             </p>
 
             <div class="cta-container">
@@ -183,7 +190,14 @@
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js"></script>
-    <script src="script.js"></script>
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="menu-close-btn" id="menuClose">✕</button>
+        <nav class="menu-nav">
+            <a href="index.html" class="menu-link">Home</a>
+            <a href="index.html#projects" class="menu-link">Properties</a>
+            <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
+        </nav>
+    </div>
+
 </body>
 </html>

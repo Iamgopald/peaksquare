@@ -13,116 +13,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Disclaimer | PeakSquare Estates</title>
     
-    <meta name="description" content="Important legal information regarding property listings and RERA compliance for PeakSquare Estates." />
-    <meta name="robots" content="noindex, follow" />
-    
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-    <link rel="apple-touch-icon" href="assets/favicon-180.png">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
 
     <style>
+        /* Legal Page specific styling using Luxury Variables */
         .legal-page-wrapper {
             padding: 160px 5% 100px;
-            background: radial-gradient(circle at top right, #1a1a1a 0%, #050505 100%);
+            background: radial-gradient(circle at top right, var(--card-bg) 0%, var(--bg-body) 100%);
             min-height: 100vh;
+            transition: background 0.4s ease;
         }
 
         .legal-container {
             max-width: 900px;
             margin: 0 auto;
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
             padding: 60px;
             border-radius: 12px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
         }
 
-        /* --- EXPLICIT BUTTON BOX STYLING --- */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 18px 35px;
-            border-radius: 4px; /* Professional sharp edges */
-            font-family: 'Manrope', sans-serif;
-            font-weight: 800;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            cursor: pointer;
-            text-decoration: none;
-            min-width: 200px;
+        .legal-header { text-align: center; margin-bottom: 60px; }
+        .legal-header h1 { 
+            font-size: clamp(2.5rem, 5vw, 3.5rem); 
+            color: var(--text-main); 
+            font-family: 'Cormorant Garamond', serif; 
         }
-
-        /* Secondary Button Style (Ghost Box) */
-        .btn.secondary {
-            background: transparent;
-            color: #D4AF37;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-        }
-
-        .btn.secondary:hover {
-            background: rgba(212, 175, 55, 0.05);
-            border-color: #D4AF37;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.1);
-        }
-
-        /* Primary Button Style (Gold Box) if needed elsewhere */
-        .btn.primary {
-            background: #D4AF37;
-            color: #050505;
-            border: 1px solid #D4AF37;
-        }
-
-        .legal-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .legal-header h1 {
-            font-size: 3rem;
-            color: #ffffff;
-            font-family: 'Cormorant Garamond', serif;
-            margin-bottom: 10px;
-        }
-
-        .legal-label {
-            color: #D4AF37;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-size: 0.75rem;
-            font-weight: 800;
-        }
-
-        .legal-body h3 {
-            color: #D4AF37;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            margin-top: 40px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        .legal-label { color: var(--gold-main); text-transform: uppercase; letter-spacing: 4px; font-size: 0.75rem; font-weight: 800; }
+        
+        .legal-body h3 { 
+            color: var(--gold-main); 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 1.8rem; 
+            margin-top: 40px; 
+            border-bottom: 1px solid var(--glass-border);
             padding-bottom: 10px;
+            margin-bottom: 20px;
         }
-
-        .legal-body p {
+        
+        .legal-body p { 
+            color: var(--text-muted); 
             font-family: 'Manrope', sans-serif;
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: #a0a0a0;
-            margin-bottom: 25px;
+            line-height: 1.8; 
+            margin-bottom: 20px; 
         }
 
         @media (max-width: 768px) {
             .legal-container { padding: 40px 20px; }
-            .legal-header h1 { font-size: 2.2rem; }
-            .btn { width: 100%; }
+            .legal-page-wrapper { padding-top: 120px; }
         }
     </style>
 
@@ -135,52 +77,86 @@
     <header class="header">
         <a href="/" class="logo-link">
             <div class="brand">
-                <div class="logo-box">
-                    <img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40">
-                </div>
+                <div class="logo-box"><img src="assets/logo.svg" alt="Logo" width="40" height="40"></div>
                 <div class="brand-text">
                     <span class="sub">PEAKSQUARE</span>
                     <span class="main">ESTATES</span>
                 </div>
             </div>
         </a>
+        <nav class="desktop-nav">
+            <a href="index.html#projects" class="nav-item">Properties</a>
+            <a href="blog.html" class="nav-item">Market Pulse</a>
+            <a href="mailto:sales@peaksquareestates.com" class="nav-item">Contact</a>
+        </nav>
+        <div class="header-controls">
+            <button id="searchTrigger" class="icon-btn" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+            <button id="menuTrigger" class="icon-btn" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+        </div>
     </header>
 
     <main class="legal-page-wrapper">
         <div class="legal-container fade-in-up">
-            
             <header class="legal-header">
-                <span class="legal-label">Terms of Use</span>
+                <span class="legal-label">Legal Information</span>
                 <h1>Disclaimer</h1>
             </header>
 
             <article class="legal-body">
                 <p>
-                    The information provided on <strong>PeakSquare Estates</strong> (peaksquareestates.com) is for general informational purposes only. While we endeavor to keep the information up-to-date and correct, we make no representations or warranties of any kind regarding the accuracy or availability of property listings.
+                    The information provided on <strong>PeakSquare Estates</strong> (peaksquareestates.com) is for general informational purposes only. While we endeavor to keep the information up-to-date and correct, we make no representations or warranties regarding the accuracy or availability of property listings.
                 </p>
 
                 <h3>1. Artistic Impressions</h3>
                 <p>
-                    Visual representations, including floor plans and photographs, are intended to be artistic impressions only. They may not represent the actual finished property accurately. It does not constitute a legal offer or contract.
+                    Visual representations, including floor plans and photographs, are intended to be artistic impressions only. They may not represent the actual finished property accurately and do not constitute a legal offer or contract.
                 </p>
 
                 <h3>2. RERA Compliance</h3>
                 <p>
                     Project information is provided based on data received from developers. It is the user’s responsibility to independently verify the <strong>MahaRERA</strong> registration status of any project on the official government website before proceeding.
                 </p>
-            </article>
 
-            <div style="text-align: center; margin-top: 50px;">
-                <a href="index.html" class="btn secondary">Back to Home</a>
-            </div>
+                <div style="text-align: center; margin-top: 60px;">
+                    <a href="index.html#projects" class="btn secondary">Back to Collection</a>
+                </div>
+            </article>
         </div>
     </main>
 
     <footer class="main-footer">
+        <div class="footer-links">
+            <a href="blog.html" class="footer-link">Market Insights</a> • 
+            <a href="privacy.html" class="footer-link">Privacy Policy</a> • 
+            <a href="disclaimer.html" class="footer-link">Disclaimer</a>
+            <span class="footer-desktop-sep"> • </span>
+            <button id="themeToggleFooter" class="theme-btn-footer">☀ Switch Theme</button>
+        </div>
         <div class="footer-copyright">
             © 2025 PEAKSQUARE ESTATES • Luxury Real Estate Pune
         </div>
     </footer>
+
+    <div class="search-overlay" id="searchOverlay">
+        <button class="search-close" id="searchClose">✕</button>
+        <div class="search-container">
+            <div class="search-bar-wrapper">
+                <input type="text" class="search-input" placeholder="Search locations..." id="searchInput">
+            </div>
+            <div id="searchResults" class="search-results-list"></div>
+        </div>
+    </div>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="menu-close-btn" id="menuClose">✕</button>
+        <nav class="menu-nav">
+            <span class="menu-label">Menu</span>
+            <a href="index.html" class="menu-link">Home</a>
+            <a href="index.html#projects" class="menu-link">Properties</a>
+            <a href="blog.html" class="menu-link">Insights</a>
+            <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
+        </nav>
+    </div>
 
 </body>
 </html>

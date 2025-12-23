@@ -10,6 +10,7 @@ function getValidImage(url) {
     if (url.includes('drive.google.com')) {
         const idMatch = url.match(/\/d\/(.+?)\//) || url.match(/id=(.+?)(&|$)/);
         if (idMatch && idMatch[1]) {
+            // FIXED: Added $ and used the more reliable direct imaging domain
             return `https://lh3.googleusercontent.com/u/0/d/${idMatch[1]}=s1600`;
         }
     }
@@ -56,7 +57,6 @@ function loadBlogList() {
                     });
                 } catch(e) { dateStr = blog.date; }
 
-                // IMAGE LOGIC: Check if image available
                 const imgUrl = getValidImage(blog.image);
                 const imageHTML = imgUrl ? `
                     <div class="project-card-image">
@@ -75,7 +75,7 @@ function loadBlogList() {
                         <span style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; display:block;">${dateStr}</span>
                         <h3 style="font-family: 'Manrope', sans-serif; font-size: 1.2rem; margin-bottom: 10px; color: var(--text-main); line-height: 1.4;">${blog.title}</h3>
                         <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; flex-grow: 1;">${blog.summary}</p>
-                        <span style="color: var(--gold-main); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px;">READ ARTICLE &rarr;</span>
+                        <span style="color: var(--gold-main); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px;">READ ARTICLE →</span>
                     </div>
                 `;
                 
@@ -111,7 +111,6 @@ function loadSinglePost(id) {
                 });
             } catch(e) { dateStr = post.date; }
 
-            // IMAGE LOGIC: Check if hero image available
             const heroImgUrl = getValidImage(post.image);
             const heroImageHTML = heroImgUrl ? `
                 <div class="blog-hero-image-wrapper">
@@ -135,7 +134,6 @@ function loadSinglePost(id) {
                         <h1 class="blog-title-large">${post.title}</h1>
                         <div class="blog-meta">
                             <span class="date">Published: ${dateStr}</span>
-                            <span class="read-time"> • 5 min read</span>
                         </div>
                     </header>
                     
@@ -148,7 +146,7 @@ function loadSinglePost(id) {
                     <div class="blog-footer-cta">
                         <div class="cta-glass-box">
                             <h3>Seeking Personalized Advice?</h3>
-                            <p>Connect with our expert advisors for a private consultation regarding properties</p>
+                            <p>Connect with our expert advisors for a private consultation.</p>
                             <div class="cta-buttons">
                                 <a href="mailto:sales@peaksquareestates.com?subject=Inquiry: ${encodeURIComponent(post.title)}" class="btn secondary blog-cta-btn">
                                     Private Email Enquiry

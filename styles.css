@@ -6,7 +6,7 @@
     --bg-body: #050505;
     --text-main: #ffffff;
     --text-muted: #a0a0a0;
-    
+
     /* Luxury Accents */
     --gold-main: #D4AF37;       /* Classic Metallic Gold */
     --gold-dim: #bfbfbf;
@@ -43,11 +43,14 @@ body.light-mode {
     --gold-dim: rgba(142, 107, 29, 0.1);
     --overlay-bg: rgba(255, 255, 255, 0.98);
     --search-box-bg: #ffffff;
+    --input-bg: rgba(0, 0, 0, 0.03);    /* Very subtle tint */
+    --input-border: rgba(0, 0, 0, 0.1); /* Soft border */
 }
 /* --- RESET & PERFORMANCE --- */
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-html { scroll-behavior: smooth; font-size: 16px; width: 100%; overflow-x: hidden; }
+html { scroll-behavior: smooth; font-size: 16px; width: 100%; overflow-x: hidden;  background-color: #050505; /* Matches your --bg-body */
+    color-scheme: dark light; }
 body { 
     width: 100%; overflow-x: hidden; position: relative; 
     background-color: var(--bg-body); color: var(--text-main);
@@ -126,7 +129,8 @@ body::after {
 }
 
 /* Cinematic Background */
-.hero-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden;
+    z-index: 1 }
 .hero-bg-img { 
     width: 100%; height: 100%; object-fit: cover; 
     filter: brightness(0.7) contrast(1.1);
@@ -170,7 +174,7 @@ body::after {
     font-size: clamp(2.8rem, 6vw, 5rem); 
     line-height: 1.05; 
     margin-bottom: 30px; 
-    color: #fff;
+    color: var(--text-main);
     font-family: 'Cormorant Garamond', serif;
 }
 
@@ -310,34 +314,88 @@ body::after {
 
 /* Light Mode Overrides for Form Components */
 body.light-mode .form-glass-box {
-    background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(0, 0, 0, 0.1);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
-    color-scheme: light;
+    background: rgba(255, 255, 255, 0.7); /* Frosted white */
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05); /* Softer shadow */
 }
-body.light-mode .form-header h3, 
-body.light-mode .form-header p { color: #111; }
-body.light-mode input, 
-body.light-mode select {
-    background: #f4f4f4;
-    border-color: #e0e0e0;
+body.light-mode .form-glass-box input, 
+body.light-mode .form-glass-box select {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     color: #111;
 }
 
-/* Scroll Indicator */
-.scroll-indicator {
-    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 15px; opacity: 0.6;
-    color: var(--gold-dim);
+body.light-mode .form-glass-box input:focus {
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(142, 107, 29, 0.1); /* Soft gold bloom */
 }
-.scroll-text { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 4px; }
-.scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold-main), transparent); position: relative; overflow: hidden; }
-.scroll-line::after {
-    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: #fff; animation: scrollAnim 2s infinite cubic-bezier(.7,0,.3,1);
+body.light-mode .form-header h3, 
+body.light-mode .form-header p { color: var(--text-main); }
+body.light-mode input, 
+body.light-mode select {
+    background: var(--input-bg);    /* Use variable */
+    border: 1px solid var(--input-border); /* Use variable */
+    color: var(--text-main);
 }
-@keyframes scrollAnim { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
 
+/* --- FIXED SCROLL INDICATOR --- */
+.scroll-indicator {
+    position: absolute; 
+    bottom: 30px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 15px; 
+    
+    /* Ensure it sits on top of the hero image/overlay */
+    z-index: 10; 
+    
+    /* Use a more visible gold for the base */
+    color: var(--gold-main); 
+    opacity: 0.8;
+    transition: all 0.4s ease;
+}
+
+.scroll-text { 
+    font-size: 0.65rem; 
+    text-transform: uppercase; 
+    letter-spacing: 4px; 
+    font-weight: 700;
+}
+
+.scroll-line { 
+    width: 1px; 
+    height: 50px; 
+    background: linear-gradient(to bottom, var(--gold-main), transparent); 
+    position: relative; 
+    overflow: hidden; 
+}
+
+.scroll-line::after {
+    content: ''; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    /* This creates the moving white/gold "drop" */
+    background: var(--text-main); 
+    animation: scrollAnim 2s infinite cubic-bezier(.7,0,.3,1);
+}
+
+@keyframes scrollAnim { 
+    0% { transform: translateY(-100%); } 
+    100% { transform: translateY(100%); } 
+}
+
+body.light-mode .scroll-indicator {
+    opacity: 1;
+    color: var(--gold-main); /* Ensure it doesn't use the dim/transparent gold */
+}
 /* Responsive Adjustments for Hero */
 @media (max-width: 992px) {
     .hero-container { 
@@ -352,6 +410,20 @@ body.light-mode select {
     .hero-stats-wrapper { justify-content: center; }
     .hero-badge {
         display: none;
+    }
+    .hero {
+        padding-bottom: 120px !important; 
+    }
+
+    /* 2. Position the indicator further down so it doesn't touch the form */
+    .scroll-indicator {
+        bottom: 15px; 
+        opacity: 0.5; /* Lower opacity makes it less distracting on small screens */
+    }
+    
+    /* 3. Add a gap after the form to prevent the Privacy Note from touching the indicator */
+    .hero-form-wrapper {
+        margin-bottom: 40px; 
     }
     
 }
@@ -630,7 +702,7 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
         font-size: 2.5rem !important; /* Adjusted for mobile readability */
         line-height: 1.1;
         margin: 10px 0 !important;
-        color: #ffffff;
+        color: var(--text-main);
     }
 
     /* 4. Style the Price (Rs. 1,00,00,000) */
@@ -761,7 +833,7 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
     font-weight: 600;
     line-height: 0.9;
     letter-spacing: -0.04em;
-    color: #ffffff;
+    color: var(--text-main);
     text-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
 
@@ -1178,29 +1250,38 @@ body.light-mode .hero-description {
 }
 
 .form-glass-box .btn.primary {
-    /* 1. Reset width from 100% to fit the content */
-    width: fit-content !important; 
-    min-width: 240px; /* Ensures the button doesn't look too tiny */
-    
-    /* 2. Push it to the center using horizontal auto margins */
-    margin: 0 auto !important; 
-    
-    /* 3. Ensure it behaves like a block element so margins work */
-    display: flex !important; 
-
-    /* --- Keep your refined styles from before --- */
-    background: var(--gold-main) !important;
-    border: 1px solid var(--gold-main) !important;
-    color: #050505 !important;
-    border-radius: 4px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 3px !important;
-    font-size: 0.75rem !important;
-    font-weight: 800 !important;
-    padding: 18px 40px !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    width: 100%;             /* Full width on mobile */
+    display: block;          /* Standard block behavior */
+    padding: 18px 20px;      /* Comfortable tap area */
+    background: var(--gold-main);
+    color: #050505;
+    border: none;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
+/* --- Light Mode Hero Refinements --- */
+body.light-mode .hero-overlay {
+    /* Change from dark shadow to a soft white/champagne glow */
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 100%);
+    backdrop-filter: contrast(0.8) brightness(1.2); /* Softens the image underneath */
+}
 
+body.light-mode .hero-bg-img {
+    filter: brightness(1.1) saturate(0.8); /* Makes image look like a faded high-end print */
+    opacity: 0.8;
+}
 
+body.light-mode .hero-description {
+    color: #333333; /* Darker grey for better reading on light background */
+    border-left-color: var(--gold-main);
+}
+
+body.light-mode .stat-divider {
+    background: rgba(0, 0, 0, 0.1); /* Visible divider in light mode */
+}
