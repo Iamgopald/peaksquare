@@ -1284,4 +1284,39 @@ body.light-mode .hero-description {
 
 body.light-mode .stat-divider {
     background: rgba(0, 0, 0, 0.1); /* Visible divider in light mode */
+
+}
+
+/* Boxed Button Styling */
+.legal-action-footer {
+    text-align: center; 
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--glass-border); /* Subtle line above the button */
+}
+
+.btn-legal-box {
+    display: inline-block;
+    padding: 18px 45px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-main);
+    text-decoration: none;
+    
+    /* The "Box" effect */
+    border: 1px solid var(--gold-main);
+    background: transparent;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    border-radius: 4px;
+}
+
+.btn-legal-box:hover {
+    background: var(--gold-main);
+    color: #000; /* Contrast color for light-on-gold */
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(197, 168, 128, 0.2); /* Soft gold glow */
 }
