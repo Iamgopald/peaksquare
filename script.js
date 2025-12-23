@@ -115,8 +115,14 @@ async function initDataLoading() {
         // Fetch Data
         await loadContent('peaksquare_data', 'propertyGrid', renderProperties);
         await loadContent('peaksquare_blog_data', 'featured-blog-container', renderBlogs, "?action=getBlogList");
-        
-        initSearchLogic(); 
+       
+    }
+     initSearchLogic(); 
+    if (!localStorage.getItem('peaksquare_data')) {
+        loadContent('peaksquare_data', null, null);
+    }
+    if (!localStorage.getItem('peaksquare_blog_data')) {
+        loadContent('peaksquare_blog_data', null, null, "?action=getBlogList");
     }
 }
 
@@ -542,4 +548,5 @@ function injectRealEstateSchema(properties) {
 
 const footerBtn = document.getElementById('themeToggleFooter');
 if (footerBtn) footerBtn.addEventListener('click', switchTheme);
+
 
