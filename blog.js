@@ -1,17 +1,15 @@
 // CONFIGURATION
-const BLOG_API_URL = "https://script.google.com/macros/s/AKfycbzdsftNssnmWHAO5ioiyKTGhJkgJ8ubf1rmEYr56xOk7X-gtIfn_4HTAowBq3id_lL3/exec";
+const BLOG_API_URL = "https://script.google.com/macros/s/AKfycbzjU1QsPqJodJ0OIdKrn0bf0kguyGbNrOonKaKzbj4kDKLoygi3G70G3yjoZLNMskgc/exec";
 
 // HELPER: Convert Drive links and check if image exists
 function getValidImage(url) {
-    if (!url || typeof url !== 'string' || url.length < 10 || url.toLowerCase() === "n/a") {
-        return null;
-    }
-    // Convert Drive "view" link to "direct" link
+    if (!url || url.length < 10) return 'assets/logo.svg';
+    
     if (url.includes('drive.google.com')) {
-        const idMatch = url.match(/\/d\/(.+?)\//) || url.match(/id=(.+?)(&|$)/);
+        const idMatch = url.match(/id=([^&]+)/) || url.match(/\/d\/([^/]+)/);
         if (idMatch && idMatch[1]) {
-            // FIXED: Added $ and used the more reliable direct imaging domain
-            return `https://lh3.googleusercontent.com/u/0/d/${idMatch[1]}=s1600`;
+            // Use the same reliable lh3 path here
+            return `https://lh3.googleusercontent.com/d/${idMatch[1]}=s1200`;
         }
     }
     return url;
@@ -39,6 +37,7 @@ function loadBlogList() {
     if(listWrapper) listWrapper.style.display = 'block';
     if(singlePostContainer) singlePostContainer.style.display = 'none';
 
+    // Grid Container already has skeletons in HTML, so we just fetch
     fetch(`${BLOG_API_URL}?action=getBlogList`)
         .then(response => response.json())
         .then(data => {
@@ -60,7 +59,7 @@ function loadBlogList() {
                 const imgUrl = getValidImage(blog.image);
                 const imageHTML = imgUrl ? `
                     <div class="project-card-image">
-                        <img src="${imgUrl}" alt="${blog.title}" style="width:100%; height:100%; object-fit:cover;">
+                        <img src="${imgUrl}" alt="${blog.title}" loading="lazy">
                     </div>
                 ` : '';
 
@@ -91,16 +90,28 @@ function loadBlogList() {
 // --- 2. FETCH & RENDER SINGLE POST ---
 function loadSinglePost(id) {
     if(listWrapper) listWrapper.style.display = 'none';
-    if(singlePostContainer) singlePostContainer.style.display = 'block';
+    if(singlePostContainer) {
+        singlePostContainer.style.display = 'block';
+        // USE SKELETON INSTEAD OF "LOADING..." TEXT
+        singlePostContainer.innerHTML = `
+            <div class="blog-post-content" style="padding-top: 100px;">
+                <div class="skeleton-box" style="width: 150px; height: 20px; margin: 0 auto 20px;"></div>
+                <div class="skeleton-box" style="width: 80%; height: 50px; margin: 0 auto 40px;"></div>
+                <div class="skeleton-box" style="width: 100%; aspect-ratio: 21/9; border-radius: 12px; margin-bottom: 40px;"></div>
+                <div class="skeleton-box" style="width: 100%; height: 20px; margin-bottom: 10px;"></div>
+                <div class="skeleton-box" style="width: 100%; height: 20px; margin-bottom: 10px;"></div>
+                <div class="skeleton-box" style="width: 60%; height: 20px;"></div>
+            </div>
+        `;
+    }
     
-    singlePostContainer.innerHTML = '<div style="padding: 100px; text-align: center; color: var(--text-muted);">Loading article...</div>';
     window.scrollTo(0, 0);
 
     fetch(`${BLOG_API_URL}?action=getBlogPost&id=${id}`)
         .then(response => response.json())
         .then(post => {
             if (!post || !post.title) {
-                singlePostContainer.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-muted);">Article not found.</p>';
+                singlePostContainer.innerHTML = '<p style="text-align:center; padding: 100px; color: var(--text-muted);">Article not found.</p>';
                 return;
             }
 
@@ -128,7 +139,7 @@ function loadSinglePost(id) {
                     </div>
                 </div>
 
-                <article class="blog-post-content">
+                <article class="blog-post-content fade-in-up">
                     <header class="blog-header">
                         <span class="category-badge">Market Analysis</span>
                         <h1 class="blog-title-large">${post.title}</h1>
@@ -159,6 +170,6 @@ function loadSinglePost(id) {
         })
         .catch(error => {
             console.error('Error:', error);
-            singlePostContainer.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-muted);">Error loading article.</p>';
+            singlePostContainer.innerHTML = '<p style="text-align:center; padding: 100px; color: var(--text-muted);">Error loading article.</p>';
         });
 }

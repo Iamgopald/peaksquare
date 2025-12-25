@@ -55,8 +55,33 @@
 </head>
 
 <body>
+    <div class="search-overlay" id="searchOverlay">
+        <button class="search-close" id="searchClose" aria-label="Close Search">
+            <span class="close-icon">✕</span>
+            <span class="close-text">Close</span>
+        </button>
+        
+        <div class="search-container">
+            <div class="search-bar-wrapper">
+                <input type="text" class="search-input" placeholder="Type a location or project..." id="searchInput" autocomplete="off">
+                <div class="search-line-effect"></div>
+            </div>
+    
+            <div class="search-quick-discover">
+                <p>Popular Searches</p>
+                <div class="discover-chips">
+                    <button onclick="document.getElementById('searchInput').value='Charholi'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Charholi</button>
+                    <button onclick="document.getElementById('searchInput').value='Moshi'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Moshi</button>
+                    <button onclick="document.getElementById('searchInput').value='Dudulgaon'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Dudulgaon</button>
+                </div>
+            </div>
+    
+            <div id="searchResults" class="search-results-list"></div>
+        </div>
+    </div>
 
     <header class="header">
+        <div class="container">
         <a href="/" class="logo-link" aria-label="PeakSquare Estates Home">
             <div class="brand">
                 <div class="logo-box">
@@ -76,9 +101,7 @@
         </nav>
 
         <div class="header-controls">
-            <a href="https://wa.me/917276607467" class="btn secondary desktop-cta" style="padding: 10px 24px; font-size: 0.85rem; width: auto; margin-right: 15px; display: none;">Enquire Now</a>
-            <style> @media(min-width: 992px) { .desktop-cta { display: inline-flex !important; } } </style>
-
+            <a href="https://wa.me/917276607467" class="btn secondary desktop-cta" target="_blank" rel="noopener noreferrer">WhatsApp Now</a>
             <button id="searchTrigger" class="icon-btn" aria-label="Open Search">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
@@ -86,16 +109,7 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             </button>
         </div>
-
-        <div class="search-overlay" id="searchOverlay">
-            <button class="search-close" id="searchClose" aria-label="Close Search">✕</button>
-            <div class="search-container">
-                <div class="search-bar-wrapper">
-                    <input type="text" class="search-input" placeholder="Search locations, projects..." id="searchInput" autocomplete="off">
-                </div>
-                <div id="searchResults" class="search-results-list"></div>
-            </div>
-        </div>
+    </div>
     </header>
 
     <main>
@@ -162,7 +176,7 @@
                                     <input type="email" name="email" placeholder="Email Address" required />
                                 </div>
                                 <div class="field-group">
-                                    <input type="tel" name="phone" placeholder="Phone Number" required />
+                                    <input type="tel" name="phone" id="phoneInput" placeholder="10-Digit Phone Number" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '');"required />
                                 </div>
                             </div>
                             
@@ -180,11 +194,12 @@
         </section>
 
         <section class="section" id="projects">
-            <div class="section-header">
+         <div class="container">
+            <div class="section-header section">
                 <h3 class="section-title fade-in-scroll">Curated Collection</h3>
                 <p class="section-subtitle fade-in-scroll">Handpicked luxury residences.</p>
             </div>
-            
+         </div>
             <div class="project-grid" id="propertyGrid">
                 <div class="skeleton-card">
                     <div class="skeleton-box sk-img"></div>
@@ -205,6 +220,7 @@
         </section>
 
         <section class="section" id="market-pulse">
+            <div class="container">
             <div class="market-pulse-header fade-in-scroll">
                 <div>
                     <span class="market-pulse-label">Market Pulse</span>
@@ -213,7 +229,7 @@
                 <a href="blog.html" class="btn secondary desktop-only" style="padding:10px 25px; width:auto; display:none;">View All</a>
                 <style> @media(min-width: 992px) { #market-pulse .desktop-only { display: inline-flex !important; } } </style>
             </div>
-
+        </div>
             <div id="featured-blog-container" class="project-grid">
                 <div class="skeleton-card">
                     <div class="skeleton-box sk-img"></div>
@@ -243,7 +259,10 @@
     </footer>
 
     <div class="menu-overlay" id="menuOverlay">
-        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">✕</button>
+        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">
+            <span class="close-icon">✕</span>
+            <span class="close-text">Close</span>
+        </button>
         <nav class="menu-nav">
             <span class="menu-label">Menu</span>
             <a href="index.html" class="menu-link">Home</a>

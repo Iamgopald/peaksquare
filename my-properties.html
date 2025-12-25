@@ -19,52 +19,72 @@
 </head>
 
 <body>
-
-    <header class="header">
-        <a href="/" class="logo-link" aria-label="PeakSquare Estates Home">
-            <div class="brand">
-                <div class="logo-box"><img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40"></div>
-                <div class="brand-text">
-                    <span class="sub">PEAKSQUARE</span>
-                    <span class="main">ESTATES</span>
+    <div class="search-overlay" id="searchOverlay">
+        <button class="search-close" id="searchClose" aria-label="Close Search">
+            <span class="close-icon">✕</span>
+            <span class="close-text">Close</span>
+        </button>
+        <div class="search-container">
+            <div class="search-bar-wrapper">
+                <input type="text" class="search-input" placeholder="Type a location or project..." id="searchInput" autocomplete="off">
+                <div class="search-line-effect"></div>
+            </div>
+            <div class="search-quick-discover">
+                <p>Popular Searches</p>
+                <div class="discover-chips">
+                    <button onclick="document.getElementById('searchInput').value='Charholi'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Charholi</button>
+                    <button onclick="document.getElementById('searchInput').value='Moshi'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Moshi</button>
+                    <button onclick="document.getElementById('searchInput').value='Dudulgaon'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Dudulgaon</button>
                 </div>
             </div>
-        </a>
-        <nav class="desktop-nav">
-            <a href="index.html#projects" class="nav-item">Properties</a>
-            <a href="blog.html" class="nav-item">Market Pulse</a>
-            <a href="mailto:sales@peaksquareestates.com" class="nav-item">Email Us</a>
-        </nav>
-        <div class="header-controls">
-            <a href="https://wa.me/917276607467" class="btn primary desktop-cta" style="padding: 10px 24px; font-size: 0.85rem; width: auto; margin-right: 15px; display: none;">Enquire Now</a>
-            <button id="searchTrigger" class="icon-btn" aria-label="Open Search"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-            <button id="menuTrigger" class="icon-btn" aria-label="Open Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+            <div id="searchResults" class="search-results-list"></div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container"> 
+            <a href="/" class="logo-link" aria-label="PeakSquare Estates Home">
+                <div class="brand">
+                    <div class="logo-box"><img src="assets/logo.svg" alt="Logo" width="40" height="40"></div>
+                    <div class="brand-text">
+                        <span class="sub">PEAKSQUARE</span>
+                        <span class="main">ESTATES</span>
+                    </div>
+                </div>
+            </a>
+
+            <nav class="desktop-nav">
+                <a href="index.html#projects" class="nav-item">Properties</a>
+                <a href="blog.html" class="nav-item">Market Pulse</a>
+                <a href="mailto:sales@peaksquareestates.com" class="nav-item">Email Us</a>
+            </nav>
+
+            <div class="header-controls">
+                <a href="https://wa.me/917276607467" class="desktop-cta" target="_blank" rel="noopener noreferrer">Enquire Now</a>
+                <button id="searchTrigger" class="icon-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+                <button id="menuTrigger" class="icon-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+            </div>
         </div>
     </header>
-
+    
     <main id="property-main">
-        <div class="breadcrumb-nav">
+        <nav class="breadcrumb-nav">
             <div class="container">
                 <a href="index.html#projects" class="back-link">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                     Back to Collection
                 </a>
             </div>
-        </div>
+        </nav>
         
         <div id="dynamicContent">
             <section class="hero property-hero">
-                <div class="hero-bg">
-                    <div class="hero-overlay"></div>
-                    <div class="skeleton-box" style="width:100%; height:100%; position:absolute; inset:0; z-index:-1; opacity:0.1;"></div>
-                </div>
-                <div class="hero-container">
+                <div class="container">
                     <div class="hero-text-content">
-                        <div class="skeleton-box" style="width: 100px; height: 14px; margin-bottom: 20px;"></div>
+                        <span class="hero-badge skeleton-box" style="width: 100px; height: 14px; margin-bottom: 20px; display: block;"></span>
                         <h1 class="hero-title property-title-large">
-                            <div class="skeleton-box" style="width: 80%; height: 60px;"></div>
+                            <span class="skeleton-box" style="width: 80%; height: 50px; display: block;"></span>
                         </h1>
-                        <div class="skeleton-box" style="width: 150px; height: 30px; margin-top: 20px;"></div>
                     </div>
                 </div>
             </section>
@@ -72,47 +92,57 @@
             <section class="property-specs-section">
                 <div class="container">
                     <div class="property-meta-grid">
-                        <div class="meta-item"><div class="skeleton-box" style="width: 60px; height: 40px;"></div></div>
-                        <div class="meta-item"><div class="skeleton-box" style="width: 60px; height: 40px;"></div></div>
-                        <div class="meta-item"><div class="skeleton-box" style="width: 60px; height: 40px;"></div></div>
+                        <div class="meta-item"><div class="skeleton-box" style="height: 40px; width: 60px;"></div></div>
+                        <div class="meta-item"><div class="skeleton-box" style="height: 40px; width: 60px;"></div></div>
+                        <div class="meta-item"><div class="skeleton-box" style="height: 40px; width: 60px;"></div></div>
                     </div>
                 </div>
             </section>
 
-            <section class="section">
-                <div style="max-width:800px; margin:0 auto; padding:0 5%;">
-                    <div class="skeleton-box" style="width: 200px; height: 30px; margin-bottom: 30px;"></div>
-                    <div class="skeleton-box" style="width: 100%; height: 16px; margin-bottom: 12px;"></div>
-                    <div class="skeleton-box" style="width: 100%; height: 16px; margin-bottom: 12px;"></div>
-                    <div class="skeleton-box" style="width: 60%; height: 16px;"></div>
+            <section class="section property-content">
+                <div class="container">
+                    <div class="section-header">
+                        <h3 class="section-title">Property Overview</h3>
+                    </div>
+                    <div class="blog-body-content content-columns">
+                        <div class="skeleton-box" style="height: 16px; margin-bottom: 12px; width: 100%;"></div>
+                        <div class="skeleton-box" style="height: 16px; margin-bottom: 12px; width: 90%;"></div>
+                        <div class="skeleton-box" style="height: 16px; width: 60%;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section gallery-section" style="padding-top: 0;">
+                <div class="container">
+                    <div class="section-header">
+                        <h3 class="section-title">Gallery</h3>
+                    </div>
+                    <div class="project-grid">
+                        <div class="skeleton-card" style="grid-column: span 12; height: 400px;"></div>
+                    </div>
                 </div>
             </section>
         </div>
     </main>
-
-     <footer class="main-footer">
-        <div class="footer-links">
-            <a href="blog.html" class="footer-link">Market Insights</a> • 
-            <a href="privacy.html" class="footer-link">Privacy Policy</a> • 
-            <a href="terms.html" class="footer-link">Terms</a> • 
-            <a href="disclaimer.html" class="footer-link">Disclaimer</a>
-            <span class="footer-desktop-sep"> • </span>
-        <button id="themeToggleFooter" class="theme-btn-footer">☀ Switch Theme</button>
-        </div>
-        <div class="footer-copyright">
-            © 2025 PEAKSQUARE ESTATES
+    
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="blog.html" class="footer-link">Market Insights</a> 
+                    <span class="footer-sep">•</span>
+                    <a href="privacy.html" class="footer-link">Privacy Policy</a> 
+                    <span class="footer-sep">•</span>
+                    <a href="terms.html" class="footer-link">Terms</a>
+                    <span class="footer-sep">•</span>
+                    <button id="themeToggleFooter" class="theme-btn-footer">☀ Switch Theme</button>
+                </div>
+                <div class="footer-copyright">
+                    © 2025 PEAKSQUARE ESTATES
+                </div>
+            </div>
         </div>
     </footer>
-
-    <div class="search-overlay" id="searchOverlay">
-        <button class="search-close" id="searchClose" aria-label="Close Search">✕</button>
-        <div class="search-container">
-            <div class="search-bar-wrapper">
-                <input type="text" class="search-input" placeholder="Search locations, projects..." id="searchInput" autocomplete="off">
-            </div>
-            <div id="searchResults" class="search-results-list"></div>
-        </div>
-    </div>
 
     <div class="menu-overlay" id="menuOverlay">
         <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">✕</button>
@@ -133,5 +163,4 @@
         <a href="tel:+917276607467" class="sticky-btn call">Call Agent</a>
     </div>
 </body>
-
 </html>

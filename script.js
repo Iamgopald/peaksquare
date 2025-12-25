@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Global API Config
-const API_URL = "https://script.google.com/macros/s/AKfycbzdsftNssnmWHAO5ioiyKTGhJkgJ8ubf1rmEYr56xOk7X-gtIfn_4HTAowBq3id_lL3/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzjU1QsPqJodJ0OIdKrn0bf0kguyGbNrOonKaKzbj4kDKLoygi3G70G3yjoZLNMskgc/exec";
 const CACHE_DURATION = 3600000; // 1 Hour Cache
 
 
@@ -24,6 +24,9 @@ const CACHE_DURATION = 3600000; // 1 Hour Cache
 // 2. THEME MANAGER (Fixed for Footer Support)
 // ===================================================
 
+// ===================================================
+// 2. THEME MANAGER (Handles Header, Menu, and Footer)
+// ===================================================
 function initThemeManager() {
     const toggleBtn = document.getElementById('themeToggle');
     const menuToggleBtn = document.querySelector('.theme-btn-menu');
@@ -36,10 +39,11 @@ function initThemeManager() {
     const updateUI = (isLight) => {
         const text = isLight ? '☾ Dark Mode' : '☀ Light Mode';
         if(toggleBtn) toggleBtn.innerHTML = text;
-        if(menuToggleBtn) menuToggleBtn.innerHTML = text; // Added this line
+        if(menuToggleBtn) menuToggleBtn.innerHTML = text;
         if(footerToggleBtn) footerToggleBtn.innerHTML = text;
     };
 
+    // Set initial state
     if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
         body.classList.add('light-mode');
         updateUI(true);
@@ -54,18 +58,22 @@ function initThemeManager() {
         updateUI(isCurrentlyLight);
     };
 
-    // Keep these INSIDE this function
+    // Event Listeners for all possible toggle locations
     if (toggleBtn) toggleBtn.addEventListener('click', switchTheme);
     if (menuToggleBtn) menuToggleBtn.addEventListener('click', switchTheme);
     if (footerToggleBtn) footerToggleBtn.addEventListener('click', switchTheme);
 }
 
 function optimizeDriveImage(url, width = 1600) {
-    if (!url) return 'assets/logo.svg';
+    if (!url || url === "#") return 'assets/logo.svg';
+    
     if (url.includes('drive.google.com')) {
-        const idMatch = url.match(/id=([^&]+)/);
-        // FIXED: Added $ and updated domain
-        if (idMatch) return `https://lh3.googleusercontent.com/u/0/d/${idMatch[1]}=s${width}`;
+        const idMatch = url.match(/id=([^&]+)/) || url.match(/\/d\/([^/]+)/);
+        
+        if (idMatch && idMatch[1]) {
+            // FIXED: Added the missing $ sign here
+            return `https://lh3.googleusercontent.com/u/0/d/${idMatch[1]}=s${width}`;
+        }
     }
     return url;
 }
@@ -217,16 +225,20 @@ function renderSingleProperty(p, container) {
     document.title = `${title} | PeakSquare Estates`;
     
     const waLink = document.getElementById('whatsappCta');
-    if(waLink) waLink.href = `https://wa.me/917276607467?text=Hi, I am interested in ${encodeURIComponent(title)} at ${encodeURIComponent(loc)}`;
+    if(waLink) {
+        waLink.href = `https://wa.me/917276607467?text=Hi, I am interested in ${encodeURIComponent(title)} at ${encodeURIComponent(loc)}`;
+        waLink.setAttribute('target', '_blank');
+        waLink.setAttribute('rel', 'noopener noreferrer');
+    }
 
-    // Corrected Injection Logic to match the Designer Layout
+    // Clean Container-Based Injection
     container.innerHTML = `
         <section class="hero property-hero">
             <div class="hero-bg">
                 <div class="hero-overlay"></div>
                 <img src="${img}" class="hero-bg-img" alt="${title}">
             </div>
-            <div class="hero-container">
+            <div class="container"> 
                 <div class="hero-text-content">
                     <span class="hero-badge" style="display:block; opacity:1;">${loc}</span>
                     <h1 class="hero-title property-title-large fade-in-up">${title}</h1>
@@ -255,30 +267,34 @@ function renderSingleProperty(p, container) {
         </section>
 
         <section class="section">
-            <div class="section-header" style="text-align:left; max-width:800px; margin:0 auto;">
-                <h3 class="section-title">Property Overview</h3>
-                <div class="blog-body-content" style="margin-top:30px;">
+            <div class="container">
+                <div class="section-header">
+                    <h3 class="section-title">Property Overview</h3>
+                </div>
+                <div class="blog-body-content content-columns">
                     <p>${desc}</p>
                 </div>
             </div>
         </section>
 
         <section class="section" style="padding-top:0;">
-            <div class="section-header">
-                <h3 class="section-title">Gallery</h3>
-            </div>
-            <div class="project-grid">
-                <div class="project-card" style="width:100%; grid-column: span 12;">
-                    <div class="project-card-image"><img src="${img}" alt="Gallery View"></div>
+            <div class="container">
+                <div class="section-header">
+                    <h3 class="section-title">Gallery</h3>
+                </div>
+                <div class="project-grid" style="display:grid; grid-template-columns: 1fr; padding:0;">
+                    <div class="project-card" style="width:100%; cursor:default;">
+                        <div class="project-card-image">
+                            <img src="${img}" alt="Gallery View">
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     `;
     
-    // Re-initialize animations after injection
     initScrollAnimations();
 }
-
 // ===================================================
 // 6. RENDERERS
 // ===================================================
@@ -296,11 +312,13 @@ function renderProperties(props, container) {
         
         return `
             <div class="project-card" onclick="window.location.href='my-properties.html?id=${idx}'" style="cursor:pointer;">
-                <div class="project-card-image"><img src="${img}" alt="${title}" loading="lazy"></div>
-                <div class="meta">
-                    <h4>${loc}</h4>
-                    <p>${type}</p>
-                    <span style="font-size:0.9rem; color:var(--text-muted); display:block; margin-top:5px;">${title}</span>
+                <div class="project-card-image">
+                    <img src="${img}" alt="${title}" loading="lazy">
+                </div>
+                <div class="card-details-box">
+                    <h4 class="card-location">${loc}</h4>
+                    <p class="card-type">${type}</p>
+                    <span class="card-title-text">${title}</span>
                 </div>
             </div>`;
     }).join('');
@@ -342,16 +360,7 @@ function renderBlogs(blogs, container) {
     }).join('');
 }
 
-function optimizeDriveImage(url, width = 1600) {
-    if (!url) return 'assets/logo.svg';
-    if (url.includes('drive.google.com')) {
-        const idMatch = url.match(/id=([^&]+)/);
-        // We add =s{width} to the end. Google will resize it on their server!
-        // Desktop: 1600, Mobile: 800
-        if (idMatch) return `https://lh3.googleusercontent.com/u/0/d/${idMatch[1]}=s${width}`;
-    }
-    return url;
-}
+
 // ===================================================
 // 7. UNIFIED OVERLAY MANAGER
 // ===================================================
@@ -475,14 +484,33 @@ function initSearchLogic() {
 }
 
 // ===================================================
-// 9. PROGRESSIVE FORM
+// 9. PROGRESSIVE FORM (Unified: Mobile UX + Sheets Integration)
 // ===================================================
 function initProgressiveForm() {
     const select = document.getElementById('interestType');
     const fields = document.querySelector('.progressive-fields');
     const form = document.getElementById('contactForm');
-    if(!form) return;
-    if(select && fields) {
+    const stickyBar = document.querySelector('.mobile-sticky-bar');
+
+    if (!form) return;
+
+    // --- A. MOBILE UX: HIDE STICKY BAR WHILE TYPING ---
+    const formInputs = form.querySelectorAll('input, select, textarea');
+    formInputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            if (window.innerWidth < 992 && stickyBar) stickyBar.classList.add('hidden');
+        });
+        input.addEventListener('blur', () => {
+            setTimeout(() => {
+                if (!form.contains(document.activeElement) && stickyBar) {
+                    stickyBar.classList.remove('hidden');
+                }
+            }, 100);
+        });
+    });
+
+    // --- B. REVEAL HIDDEN FIELDS ---
+    if (select && fields) {
         select.addEventListener('change', () => {
             fields.classList.add('active');
             fields.style.display = 'block'; 
@@ -490,36 +518,60 @@ function initProgressiveForm() {
         });
     }
 
-    if(form) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if(fields && !fields.classList.contains('active')) {
-                fields.classList.add('active');
-                fields.style.display = 'block';
-                fields.style.opacity = '1';
-                if(select && !select.value) { select.focus(); return; }
-            }
+    // --- C. CLEAN SUBMIT LOGIC ---
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-            const btn = form.querySelector('button');
-            const originalText = btn.textContent;
-            btn.textContent = "Securing Access...";
-            btn.disabled = true;
-            btn.style.opacity = "0.7";
-            
-            try {
-                await fetch(API_URL, { method: "POST", body: new FormData(form), mode: 'no-cors' });
-                window.location.href = "thankyou.html";
-            } catch (err) {
-                console.error("Form Error:", err);
-                alert("Connection issue. Please use WhatsApp.");
-                btn.textContent = originalText;
-                btn.disabled = false;
-                btn.style.opacity = "1";
-            }
-        });
+        // 1. Phone Validation Check
+    const phoneField = form.querySelector('input[name="phone"]');
+    const phoneValue = phoneField.value.trim();
+    
+    // Check if it's exactly 10 digits
+    if (!/^\d{10}$/.test(phoneValue)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        phoneField.focus();
+        phoneField.style.borderColor = "red"; // Visual feedback
+        return; // Stop the function here
     }
-}
+        // Validate hidden fields
+        if (fields && !fields.classList.contains('active')) {
+            fields.classList.add('active');
+            fields.style.display = 'block';
+            fields.style.opacity = '1';
+            if (select && !select.value) { select.focus(); return; }
+        }
 
+        const btn = form.querySelector('button');
+        const originalHTML = btn.innerHTML;
+
+        // 1. Trigger Loading UI
+        btn.classList.add('btn-loading');
+        btn.disabled = true;
+        btn.innerHTML = `<span class="spinner"></span> Securing Access...`;
+
+        const formData = new FormData(form);
+        const params = new URLSearchParams();
+        for (const pair of formData) {
+            params.append(pair[0], pair[1]);
+        }
+
+        try {
+            await fetch(API_URL, { 
+                method: "POST", 
+                body: params, 
+                mode: 'no-cors'
+            });
+            window.location.href = "thankyou.html";
+        } catch (err) {
+            console.error("Form Error:", err);
+            alert("Issue submitting. Please try WhatsApp.");
+            // Reset button on failure
+            btn.classList.remove('btn-loading');
+            btn.disabled = false;
+            btn.innerHTML = originalHTML;
+        }
+    });
+}
 // ===================================================
 // 10. SEO SCHEMA
 // ===================================================
@@ -545,8 +597,4 @@ function injectRealEstateSchema(properties) {
     script.text = JSON.stringify(schema);
     document.head.appendChild(script);
 }
-
-const footerBtn = document.getElementById('themeToggleFooter');
-if (footerBtn) footerBtn.addEventListener('click', switchTheme);
-
 

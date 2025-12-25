@@ -61,11 +61,6 @@ body {
 /* CRITICAL: Fix iOS Zoom on Mobile */
 input, select, textarea { font-size: 16px !important; }
 
-/* Desktop Typography Override */
-@media (min-width: 992px) {
-    input.search-input { font-size: 2rem !important; } 
-}
-
 h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; font-weight: 600; line-height: 1.1; }
 a { text-decoration: none; color: inherit; transition: opacity 0.3s ease; }
 ul { list-style: none; }
@@ -81,13 +76,28 @@ body::after {
    2. HEADER & NAVIGATION
 ========================================= */
 .header {
-    position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
-    padding: 0 5%;
-    display: flex; justify-content: space-between; align-items: center;
-    background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border-bottom: 1px solid var(--glass-border);
     z-index: 1000;
+    display: flex;
+    justify-content: center; /* Centers the inner container */
+    padding: 0 !important; 
+}
+
+/* This targets the <div class="container"> you added inside the <header> */
+.header > .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    /* Inherits max-width: 1200px and padding: 0 20px from your global .container */
 }
 
 .brand { display: flex; align-items: center; gap: 10px; }
@@ -95,14 +105,19 @@ body::after {
 .brand-text .sub { font-size: 0.65rem; letter-spacing: 0.2em; font-weight: 700; text-transform: uppercase; }
 .brand-text .main { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--gold-main); font-weight: 700; letter-spacing: 0.05em; }
 
-/* Hidden on mobile, shown on desktop via media query */
-.desktop-nav { display: none; }
+.desktop-nav { 
+    display: none; 
+    gap: 30px; 
+}
+
+.header-controls { 
+    display: flex; 
+    gap: 15px; 
+    align-items: center; 
+}
 
 /* Header Icons (Search & Menu) */
-.header-controls { 
-    display: flex; gap: 15px; align-items: center; 
-    z-index: 1005; 
-}
+
 
 .icon-btn {
     background: transparent; border: 1px solid var(--glass-border);
@@ -130,7 +145,7 @@ body::after {
 
 /* Cinematic Background */
 .hero-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden;
-    z-index: 1 }
+    z-index: 0 }
 .hero-bg-img { 
     width: 100%; height: 100%; object-fit: cover; 
     filter: brightness(0.7) contrast(1.1);
@@ -178,7 +193,7 @@ body::after {
     font-family: 'Cormorant Garamond', serif;
 }
 
-.hero-title span { display: block; }
+.hero-title span { display: block; text-align: center;}
 .hero-title .script-text {
     font-family: 'Cormorant Garamond', serif; 
     font-weight: 400; 
@@ -402,6 +417,8 @@ body.light-mode .scroll-indicator {
         grid-template-columns: 1fr; 
         text-align: center; 
         gap: 40px; 
+        padding: 0 5%;
+        text-align: center;
     }
     .hero-content-left { text-align: center; }
     .hero-description { 
@@ -425,15 +442,28 @@ body.light-mode .scroll-indicator {
     .hero-form-wrapper {
         margin-bottom: 40px; 
     }
-    
+    .hero-title span {
+        text-align: center !important; /* Ensure centered titles on mobile */
+    }
+    .main-footer{
+        padding-bottom: 25%;
+    }
+    .footer-desktop-sep,.theme-btn-footer{
+        visibility: hidden;
+    }
+    #property-main .property-hero {
+        text-align: left; /* Keep property details editorial style even on mobile */
+    }
+    .property-meta-grid {
+        grid-template-columns: 1fr; /* Stack on mobile for readability */
+    }
+   
 }
-
 
 /* =========================================
    4. SECTIONS & GRIDS
 ========================================= */
 .section { padding: 2% 0; }
-.section-header, .market-pulse-header { padding: 0 5%; margin-bottom: 30px; }
 .section-title { font-size: 2.2rem; color: var(--text-main); }
 .section-subtitle { color: var(--text-muted); margin-top: 5px; }
 
@@ -447,33 +477,94 @@ body.light-mode .scroll-indicator {
 }
 
 /* Horizontal Scroll Container (Mobile Default) */
-.project-grid, #featured-blog-container {
-    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
-    gap: 15px; padding-left: 5%; padding-right: 5%; padding-bottom: 40px;
-    -webkit-overflow-scrolling: touch; scrollbar-width: none;
-    align-items: stretch;
-}
 .project-grid::-webkit-scrollbar { display: none; }
 
-.project-card, .featured-blog-card {
-    flex: 0 0 85vw; min-width: 85vw; /* 85% width on mobile */
-    scroll-snap-align: start;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 12px; overflow: hidden;
-    position: relative; transition: transform 0.3s ease;
+
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover; /* Ensures images don't look squished */
 }
 
-.project-card-image { width: 100%; aspect-ratio: 4/3; background: #222; }
-.project-card-image img { width: 100%; height: 100%; object-fit: cover; }
-.project-card .meta, .featured-content { padding: 20px; }
-.project-card h4 { color: var(--gold-main); font-size: 1.1rem; font-family: 'Manrope', sans-serif; letter-spacing: 1px; text-transform: uppercase; }
-.project-card p { font-size: 1.2rem; font-family: 'Cormorant Garamond', serif; color: var(--text-main); }
+.project-card-image {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Keeps them matching */
+    overflow: hidden;
+}
 
-.featured-blog-card { border-top: 3px solid var(--gold-main); display: flex; flex-direction: column; justify-content: space-between; min-height: 250px; }
-.featured-title { font-size: 1.5rem; margin-bottom: 10px; }
+.project-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* --- PROPERTY CARD CONTENT ADJUSTMENTS --- */
+.project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensures all cards in a row have same height */
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+/* Internal text container */
+.project-card .meta {
+    padding: 20px 24px; /* Increased padding for luxury feel */
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Consistent spacing between text lines */
+    flex-grow: 1; /* Pushes content to fill space */
+}
+
+/* Location Text (H4) */
+.project-card h4 {
+    color: var(--gold-main);
+    font-size: 0.75rem;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0; /* Reset default margins */
+}
+
+/* Property Type (P) */
+.project-card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; /* Larger, elegant serif font */
+    color: var(--text-main);
+    line-height: 1.2;
+    margin: 0;
+}
+.project-card span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-family: 'Manrope', sans-serif;
+    margin-top: auto; /* Pushes specific title to bottom */
+}
+
+.card-details-box{
+    padding: 10px;
+}
+
+.featured-blog-card { border-top: 3px solid var(--gold-main); display: flex; flex-direction: column; justify-content: space-between; min-height: auto; padding: 10px; }
+.featured-title { font-size: 1.15rem; line-height: 1.3; margin-bottom: 10px; }
 .featured-date { font-size: 0.75rem; color: var(--gold-main); text-transform: uppercase; letter-spacing: 2px; }
-.blog-btn-wrapper { padding: 0 20px 20px; text-align: right; }
+.featured-summary {
+    font-size: 0.85rem !important; /* Slightly smaller text */
+    line-height: 1.5 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Change this to 3 if you want more text */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 12px !important;
+}
+.blog-btn-wrapper { text-align: right; }
 
 
 /* =========================================
@@ -503,114 +594,238 @@ body.light-mode .skeleton-box::after { background: linear-gradient(90deg, transp
 /* =========================================
    6. OVERLAYS (MENU & SEARCH)
 ========================================= */
+
+/* --- SHARED OVERLAY BASE --- */
 .menu-overlay, .search-overlay {
-    position: fixed; inset: 0;
-    background: var(--overlay-bg); 
-    z-index: 2000;
-    opacity: 0; visibility: hidden; pointer-events: none;
-    transition: all 0.3s ease;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.menu-overlay.active, .search-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
 
-/* --- VERTICAL HAMBURGER MENU FIX --- */
+.menu-overlay.active, .search-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
 .menu-overlay {
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    backdrop-filter: blur(20px);
-}
-
-.menu-nav {
-    display: flex; flex-direction: column; /* VERTICAL STACK */
+    background: var(--overlay-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Links in middle, Toggle at bottom */
     align-items: center;
-    gap: 20px; /* Spacing between links */
-    text-align: center;
+    padding: 120px 0 60px; /* Top space for close button, bottom for toggle */
 }
+.menu-nav { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.menu-link { font-size: 2.5rem; font-family: 'Cormorant Garamond', serif; color: var(--text-main); }
 
-.menu-label {
-    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
-    color: var(--gold-main); margin-bottom: 10px; display: block;
-}
-
-.menu-link { 
-    font-size: 2.5rem; 
-    font-family: 'Cormorant Garamond', serif; 
-    color: var(--text-main); 
-    text-decoration: none; 
-    display: block; /* Ensure it takes full line */
-    transition: transform 0.3s ease;
-}
-.menu-link:hover { transform: translateX(10px); color: var(--gold-main); }
-
-.menu-footer { margin-top: 40px; }
-.theme-btn-menu {
-    background: transparent; border: 1px solid var(--glass-border);
-    color: var(--text-main); padding: 12px 24px; border-radius: 50px;
-    font-family: 'Manrope', sans-serif; font-size: 0.95rem; font-weight: 600;
-    cursor: pointer; transition: all 0.3s ease;
-}
-.theme-btn-footer, 
-.footer-desktop-sep {
-    display: none;
-}
-
-/* Close Button */
-.menu-close-btn, .search-close { 
-    position: absolute; top: 30px; right: 20px; 
-    width: 50px; height: 50px; border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
-    font-size: 1.5rem; color: var(--text-main); cursor: pointer; 
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.3s ease; z-index: 2005;
-}
-.menu-close-btn:hover, .search-close:hover { background: var(--gold-main); color: #000; border-color: var(--gold-main); }
-
-/* --- SEARCH OVERLAY --- */
+/* --- CINEMATIC SEARCH OVERLAY (Aligned) --- */
 .search-overlay {
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: flex-start; padding-top: 100px;
+    background-color: #050505 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 15vh;
 }
 
-.search-container { width: 90%; max-width: 700px; display: flex; flex-direction: column; gap: 20px; }
+.search-container {
+    width: 90%;
+    max-width: 1000px; /* Luxury wide-screen width */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Ensures label, input, and chips are all centered */
+}
 
-.search-bar-wrapper { position: relative; width: 100%; }
+
+/* 2. Frameless Centered Input */
+.search-bar-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+}
 
 .search-input {
-    width: 100%; height: 60px;
-    background-color: var(--search-box-bg); 
-    border: 1px solid var(--glass-border); border-radius: 8px;
-    color: var(--text-main); font-family: 'Manrope', sans-serif; font-weight: 500;
-    padding: 0 20px 0 60px; /* Space for Icon */
-    font-size: 1.15rem !important;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-}
-.search-input:focus { outline: none; border-color: var(--gold-main); box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15); }
-
-/* Gold Search Icon Embedded */
-.search-bar-wrapper::before {
-    content: ""; position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
-    width: 24px; height: 24px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D4AF37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
-    background-repeat: no-repeat; pointer-events: none; z-index: 2;
+    width: 100%;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    color: var(--text-main);
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: clamp(2rem, 6vw, 4rem) !important;
+    font-style: italic;
+    text-align: left; /* Crucial for cinematic look */
+    padding: 20px 0 20px 10px !important;
+    outline: none !important;
 }
 
-/* Search Results */
-.search-results-list { max-height: 60vh; overflow-y: auto; width: 100%; padding-right: 5px; }
-.search-result-item { 
-    display: flex; gap: 20px; padding: 15px; margin-bottom: 10px; border-radius: 8px;
-    align-items: center; text-decoration: none;
-    background: var(--search-box-bg); border: 1px solid var(--glass-border);
+/* 3. Line growing from center */
+.search-line-effect {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: var(--gold-main);
+    transform: translateX(-50%);
+    transition: width 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.search-result-item:hover { border-color: var(--gold-main); }
-.search-thumb { width: 70px; height: 70px; border-radius: 6px; object-fit: cover; background: #333; flex-shrink: 0; }
 
+.search-input:focus ~ .search-line-effect {
+    width: 100%; /* Spans full container width */
+}
+
+/* 4. Quick Discovery Chips Centering */
+.search-quick-discover {
+    text-align: center;
+    margin-top: 30px;
+    animation: fadeInUp 1s ease 0.3s forwards;
+    opacity: 0;
+}
+
+.search-quick-discover p {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.discover-chips {
+    display: flex;
+    gap: 12px;
+    justify-content: center; /* Keeps chips centered */
+    flex-wrap: wrap;
+}
+
+/* 5. Centered Minimalist Close Button */
+.search-close {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%); /* Center it above the label */
+    background: transparent !important;
+    border: none !important;
+    color: var(--text-muted) !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+/* 6. Results Alignment */
+.search-results-list {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 1100px;
+    max-height: 55vh; /* Increased height for better browsing */
+    overflow-y: auto;
+    padding-bottom: 50px;
+    
+    /* Layout: 1 column for mobile, 2 for tablet, 3 for desktop */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+.search-result-item:hover {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: var(--gold-main);
+    transform: translateY(-4px);
+}
+
+.search-thumb {
+    width: 100px; /* Larger, more architectural image */
+    height: 80px;
+    border-radius: 2px;
+    object-fit: cover;
+    filter: brightness(0.9);
+    flex-shrink: 0;
+    transition: transform 0.6s ease;
+}
+
+.search-result-item:hover .search-thumb {
+    transform: scale(1.05);
+}
+
+.search-result-item div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.search-result-item div span:first-child {
+    font-size: 0.6rem;
+    color: var(--gold-main);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 800;
+}
+
+/* The Title */
+.search-result-item h4 {
+    font-size: 1.15rem;
+    color: var(--text-main);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.search-result-item p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-family: 'Manrope', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+/* 5. Custom Scrollbar (Hidden but functional) */
+.search-results-list::-webkit-scrollbar {
+    width: 2px;
+}
+.search-results-list::-webkit-scrollbar-thumb {
+    background: var(--gold-main);
+}
+/* Light Mode Support */
+body.light-mode .search-overlay {
+    background-color: #ffffff !important;
+}
+body.light-mode .search-result-item {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .search-result-item:hover {
+    background: rgba(142, 107, 29, 0.05);
+    border-color: var(--gold-main);
+}
 
 /* =========================================
    7. FOOTER & MISC
 ========================================= */
 .main-footer {
-    text-align: left; padding: 60px 20px; 
+    text-align: left; padding: 20px 20px; 
     background: var(--card-bg); border-top: 1px solid var(--glass-border);
-    margin-top: 50px;
+    flex-shrink: 0;
+    margin-top: 20px;
 }
 .footer-links { margin-bottom: 20px; color: var(--text-muted); font-size: 0.9rem; }
 .footer-link { color: var(--text-muted); text-decoration: none; margin-right: 15px; }
@@ -646,12 +861,10 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
 /* =========================================
    9. DESKTOP MEDIA QUERY (Polishing)
 ========================================= */
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
     .header-controls #menuTrigger { display: none; }
-    
-    .desktop-nav { 
-        display: flex; gap: 30px; position: absolute; left: 50%; transform: translateX(-50%); 
-    }
+    input.search-input { font-size: 2rem !important; } 
+    .desktop-nav { display: flex; }
     .nav-item { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); transition: color 0.3s; }
     .nav-item:hover { color: var(--gold-main); }
 
@@ -693,11 +906,7 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
         margin: 0 auto;
         padding: 0 5%;
     }
-    .property-meta-grid {
-        width: 100%;
-        margin-top: 0; /* Ensures no weird shifting */
-    }
-
+   
     .property-title-large {
         font-size: 2.5rem !important; /* Adjusted for mobile readability */
         line-height: 1.1;
@@ -716,11 +925,29 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
     .hero-features { justify-content: flex-start; }
     .hero-separator { margin: 20px 0; }
     
-    .project-grid, #featured-blog-container { 
-        display: grid; grid-template-columns: repeat(3, 1fr); 
-        overflow: visible; padding: 0 5% 60px 5%; 
+    .project-grid, 
+    #featured-blog-container,
+    #blogGridSkeleton {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets/notepads */
+        gap: 35px;
+        overflow-x: visible !important;
+        padding: 40px 0 !important;
+        max-width: 1200px;
+        margin: 0 auto;
     }
-    .project-card, .featured-blog-card, .skeleton-card { min-width: auto; flex: auto; }
+
+    .project-card, 
+    .featured-blog-card, 
+    .skeleton-card {
+        flex: none;
+        width: 100%;
+        min-width: 0;
+    }
+    .project-grid, 
+    #featured-blog-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns for desktop */
+    }
     
     /* Remove sticky bar on Desktop */
     .mobile-sticky-bar { display: none !important; }
@@ -728,10 +955,23 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
     /* Footer Alignment */
     .main-footer { padding: 60px 5% !important; } 
     
-    /* Search Bar Scaling */
-    .search-input { height: 80px; padding-left: 70px; }
-    .search-bar-wrapper::before { left: 25px; width: 30px; height: 30px; }
-    .search-close { top: 40px; right: 40px; width: 60px; height: 60px; font-size: 2rem; }
+    .search-results-list {
+        grid-template-columns: repeat(2, 1fr); /* 2 Columns look more elite than 3 */
+        gap: 30px;
+    }
+
+    .search-result-item {
+        padding: 20px;
+    }
+
+    .search-thumb {
+        width: 140px;
+        height: 100px;
+    }
+
+    .search-result-item h4 {
+        font-size: 1.4rem;
+    }
     .footer-desktop-sep {
         display: inline;
     }
@@ -793,6 +1033,23 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
         color: #000 !important;
         letter-spacing: 5px !important; /* Subtle expansion effect */
     }
+    .desktop-cta {
+        display: inline-flex !important;
+    }
+    .desktop-cta:hover {
+        /* Matching your secondary hover effect */
+        border-color: var(--gold-main) !important;
+        background: rgba(212, 175, 55, 0.08) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(212, 175, 55, 0.1);
+    }
+    
+    .desktop-cta:active {
+        transform: translateY(0);
+    }
+    .container {
+        padding: 0 20px !important;
+    }
 }
 
 /* Add to bottom of styles.css */
@@ -819,18 +1076,16 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
 /* A. THE IMMERSIVE HERO */
 /* This targets the top section of your property detail */
 #property-main .property-hero {
-    height: 85vh; /* Taller, more cinematic height */
-    display: flex;
-    align-items: flex-end;
-    padding-bottom: 80px;
-    position: relative;
-    overflow: hidden;
+    padding-top: 120px;
+    padding-bottom: 60px;
+    min-height: 70vh; /* Slightly shorter than home hero for focus on details */
 }
 
 /* Ensure the title inside the detail page stands out */
 .property-title-large {
     font-size: clamp(3rem, 8vw, 5.5rem) !important; /* Massive, elegant typography */
     font-weight: 600;
+    text-align: left !important;
     line-height: 0.9;
     letter-spacing: -0.04em;
     color: var(--text-main);
@@ -849,17 +1104,24 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
 /* B. THE ARCHITECTURAL SPEC GRID */
 /* Refined Bed/Bath/Area specs to look like a luxury brochure */
 .property-meta-grid {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0; /* Clean lines */
-    background: var(--glass-bg);
-    backdrop-filter: blur(15px);
-    border: 1px solid var(--glass-border);
-    border-radius: 4px; /* Sharp, sophisticated edges */
+    border-radius: 4px;
     overflow: hidden;
-    margin-top: -60px; /* Overlap the hero for depth */
-    position: relative;
-    z-index: 10;
+}
+/* --- 5. CLEAN FOOTER (No inline styles) --- */
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.footer-sep {
+    color: var(--glass-border);
+    margin: 0 10px;
 }
 
 .meta-item {
@@ -892,11 +1154,8 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
 }
 
 /* C. THE CONTENT & OVERVIEW */
-#property-main .section-header .section-title {
-    font-size: 2.5rem;
-    border-bottom: 1px solid var(--gold-dim);
-    display: inline-block;
-    padding-bottom: 10px;
+#property-main .section-header {
+    padding: 0; /* Let .container handle the padding */
     margin-bottom: 30px;
 }
 
@@ -926,14 +1185,16 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
 }
 
 /* Mobile Adjustments for Detail Page */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     #property-main .property-hero {
         height: 70vh;
     }
+    .property-title-large,.hero-title{
+        font-size: 1rem;
+    }
     
     .property-meta-grid {
-        grid-template-columns: 1fr; /* Stack on mobile */
-        margin-top: -30px;
+        grid-template-columns: 1fr;
     }
     
     .meta-item {
@@ -945,7 +1206,10 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
         border-right: none;
     }
     .property-hero {
-        min-height: 50vh !important; /* Reduce the height so it's not "too big" */
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        position: relative;
     }
     .hero-bg-img {
         /* On mobile, center the crop perfectly */
@@ -959,36 +1223,92 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
     .blog-footer-cta {
         padding: 0 5%;
     }
+    .search-overlay {
+        padding-top: 100px !important;
+    }
+    .search-result-item {
+        gap: 15px;
+        padding: 10px;
+    }
 
-  
+    .search-thumb {
+        width: 80px;
+        height: 80px;
+    }
+
+    .search-result-item h4 {
+        font-size: 1rem;
+    } 
+    .menu-close-btn, 
+    .search-close {
+        top: 25px !important;
+        right: 25px !important;
+        left: auto !important;
+        transform: none !important;
+        
+        width: 48px !important;
+        height: 48px !important;
+        
+        background: transparent !important; /* Request: No bg color */
+        border: 1px solid var(--glass-border) !important; /* Keeps the rim border */
+        
+        display: flex !important;
+        flex-direction: row !important; /* Reset from column to row for centering */
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .close-text {
+        display: none !important;
+    }
+    .close-icon {
+        margin: 0 !important;
+        font-size: 1.1rem !important; /* Slightly smaller for the smaller circle */
+    }
+    .main-footer{
+        padding-bottom: 12%;
+    }
+    .footer-desktop-sep,.theme-btn-footer{
+        visibility: hidden;
+    }
+    .project-grid, #featured-blog-container {
+        grid-template-columns: 1fr; /* Single column for mobile */
+    }
+    .section-title {
+        font-size: 1.8rem !important; /* More appropriate for small screens */
+    }
+    .project-grid, 
+    #featured-blog-container,
+    #blogGridSkeleton {
+        display: flex !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory;
+        gap: 15px;
+        padding: 10px 20px 40px !important;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    .project-grid::-webkit-scrollbar { display: none; }
+    
+    .project-card, .featured-blog-card, .skeleton-card {
+        flex: 0 0 85% !important;
+        min-width: 85% !important;
+        scroll-snap-align: center;
+    }
 
 }
 
 
 /* 3. THE LOADING SPINNER SYSTEM */
-.blog-cta-btn.is-loading {
-    color: transparent !important; /* Hide text while loading */
-    pointer-events: none;
-    position: relative;
-}
-
-.blog-cta-btn.is-loading::after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    top: 50%;
-    left: 50%;
-    margin-top: -10px;
-    margin-left: -10px;
-    border: 2px solid rgba(212, 175, 55, 0.3);
-    border-top-color: var(--gold-main);
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
+.form-glass-box .btn.primary.btn-loading,
+.blog-cta-btn.primary.btn-loading {
+    filter: grayscale(1) contrast(0.5) !important; 
+    opacity: 0.8 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    background: #444 !important; /* Forces a dark grey background */
+    color: #888 !important;      /* Forces grey text */
+    border-color: #555 !important;
 }
 
 /* 4. LIGHT MODE SPECIFIC FIX */
@@ -1039,11 +1359,13 @@ body.light-mode .blog-cta-btn.secondary {
 
 .breadcrumb-nav {
     position: absolute;
-    top: 100px;
+    top: 100px; /* Sits below the fixed header */
     left: 0;
     width: 100%;
-    z-index: 100;
-    padding: 0 5%;
+    z-index: 10;
+}
+.breadcrumb-nav .container {
+    padding: 0 20px !important; /* Matches your global alignment */
 }
 
 .back-link {
@@ -1063,16 +1385,20 @@ body.light-mode .blog-cta-btn.secondary {
 }
 
 .property-specs-section {
-    padding: 0 5%;
+    margin-top: -50px; /* Luxury overlap effect */
     position: relative;
-    z-index: 20;
+    z-index: 5;
 }
-
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px; /* Limits site width on ultra-wide screens */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px !important;  /* Fixed mobile safe-zone (approx 5%) */
+    padding-right: 20px !important; /* Fixed mobile safe-zone */
+    box-sizing: border-box;
+    display: block;
 }
-
 /* Specific Light Mode Readability Fixes */
 body.light-mode .privacy-note,
 body.light-mode .section-subtitle,
@@ -1106,9 +1432,9 @@ body.light-mode .hero-description {
 
 /* B. Editorial Typography */
 .blog-post-content {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 5% 100px;
+    padding: 0 5%;
 }
 
 .blog-header {
@@ -1133,7 +1459,7 @@ body.light-mode .hero-description {
     margin-bottom: 20px;
     color: var(--text-main);
     letter-spacing: -0.02em;
-    max-width: 800px;                     /* Prevents lines from getting too long */
+    max-width: 1200px;                     /* Prevents lines from getting too long */
 }
 
 .blog-meta {
@@ -1169,7 +1495,7 @@ body.light-mode .hero-description {
 /* E. The "End of Article" CTA */
 .blog-footer-cta {
     margin-top: 60px;
-    padding-bottom: 100px;
+    
 }
 
 .cta-glass-box {
@@ -1319,4 +1645,260 @@ body.light-mode .stat-divider {
     color: #000; /* Contrast color for light-on-gold */
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(197, 168, 128, 0.2); /* Soft gold glow */
+}
+/* --- LUXURY CLOSE BUTTON SYSTEM --- */
+.menu-close-btn, 
+.search-close {
+    position: absolute;
+    top: 40px;
+    right: 5%;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column; /* Desktop: Stacks Icon on top of Text */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 100001;
+}
+/* --- THE CLOSE BUTTON --- */
+.menu-close-btn {
+    position: absolute;
+    top: 40px;
+    right: 5%;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.4s ease;
+    z-index: 100001;
+}
+
+.menu-close-btn:hover {
+    border-color: var(--gold-main);
+    color: var(--gold-main);
+    transform: rotate(90deg);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+/* --- THEME TOGGLE (MENU SPECIFIC) --- */
+.menu-footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.theme-btn-menu {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    padding: 14px 28px;
+    border-radius: 50px; /* Perfect pill shape */
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme-btn-menu:hover {
+    border-color: var(--gold-main);
+    color: var(--gold-main);
+    background: rgba(212, 175, 55, 0.05);
+    transform: translateY(-3px);
+}
+
+/* Light Mode visibility for the toggle */
+body.light-mode .theme-btn-menu {
+    border-color: rgba(0,0,0,0.1);
+    color: #000;
+}
+/* The "✕" Symbol */
+.close-icon {
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1;
+}
+
+/* Hidden "Close" text that appears on hover (Desktop) */
+.close-text {
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 2px;
+    opacity: 0.7;
+    color: var(--gold-main);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+}
+/* --- HOVER STATES --- */
+.menu-close-btn:hover, 
+.search-close:hover {
+    border-color: var(--gold-main);
+    background: rgba(212, 175, 55, 0.05);
+    transform: rotate(90deg);
+}
+
+.menu-close-btn:hover .close-icon,
+.search-close:hover .close-icon {
+    color: var(--gold-main);
+}
+
+.menu-close-btn:hover .close-text,
+.search-close:hover .close-text {
+    opacity: 1;
+}
+
+/* Spinner Animation */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Button Loading State */
+.btn-loading, 
+.btn-loading:hover, 
+.btn-loading:active {
+    background: #444 !important; /* Force Grey */
+    color: #888 !important;      /* Force Grey text */
+    filter: grayscale(1) !important;
+    box-shadow: none !important;  /* Removes the glow/shadow */
+    transform: none !important;   /* Prevents the 'lift' effect */
+    border-color: #555 !important;
+    opacity: 0.8 !important;
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff; 
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/* Ensure the button stays gold-toned even when disabled if preferred, 
+   or let grayscale(1) make it grey. */
+button:disabled {
+    pointer-events: none;
+}
+
+/* Shake animation for invalid input */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+input[name="phone"]:invalid:focus:not(:placeholder-shown) {
+    border-color: #ff4d4d !important;
+    animation: shake 0.2s ease-in-out 0s 2;
+    box-shadow: 0 0 0 4px rgba(255, 77, 77, 0.1);
+}
+
+input[name="phone"]:valid:not(:placeholder-shown) {
+    border-color: #25D366 !important; /* WhatsApp Green */
+}
+/* The wrapper becomes a vertical flexbox */
+.site-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Minimum height of the screen */
+}
+
+/* The main content area grows to push the footer down */
+#blog-main, #property-main {
+    flex: 1 0 auto;
+}
+
+/* Footer stays its natural size */
+.main-footer {
+    flex-shrink: 0;
+}
+/* Reset specific misalignments */
+.hero-container, 
+.section-header, 
+.blog-post-content, 
+.property-specs-section .container {
+    padding-left: 0;  /* Let the parent .container handle this */
+    padding-right: 0;
+}
+
+/* Fix Blog Body specifically */
+.blog-body-text, .blog-header {
+    max-width: 900px; /* Narrower for better readability */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+}
+
+
+.desktop-cta {
+    display: none; /* Hidden on mobile */
+    align-items: center;
+    justify-content: center;
+    
+    /* From your preferred styles */
+    background: rgba(255, 255, 255, 0.03) !important;
+    color: var(--gold-main) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* Typography & Sizing */
+    padding: 10px 22px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 4px;
+    margin-right: 15px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    text-decoration: none;
+    white-space: nowrap;
+}
+@media (min-width: 768px) {
+    .container {
+        padding: 0 40px !important; /* Slightly more breathing room on tablets */
+    }
+
+    .project-grid, 
+    #featured-blog-container,
+    #blogGridSkeleton {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 20px; /* Tighter gap for smaller screens */
+        overflow-x: visible !important;
+        padding: 40px 0 !important;
+        margin: 0 auto;
+        max-width: 1200px;
+    }
+
+    .project-card, .featured-blog-card, .skeleton-card {
+        flex: none !important;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+    
+    .hero-title { font-size: 3.5rem !important; } /* Balanced title for tablets */
 }
