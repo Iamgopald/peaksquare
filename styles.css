@@ -908,10 +908,9 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
     }
    
     .property-title-large {
-        font-size: 2.5rem !important; /* Adjusted for mobile readability */
         line-height: 1.1;
         margin: 10px 0 !important;
-        color: var(--text-main);
+        font-size: clamp(2rem, 5vw, 3.5rem);
     }
 
     /* 4. Style the Price (Rs. 1,00,00,000) */
@@ -921,9 +920,16 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
         color: var(--gold-main);
         margin: 0 !important;
     }
+
     
     .hero-features { justify-content: flex-start; }
-    .hero-separator { margin: 20px 0; }
+    .hero-separator {
+        width: 50px;
+        height: 1px;
+        background: var(--gold-main);
+        margin-top: 15px;
+        opacity: 0.6;
+    }
     
     .project-grid, 
     #featured-blog-container,
@@ -1068,6 +1074,9 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
     border-radius: 8px;
     margin: 20px 0;
 }
+.blog-post-content .container {
+    padding-top: 0 !important;
+}
 
 /* =========================================
    10. PROPERTY DETAILS PAGE (Dynamic Styling)
@@ -1186,13 +1195,23 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
 
 /* Mobile Adjustments for Detail Page */
 @media (max-width: 767px) {
+    .breadcrumb-nav {
+        /* Tighter gap on mobile */
+        padding-top: calc(var(--nav-height) + 10px);
+    }
+    .editorial-header {
+        padding-top: 10px;
+    }
     #property-main .property-hero {
         height: 70vh;
     }
     .property-title-large,.hero-title{
         font-size: 1rem;
     }
-    
+    .btn-ui {
+        width: 100%;
+        min-width: unset;
+    }
     .property-meta-grid {
         grid-template-columns: 1fr;
     }
@@ -1295,6 +1314,9 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
         min-width: 85% !important;
         scroll-snap-align: center;
     }
+    .back-link {
+        font-size: 0.7rem;
+    }
 
 }
 
@@ -1358,11 +1380,13 @@ body.light-mode .blog-cta-btn.secondary {
 }
 
 .breadcrumb-nav {
-    position: absolute;
-    top: 100px; /* Sits below the fixed header */
-    left: 0;
     width: 100%;
+    /* Standard Gap: Header Height + 20px breathing room */
+    padding-top: calc(var(--nav-height) + 20px); 
+    padding-bottom: 10px;
+    background: transparent;
     z-index: 10;
+    position: relative;
 }
 .breadcrumb-nav .container {
     padding: 0 20px !important; /* Matches your global alignment */
@@ -1371,19 +1395,28 @@ body.light-mode .blog-cta-btn.secondary {
 .back-link {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     color: var(--text-muted);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
-    transition: color 0.3s ease;
+    letter-spacing: 2px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    line-height: 1.2; /* Prevents text overlap */
+    padding: 8px 0;
+}
+
+.back-link svg {
+    transition: transform 0.3s ease;
 }
 
 .back-link:hover {
     color: var(--gold-main);
 }
 
+.back-link:hover svg {
+    transform: translateX(-5px); /* Elegant pull-back effect */
+}
 .property-specs-section {
     margin-top: -50px; /* Luxury overlap effect */
     position: relative;
@@ -1470,16 +1503,17 @@ body.light-mode .hero-description {
 /* C. Immersive Imagery */
 .blog-hero-image-wrapper {
     width: 100%;
-    border-radius: 12px;
+    max-height: 450px; /* Limits vertical size */
     overflow: hidden;
-    margin-bottom: 60px;
+    border-radius: 8px;
+    margin-bottom: 40px;
     border: 1px solid var(--glass-border);
 }
 
 .blog-main-img {
     width: 100%;
-    height: auto;
-    display: block;
+    height: 100%;
+    object-fit: cover; /* Keeps aspect ratio clean within the max-height */
 }
 
 /* D. The Content Flow */
@@ -1902,3 +1936,119 @@ input[name="phone"]:valid:not(:placeholder-shown) {
     
     .hero-title { font-size: 3.5rem !important; } /* Balanced title for tablets */
 }
+
+/* =========================================
+   REUSABLE BUTTON SYSTEM (Luxury Components)
+   ========================================= */
+
+/* The Base "Box" Container */
+.btn-ui {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 36px;
+    border-radius: 4px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    min-width: 200px;
+    border: 1px solid transparent;
+}
+
+/* Primary: The Solid Gold Box */
+.btn-primary {
+    background: var(--gold-main);
+    color: #050505 !important;
+    border-color: var(--gold-main);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3);
+    filter: brightness(1.1);
+}
+
+/* Secondary: The Luxury Glass Box */
+.btn-secondary {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    color: var(--gold-main) !important;
+    border: 1px solid var(--glass-border);
+}
+
+.btn-secondary:hover {
+    border-color: var(--gold-main);
+    background: rgba(212, 175, 55, 0.05);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================================
+   EDITORIAL ALIGNMENT (Blog & Single Post)
+   ========================================= */
+
+/* Use this to wrap the dynamic article content */
+.blog-article-body {
+    max-width: 850px; /* Luxury editorial width */
+    margin: 0 auto;
+    padding: 40px 0;
+    line-height: 1.8;
+    font-size: 1.15rem;
+}
+
+.blog-article-body p {
+    margin-bottom: 25px;
+    color: var(--text-muted);
+}
+
+.blog-article-body h2, .blog-article-body h3 {
+    margin: 40px 0 20px;
+    color: var(--text-main);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+}
+
+/* Force images inside blog posts to stay within container */
+.blog-article-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 30px 0;
+    border: 1px solid var(--glass-border);
+}
+
+/* Center the CTA Box */
+.blog-footer-cta {
+    max-width: 850px;
+    margin: 80px auto 0;
+}
+
+/* --- Editorial Header Styling --- */
+.editorial-header {
+    width: 100%;
+    /* If breadcrumb is present, this padding can be smaller */
+    padding-top: 20px; 
+    padding-bottom: 30px;
+    background: var(--bg-body);
+}
+
+.push-below-header {
+    margin-top: var(--nav-height);
+}
+
+/* Remove the "Line 1/2" block behavior for sub-pages */
+.editorial-header .property-title-large {
+    text-align: left !important;
+    font-size: clamp(2.2rem, 5vw, 3.5rem); /* Slightly smaller than homepage hero */
+    margin: 0;
+    display: block;
+}
+

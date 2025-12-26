@@ -162,16 +162,41 @@
         </p>
         
         <div class="btn-wrapper">
-            <a href="index.html" class="btn primary">Return to Home</a>
-            <a href="index.html#projects" class="btn secondary">View Properties</a>
+            <a href="index.html" class="btn-ui btn-primary">Return to Home</a>
+            <a href="index.html#projects" class="btn-ui btn-secondary">View Properties</a>
         </div>
     </main>
 
-    <footer class="main-footer" style="background: transparent; border: none; margin-top: 0;">
-        <div class="footer-copyright" style="text-align: center; width: 100%;">
-            © 2025 PEAKSQUARE ESTATES • Pune, MH
+    <footer class="main-footer">
+        <div class="footer-links">
+            <a href="blog.html" class="footer-link">Market Insights</a> • 
+            <a href="privacy.html" class="footer-link">Privacy Policy</a> • 
+            <a href="terms.html" class="footer-link">Terms</a> • 
+            <a href="disclaimer.html" class="footer-link">Disclaimer</a>
+            <span class="footer-desktop-sep"> • </span>
+            <button id="themeToggleFooter" class="theme-btn-footer">☀ Switch Theme</button>
+        </div>
+        <div class="footer-copyright">
+            © 2025 PEAKSQUARE ESTATES
         </div>
     </footer>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">
+            <span class="close-icon">✕</span>
+            <span class="close-text">Close</span>
+        </button>
+        <nav class="menu-nav">
+            <span class="menu-label">Menu</span>
+            <a href="index.html" class="menu-link">Home</a>
+            <a href="index.html#projects" class="menu-link">Properties</a>
+            <a href="blog.html" class="menu-link">Insights</a>
+            <a href="mailto:sales@peaksquareestates.com" class="menu-link">Email us</a>
+        </nav>
+        <div class="menu-footer">
+            <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js"></script>
     <script src="script.js"></script>

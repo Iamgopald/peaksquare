@@ -25,16 +25,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+    
     <link rel="stylesheet" href="styles.css" />
 
     <style>
+        /* Thank You Page Layout */
         .success-wrapper {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 120px 5% 60px;
-            /* ADAPTIVE BACKGROUND */
+            padding: 140px 5% 60px;
             background: radial-gradient(circle at center, var(--card-bg) 0%, var(--bg-body) 100%);
             transition: background 0.4s ease;
         }
@@ -44,7 +45,6 @@
             width: 100%;
             text-align: center;
             padding: 60px 40px;
-            /* ADAPTIVE CARD */
             background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
@@ -53,58 +53,14 @@
             box-shadow: 0 40px 100px rgba(0,0,0,0.3);
         }
 
-        /* --- THE BOXED BUTTON STYLING (RESTORED & THEMED) --- */
-        .btn {
-            display: inline-flex;
-            align-items: center;
+        /* Override to ensure buttons are visible and spaced correctly on this specific page */
+        .cta-container {
+            display: flex;
+            gap: 15px;
             justify-content: center;
-            padding: 18px 35px;
-            border-radius: 4px;
-            font-family: 'Manrope', sans-serif;
-            font-weight: 800;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            cursor: pointer;
-            text-decoration: none;
-            min-width: 200px;
+            margin-top: 30px;
         }
 
-        /* Primary Gold Box */
-        .btn.primary {
-            background: var(--gold-main);
-            color: #050505;
-            border: 1px solid var(--gold-main);
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
-        }
-
-        .btn.primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
-            filter: brightness(1.1);
-        }
-
-        /* Secondary Ghost Box */
-        .btn.secondary {
-            background: transparent;
-            color: var(--gold-main);
-            border: 1px solid var(--gold-main); /* Restored explicit box border */
-            margin-left: 10px;
-        }
-
-        .btn.secondary:hover {
-            background: rgba(212, 175, 55, 0.05);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        @media (max-width: 600px) {
-            .btn { width: 100%; margin-left: 0 !important; margin-bottom: 15px; }
-            .success-card { padding: 40px 20px; }
-        }
-
-        /* TEXT THEMING */
         .success-icon {
             width: 80px;
             height: 80px;
@@ -128,10 +84,10 @@
             font-size: 1.1rem;
             color: var(--text-muted);
             line-height: 1.8;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
-        .success-footer {
+        .success-footer-text {
             border-top: 1px solid var(--glass-border);
             padding-top: 30px;
             font-size: 0.8rem;
@@ -143,6 +99,11 @@
 
         .fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; transform: translateY(20px); }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 600px) {
+            .cta-container { flex-direction: column; }
+            .cta-container .btn { width: 100%; margin: 0; }
+        }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js" defer></script>
@@ -152,21 +113,32 @@
 <body>
 
     <header class="header">
-        <a href="/" class="logo-link">
-            <div class="brand">
-                <div class="logo-box"><img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40"></div>
-                <div class="brand-text">
-                    <span class="sub">PEAKSQUARE</span>
-                    <span class="main">ESTATES</span>
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <div class="brand">
+                    <div class="logo-box"><img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40"></div>
+                    <div class="brand-text">
+                        <span class="sub">PEAKSQUARE</span>
+                        <span class="main">ESTATES</span>
+                    </div>
                 </div>
+            </a>
+            
+            <div class="header-controls">
+                <button id="searchTrigger" class="icon-btn" aria-label="Open Search">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                <button id="menuTrigger" class="icon-btn" aria-label="Open Menu">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
             </div>
-        </a>
+        </div>
     </header>
 
     <main class="success-wrapper">
         <div class="success-card fade-in-up">
             <div class="success-icon">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                     <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
@@ -176,27 +148,45 @@
             
             <p class="success-message">
                 Thank you for reaching out to PeakSquare Estates. <br>
-                Your request for private access has been logged. Our property concierge will contact you within 24 hours.
+                Our property concierge will contact you within 24 hours.
             </p>
 
             <div class="cta-container">
-                <a href="index.html" class="btn primary">Return Home</a>
-                <a href="blog.html" class="btn secondary">Read Market Pulse</a>
+                <a href="index.html" class="btn-ui btn-primary">Return Home</a>
+                <a href="blog.html" class="btn-ui btn-secondary">Market Pulse</a>
             </div>
 
-            <div class="success-footer" style="margin-top: 40px;">
+            <div class="success-footer-text" style="margin-top: 40px;">
                 Direct Contact: +91 72766 07467
             </div>
         </div>
     </main>
 
+    <div class="search-overlay" id="searchOverlay">
+        <button class="search-close" id="searchClose">✕</button>
+        <div class="search-container">
+            <div class="search-bar-wrapper">
+                <input type="text" class="search-input" placeholder="Search..." id="searchInput">
+            </div>
+            <div id="searchResults" class="search-results-list"></div>
+        </div>
+    </div>
+
     <div class="menu-overlay" id="menuOverlay">
-        <button class="menu-close-btn" id="menuClose">✕</button>
+        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">
+            <span class="close-icon">✕</span>
+            <span class="close-text">Close</span>
+        </button>
         <nav class="menu-nav">
+            <span class="menu-label">Menu</span>
             <a href="index.html" class="menu-link">Home</a>
             <a href="index.html#projects" class="menu-link">Properties</a>
-            <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
+            <a href="blog.html" class="menu-link">Insights</a>
+            <a href="mailto:sales@peaksquareestates.com" class="menu-link">Email us</a>
         </nav>
+        <div class="menu-footer">
+            <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
+        </div>
     </div>
 
 </body>

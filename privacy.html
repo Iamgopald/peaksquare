@@ -12,9 +12,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Privacy Policy | PeakSquare Estates</title>
-    
-    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="At PeakSquare Estates, we manage luxury real estate with the highest discretion. Learn how we protect your data." />
+    <link rel="canonical" href="https://www.peaksquareestates.com/privacy.html" />
+
+    <link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/favicon-180.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="styles.css" />
 
     <style>
         /* Ensuring the Legal Page remains consistent with the Luxury Theme */
@@ -74,25 +82,46 @@
 </head>
 
 <body>
+    <div class="search-overlay" id="searchOverlay">
+        <button class="search-close" id="searchClose" aria-label="Close Search">✕</button>
+        <div class="search-container">
+            <div class="search-bar-wrapper">
+                <input type="text" class="search-input" placeholder="Type a location or project..." id="searchInput" autocomplete="off">
+                <div class="search-line-effect"></div>
+            </div>
+            <div id="searchResults" class="search-results-list"></div>
+        </div>
+    </div>
 
     <header class="header">
-        <a href="/" class="logo-link">
-            <div class="brand">
-                <div class="logo-box"><img src="assets/logo.svg" alt="Logo" width="40" height="40"></div>
-                <div class="brand-text">
-                    <span class="sub">PEAKSQUARE</span>
-                    <span class="main">ESTATES</span>
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <div class="brand">
+                    <div class="logo-box">
+                        <img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40">
+                    </div>
+                    <div class="brand-text">
+                        <span class="sub">PEAKSQUARE</span>
+                        <span class="main">ESTATES</span>
+                    </div>
                 </div>
+            </a>
+
+            <nav class="desktop-nav">
+                <a href="index.html#projects" class="nav-item">Properties</a>
+                <a href="blog.html" class="nav-item">Market Pulse</a>
+                <a href="mailto:sales@peaksquareestates.com" class="nav-item">Email Us</a>
+            </nav>
+
+            <div class="header-controls">
+                <a href="https://wa.me/917276607467" class="btn secondary desktop-cta" target="_blank" rel="noopener noreferrer">WhatsApp Now</a>
+                <button id="searchTrigger" class="icon-btn" aria-label="Open Search">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                <button id="menuTrigger" class="icon-btn" aria-label="Open Menu">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
             </div>
-        </a>
-        <nav class="desktop-nav">
-            <a href="index.html#projects" class="nav-item">Properties</a>
-            <a href="blog.html" class="nav-item">Market Pulse</a>
-            <a href="mailto:sales@peaksquareestates.com" class="nav-item">Contact</a>
-        </nav>
-        <div class="header-controls">
-            <button id="searchTrigger" class="icon-btn" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-            <button id="menuTrigger" class="icon-btn" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
         </div>
     </header>
 
@@ -104,16 +133,22 @@
             </header>
 
             <article class="legal-body">
-                <p>At PeakSquare Estates, we manage luxury real estate with the highest discretion. This policy details our commitment to your data security and confidentiality.</p>
+                <p>At <strong>PeakSquare Estates</strong>, we manage luxury real estate with the highest discretion. Your privacy is paramount. This policy details our commitment to your data security and confidentiality.</p>
                 
                 <h3>1. Data Acquisition</h3>
-                <p>We collect information necessary to curate your property search, including contact details and investment preferences shared via our private access forms or direct consultations.</p>
+                <p>We collect information necessary to curate your property search, including contact details (name, email, phone number) and investment preferences shared via our private access forms, search queries, or direct consultations.</p>
 
                 <h3>2. Professional Use</h3>
-                <p>Your data is used exclusively to facilitate private viewings, verify listing access, and provide high-value market insights specifically tailored to the Pune luxury market.</p>
+                <p>Your data is used exclusively to facilitate private viewings, verify listing access, and provide high-value market insights specifically tailored to your interest in the Pune luxury market. We do not sell or trade your personal information to third-party marketers.</p>
+
+                <h3>3. Digital Security</h3>
+                <p>We implement industry-standard encryption and security protocols to protect your personal information from unauthorized access. Our digital environment is monitored to ensure the integrity of our private inventory and client database.</p>
+
+                <h3>4. Cookies & Analytics</h3>
+                <p>We use cookies to enhance your browsing experience and analyze website traffic via Google Analytics. This helps us understand which luxury collections are most sought after, allowing us to better curate our portfolio.</p>
 
                 <div style="text-align: center; margin-top: 60px;">
-                    <a href="index.html#projects" class="btn secondary">Return to Collection</a>
+                    <a href="index.html#projects" class="btn-ui btn-secondary">Return to Collection</a>
                 </div>
             </article>
         </div>
@@ -123,35 +158,31 @@
         <div class="footer-links">
             <a href="blog.html" class="footer-link">Market Insights</a> • 
             <a href="privacy.html" class="footer-link">Privacy Policy</a> • 
-            <a href="terms.html" class="footer-link">Terms & Disclaimer</a>
+            <a href="terms.html" class="footer-link">Terms</a> • 
+            <a href="disclaimer.html" class="footer-link">Disclaimer</a>
             <span class="footer-desktop-sep"> • </span>
             <button id="themeToggleFooter" class="theme-btn-footer">☀ Switch Theme</button>
         </div>
         <div class="footer-copyright">
-            © 2025 PEAKSQUARE ESTATES • Luxury Real Estate Pune
+            © 2025 PEAKSQUARE ESTATES
         </div>
     </footer>
 
-    <div class="search-overlay" id="searchOverlay">
-        <button class="search-close" id="searchClose">✕</button>
-        <div class="search-container">
-            <div class="search-bar-wrapper">
-                <input type="text" class="search-input" placeholder="Search locations..." id="searchInput">
-            </div>
-            <div id="searchResults" class="search-results-list"></div>
-        </div>
-    </div>
-
     <div class="menu-overlay" id="menuOverlay">
-        <button class="menu-close-btn" id="menuClose">✕</button>
+        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">
+            <span class="close-icon">✕</span>
+            <span class="close-text">Close</span>
+        </button>
         <nav class="menu-nav">
             <span class="menu-label">Menu</span>
             <a href="index.html" class="menu-link">Home</a>
             <a href="index.html#projects" class="menu-link">Properties</a>
             <a href="blog.html" class="menu-link">Insights</a>
-            <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
+            <a href="mailto:sales@peaksquareestates.com" class="menu-link">Email us</a>
         </nav>
+        <div class="menu-footer">
+            <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
+        </div>
     </div>
-
 </body>
 </html>

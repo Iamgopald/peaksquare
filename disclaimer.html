@@ -12,12 +12,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Disclaimer | PeakSquare Estates</title>
-    
-    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="Official disclaimer and legal information regarding property listings and architectural representations for PeakSquare Estates, Pune." />
+    <link rel="canonical" href="https://www.peaksquareestates.com/disclaimer.html" />
+
+    <link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/favicon-180.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="styles.css" />
 
     <style>
-        /* Legal Page specific styling using Luxury Variables */
+        /* Legal Content Style - Fully variable-driven for theme support */
         .legal-page-wrapper {
             padding: 160px 5% 100px;
             background: radial-gradient(circle at top right, var(--card-bg) 0%, var(--bg-body) 100%);
@@ -62,6 +70,11 @@
             margin-bottom: 20px; 
         }
 
+        .legal-action-footer {
+            text-align: center;
+            margin-top: 60px;
+        }
+
         @media (max-width: 768px) {
             .legal-container { padding: 40px 20px; }
             .legal-page-wrapper { padding-top: 120px; }
@@ -73,25 +86,49 @@
 </head>
 
 <body>
+    <div class="search-overlay" id="searchOverlay">
+        <button class="search-close" id="searchClose" aria-label="Close Search">
+            <span class="close-icon">✕</span>
+            <span class="close-text">Close</span>
+        </button>
+        <div class="search-container">
+            <div class="search-bar-wrapper">
+                <input type="text" class="search-input" placeholder="Search locations or projects..." id="searchInput" autocomplete="off">
+                <div class="search-line-effect"></div>
+            </div>
+            <div id="searchResults" class="search-results-list"></div>
+        </div>
+    </div>
 
     <header class="header">
-        <a href="/" class="logo-link">
-            <div class="brand">
-                <div class="logo-box"><img src="assets/logo.svg" alt="Logo" width="40" height="40"></div>
-                <div class="brand-text">
-                    <span class="sub">PEAKSQUARE</span>
-                    <span class="main">ESTATES</span>
+        <div class="container">
+            <a href="index.html" class="logo-link" aria-label="PeakSquare Estates Home">
+                <div class="brand">
+                    <div class="logo-box">
+                        <img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40">
+                    </div>
+                    <div class="brand-text">
+                        <span class="sub">PEAKSQUARE</span>
+                        <span class="main">ESTATES</span>
+                    </div>
                 </div>
+            </a>
+
+            <nav class="desktop-nav">
+                <a href="index.html#projects" class="nav-item">Properties</a>
+                <a href="blog.html" class="nav-item">Market Pulse</a>
+                <a href="mailto:sales@peaksquareestates.com" class="nav-item">Email Us</a>
+            </nav>
+
+            <div class="header-controls">
+                <a href="https://wa.me/917276607467" class="btn secondary desktop-cta" target="_blank" rel="noopener noreferrer">WhatsApp Now</a>
+                <button id="searchTrigger" class="icon-btn" aria-label="Open Search">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                <button id="menuTrigger" class="icon-btn" aria-label="Open Menu">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
             </div>
-        </a>
-        <nav class="desktop-nav">
-            <a href="index.html#projects" class="nav-item">Properties</a>
-            <a href="blog.html" class="nav-item">Market Pulse</a>
-            <a href="mailto:sales@peaksquareestates.com" class="nav-item">Contact</a>
-        </nav>
-        <div class="header-controls">
-            <button id="searchTrigger" class="icon-btn" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-            <button id="menuTrigger" class="icon-btn" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
         </div>
     </header>
 
@@ -109,15 +146,21 @@
 
                 <h3>1. Artistic Impressions</h3>
                 <p>
-                    Visual representations, including floor plans and photographs, are intended to be artistic impressions only. They may not represent the actual finished property accurately and do not constitute a legal offer or contract.
+                    Visual representations, including floor plans, 3D renders, and photographs, are intended to be artistic impressions only. They are used to illustrate the potential of a property and may not represent the actual finished product accurately. These visuals do not constitute a legal offer or contract.
                 </p>
 
                 <h3>2. RERA Compliance</h3>
                 <p>
-                    Project information is provided based on data received from developers. It is the user’s responsibility to independently verify the <strong>MahaRERA</strong> registration status of any project on the official government website before proceeding.
+                    Project information is provided based on data received from developers. It is the user’s responsibility to independently verify the <strong>MahaRERA</strong> registration status of any project on the official government website before proceeding with any financial commitment.
                 </p>
+
+                <h3>3. No Investment Advice</h3>
+                <p>
+                    Market insights and blog content published on this platform represent professional opinions and should not be construed as financial or investment advice. Real estate investments carry inherent risks; users are encouraged to seek independent legal and financial counsel.
+                </p>
+
                 <div class="legal-action-footer">
-                    <a href="index.html#projects" class="btn-legal-box">Back to Collection</a>
+                    <a href="index.html#projects" class="btn-ui btn-secondary">Return to Collection</a>
                 </div>
             </article>
         </div>
@@ -130,33 +173,28 @@
             <a href="terms.html" class="footer-link">Terms</a> • 
             <a href="disclaimer.html" class="footer-link">Disclaimer</a>
             <span class="footer-desktop-sep"> • </span>
-        <button id="themeToggleFooter" class="theme-btn-footer">☀ Switch Theme</button>
+            <button id="themeToggleFooter" class="theme-btn-footer">☀ Switch Theme</button>
         </div>
         <div class="footer-copyright">
             © 2025 PEAKSQUARE ESTATES
         </div>
     </footer>
 
-    <div class="search-overlay" id="searchOverlay">
-        <button class="search-close" id="searchClose">✕</button>
-        <div class="search-container">
-            <div class="search-bar-wrapper">
-                <input type="text" class="search-input" placeholder="Search locations..." id="searchInput">
-            </div>
-            <div id="searchResults" class="search-results-list"></div>
-        </div>
-    </div>
-
     <div class="menu-overlay" id="menuOverlay">
-        <button class="menu-close-btn" id="menuClose">✕</button>
+        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">
+            <span class="close-icon">✕</span>
+            <span class="close-text">Close</span>
+        </button>
         <nav class="menu-nav">
             <span class="menu-label">Menu</span>
             <a href="index.html" class="menu-link">Home</a>
             <a href="index.html#projects" class="menu-link">Properties</a>
             <a href="blog.html" class="menu-link">Insights</a>
-            <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
+            <a href="mailto:sales@peaksquareestates.com" class="menu-link">Email us</a>
         </nav>
+        <div class="menu-footer">
+            <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
+        </div>
     </div>
-
 </body>
 </html>

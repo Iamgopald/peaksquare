@@ -16,13 +16,8 @@
     <meta name="description" content="Expert analysis, luxury property trends, and real estate insights for Pune's premium market." />
 
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/32_32 logo.png">
-    <link rel="apple-touch-icon" href="assets/180_180 logo.png">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
 
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js" defer></script>
     <script src="script.js" defer></script>
@@ -35,111 +30,110 @@
             <span class="close-icon">✕</span>
             <span class="close-text">Close</span>
         </button>
-        
         <div class="search-container">
             <div class="search-bar-wrapper">
                 <input type="text" class="search-input" placeholder="Type a location or project..." id="searchInput" autocomplete="off">
                 <div class="search-line-effect"></div>
             </div>
-    
-            <div class="search-quick-discover">
-                <p>Popular Searches</p>
-                <div class="discover-chips">
-                    <button onclick="document.getElementById('searchInput').value='Charholi'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Charholi</button>
-                    <button onclick="document.getElementById('searchInput').value='Moshi'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Moshi</button>
-                    <button onclick="document.getElementById('searchInput').value='Dudulgaon'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Dudulgaon</button>
-                </div>
-            </div>
-    
             <div id="searchResults" class="search-results-list"></div>
         </div>
     </div>
-    <div class="site-wrapper">
-        <header class="header">
-            <div class="container">
-                <a href="/" class="logo-link" aria-label="PeakSquare Estates Home">
-                    <div class="brand">
-                        <div class="logo-box"><img src="assets/logo.svg" class="logo-img" alt="Logo" width="40" height="40"></div>
-                        <div class="brand-text">
-                            <span class="sub">PEAKSQUARE</span>
-                            <span class="main">ESTATES</span>
-                        </div>
+
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo-link" aria-label="PeakSquare Estates Home">
+                <div class="brand">
+                    <div class="logo-box"><img src="assets/logo.svg" alt="Logo" width="40" height="40"></div>
+                    <div class="brand-text">
+                        <span class="sub">PEAKSQUARE</span>
+                        <span class="main">ESTATES</span>
                     </div>
-                </a>
-        
-                <nav class="desktop-nav">
-                    <a href="index.html#projects" class="nav-item">Properties</a>
-                    <a href="blog.html" class="nav-item">Market Pulse</a>
-                    <a href="mailto:sales@peaksquareestates.com" class="nav-item">Email Us</a>
-                </nav>
-        
-                <div class="header-controls">
-                    <a href="https://wa.me/917276607467" class="desktop-cta" target="_blank" rel="noopener noreferrer">Enquire Now</a>
-                    <button id="searchTrigger" class="icon-btn" aria-label="Open Search"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-                    <button id="menuTrigger" class="icon-btn" aria-label="Open Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
                 </div>
+            </a>
+
+            <nav class="desktop-nav">
+                <a href="index.html#projects" class="nav-item">Properties</a>
+                <a href="blog.html" class="nav-item">Market Pulse</a>
+                <a href="mailto:sales@peaksquareestates.com" class="nav-item">Email Us</a>
+            </nav>
+
+            <div class="header-controls">
+                <a href="https://wa.me/917276607467" class="desktop-cta" target="_blank" rel="noopener noreferrer">Enquire Now</a>
+                <button id="searchTrigger" class="icon-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+                <button id="menuTrigger" class="icon-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
             </div>
-        </header>
+        </div>
+    </header>
+    
+    <main id="blog-main">
+        <nav class="breadcrumb-nav">
+            <div class="container">
+                <a href="index.html" class="back-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to Home
+                </a>
+            </div>
+        </nav>
         
-        <main id="blog-main">
-            <section id="blog-hero" class="section">
+        
+    
+        <div id="blogDynamicContent">
+            <section class="section">
                 <div class="container">
-                    <div class="hero-text-content">
-                        <h1 class="hero-title">
-                            <span class="block-text fade-in-up">MARKET</span>
-                            <span class="script-text fade-in-up">insights & trends</span>
-                        </h1>
-                        <div class="hero-separator fade-in-up"></div>
+                    <div class="section-header">
+                        <h3 class="section-title fade-in-scroll">Latest Articles</h3>
+                        <p class="section-subtitle">Expert analysis of Pune's luxury landscape.</p>
+                    </div>
+                    
+                    <div class="project-grid" id="blogGridSkeleton">
+                        <div class="skeleton-card">
+                            <div class="skeleton-box sk-img"></div>
+                            <div class="skeleton-box sk-title"></div>
+                            <div class="skeleton-box sk-text"></div>
+                        </div>
+                        <div class="skeleton-card">
+                            <div class="skeleton-box sk-img"></div>
+                            <div class="skeleton-box sk-title"></div>
+                            <div class="skeleton-box sk-text"></div>
+                        </div>
                     </div>
                 </div>
             </section>
-        
-            <div id="blogDynamicContent">
-                <section class="section">
-                    <div class="container">
-                        <div class="section-header">
-                            <h3 class="section-title fade-in-scroll">Latest Articles</h3>
-                        </div>
-                        <div class="project-grid" id="blogGridSkeleton">
-                            <div class="skeleton-card">
-                                <div class="skeleton-box sk-img"></div>
-                                <div class="skeleton-box sk-title"></div>
-                                <div class="skeleton-box sk-text"></div>
-                            </div>
-                            </div>
-                    </div>
-                </section>
-            </div>
-        
-            <div id="single-post-container" style="display:none;"></div>
-        </main>
-        
-        <footer class="main-footer">
-            <div class="container">
-                <div class="footer-links">
-                    <a href="blog.html" class="footer-link">Market Insights</a> • 
-                    <a href="privacy.html" class="footer-link">Privacy Policy</a> • 
-                    <a href="terms.html" class="footer-link">Terms</a>
-                </div>
-                <div class="footer-copyright">
-                    © 2025 PEAKSQUARE ESTATES
-                </div>
-            </div>
-        </footer>
-</div>
+        </div>
+    
+        <div id="single-post-container" style="display:none;"></div>
+    </main>
+    
+    <footer class="main-footer">
+        <div class="footer-links">
+            <a href="blog.html" class="footer-link">Market Insights</a> • 
+            <a href="privacy.html" class="footer-link">Privacy Policy</a> • 
+            <a href="terms.html" class="footer-link">Terms</a> • 
+            <a href="disclaimer.html" class="footer-link">Disclaimer</a>
+            <span class="footer-desktop-sep"> • </span>
+            <button id="themeToggleFooter" class="theme-btn-footer">☀ Switch Theme</button>
+        </div>
+        <div class="footer-copyright">
+            © 2025 PEAKSQUARE ESTATES
+        </div>
+    </footer>
 
     <div class="menu-overlay" id="menuOverlay">
-        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">✕</button>
+        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">
+            <span class="close-icon">✕</span>
+            <span class="close-text">Close</span>
+        </button>
         <nav class="menu-nav">
             <span class="menu-label">Menu</span>
             <a href="index.html" class="menu-link">Home</a>
             <a href="index.html#projects" class="menu-link">Properties</a>
             <a href="blog.html" class="menu-link">Insights</a>
-            <a href="index.html#contactForm" class="menu-link">Contact</a>
+            <a href="mailto:sales@peaksquareestates.com" class="menu-link">Email us</a>
         </nav>
         <div class="menu-footer">
             <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
         </div>
     </div>
+
 </body>
 </html>
