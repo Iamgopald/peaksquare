@@ -2,7 +2,7 @@
    1. VARIABLES & RESET (Luxury Palette)
 ========================================= */
 :root {
-    /* --- DARK THEME (Default) --- */
+    /* --- DARK THEME (Default) --- *9
     --bg-body: #050505;
     --text-main: #ffffff;
     --text-muted: #a0a0a0;
@@ -108,6 +108,7 @@ body::after {
 .desktop-nav { 
     display: none; 
     gap: 30px; 
+    align-items: center;
 }
 
 .header-controls { 
@@ -457,7 +458,31 @@ body.light-mode .scroll-indicator {
     .property-meta-grid {
         grid-template-columns: 1fr; /* Stack on mobile for readability */
     }
+    .contact-utility-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .utility-card {
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    .area-tags {
+        justify-content: center;
+    }
+
+    .utility-value {
+        font-size: 1.5rem;
+    }
    
+    .form-glass-box .btn.primary,
+    .btn.primary.full-width {
+        width: 100% !important;
+        margin-top: 15px;
+        letter-spacing: 3px;
+        padding: 18px 20px;
+    }
 }
 
 /* =========================================
@@ -823,14 +848,60 @@ body.light-mode .search-result-item:hover {
 ========================================= */
 .main-footer {
     text-align: left; padding: 20px 20px; 
-    background: var(--card-bg); border-top: 1px solid var(--glass-border);
+    background: var(--bg-body);border-top: 1px solid var(--glass-border);
     flex-shrink: 0;
     margin-top: 20px;
 }
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: 40px;
+    margin-bottom: 60px;
+}
+.footer-brand-side p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-top: 20px;
+    max-width: 300px;
+}
+
+.footer-col-title {
+    color: var(--gold-main);
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 25px;
+    display: block;
+}
+.footer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
 .footer-links { margin-bottom: 20px; color: var(--text-muted); font-size: 0.9rem; }
-.footer-link { color: var(--text-muted); text-decoration: none; margin-right: 15px; }
-.footer-link:hover { color: var(--gold-main); }
+.footer-link { color: var(--text-muted); text-decoration: none; margin-right: 15px; font-size: 0.9rem;color: var(--text-muted);transition: all 0.3s ease;}
+.footer-link:hover { color: var(--gold-main); transform: translateX(5px);}
 .footer-copyright { color: var(--text-muted); font-size: 0.8rem; opacity: 0.8; }
+/* Bottom Bar (Legal & Theme) */
+.footer-bottom {
+    border-top: 1px solid var(--glass-border);
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.legal-link {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
 .fade-in-up, .fade-in-scroll { animation: fadeInUp 0.8s ease forwards; opacity: 0; transform: translateY(20px); }
 @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
@@ -959,7 +1030,7 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
     .mobile-sticky-bar { display: none !important; }
     
     /* Footer Alignment */
-    .main-footer { padding: 60px 5% !important; } 
+    .main-footer { padding: 60px 5% !important;background: var(--bg-body);border-top: 1px solid var(--glass-border); } 
     
     .search-results-list {
         grid-template-columns: repeat(2, 1fr); /* 2 Columns look more elite than 3 */
@@ -1010,34 +1081,15 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
         max-height: 500px; /* Prevents it from pushing content too far down */
     }
     .form-glass-box .btn.primary {
-        /* 1. Reset width from 100% to fit the content */
+        display: flex !important;
         width: fit-content !important; 
-        min-width: 240px; /* Ensures the button doesn't look too tiny */
-        
-        /* 2. Push it to the center using horizontal auto margins */
-        margin: 0 auto !important; 
-        
-        /* 3. Ensure it behaves like a block element so margins work */
-        display: flex !important; 
-
-        /* --- Keep your refined styles from before --- */
-        background: var(--gold-main) !important;
-        border: 1px solid var(--gold-main) !important;
-        color: #050505 !important;
-        border-radius: 4px !important;
-        text-transform: uppercase !important;
-        letter-spacing: 3px !important;
-        font-size: 0.75rem !important;
-        font-weight: 800 !important;
-        padding: 18px 40px !important;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
-        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        min-width: 260px;
+        margin: 20px auto 0 !important; /* Centered layout for HNW feel */
     }
     
     .form-glass-box .btn.primary:hover {
         background: var(--gold-main) !important;
         color: #000 !important;
-        letter-spacing: 5px !important; /* Subtle expansion effect */
     }
     .desktop-cta {
         display: inline-flex !important;
@@ -1056,6 +1108,7 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
     .container {
         padding: 0 20px !important;
     }
+    
 }
 
 /* Add to bottom of styles.css */
@@ -1284,8 +1337,11 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
         margin: 0 !important;
         font-size: 1.1rem !important; /* Slightly smaller for the smaller circle */
     }
-    .main-footer{
-        padding-bottom: 12%;
+    .main-footer .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
     .footer-desktop-sep,.theme-btn-footer{
         visibility: hidden;
@@ -1317,7 +1373,266 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
     .back-link {
         font-size: 0.7rem;
     }
+    /* 2. Force the Social Icons and Links to stack vertically */
+    .footer-top-row {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 25px !important;
+        width: 100%;
+        margin-bottom: 25px;
+    }
 
+    /* 3. Make the links (Privacy/Terms) look better on mobile */
+    .footer-links {
+        display: flex;
+        flex-direction: column; /* Stack links so they are easy to tap */
+        gap: 12px;
+        margin-bottom: 0;
+        font-size: 0.8rem;
+    }
+
+    /* Remove the bullet points (•) on mobile as we are stacking now */
+    .footer-links .footer-sep, 
+    .footer-links span:not(.footer-desktop-sep) {
+        display: none; 
+    }
+
+    /* 4. Social Icons remain in a horizontal row but centered */
+    .footer-socials {
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* 5. Clean up the copyright text */
+    .footer-copyright {
+        margin-top: 15px;
+        padding-top: 20px;
+        border-top: 1px solid var(--glass-border);
+        width: 100%;
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+    }
+
+    /* 1. Prevent Horizontal Scroll */
+    .legal-container {
+        padding: 40px 15px !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        border: none;
+    }
+
+    /* 2. Fix Grid Stretching */
+    .services-grid {
+        grid-template-columns: 1fr !important; /* Force single column */
+        width: 100% !important;
+        gap: 20px !important;
+    }
+
+    .service-card {
+        width: 100% !important;
+        padding: 30px 20px !important;
+        box-sizing: border-box !important;
+        border-radius: 8px;
+    }
+
+    /* 3. Steps Mobile Layout */
+    .process-steps-grid {
+        grid-template-columns: 1fr !important;
+        gap: 30px;
+        text-align: center;
+    }
+
+    /* 4. CTA Swapping: Form on Top */
+    .cta-flex-container {
+        display: flex !important;
+        flex-direction: column !important; /* Use flex for easy ordering */
+        gap: 40px !important;
+    }
+
+    .cta-flex-container .form-glass-box {
+        order: 1; /* Form goes to top */
+        width: 100%;
+        padding: 25px 20px !important;
+    }
+
+    .cta-flex-container .cta-text-side {
+        order: 2; /* Text goes below */
+        text-align: center;
+    }
+
+    .cta-text-side h2 { text-align: center !important; font-size: 1.8rem !important; }
+    .cta-text-side p { text-align: center !important; }
+    /* 3. CTA Container - Proper button stacking */
+    .cta-container {
+        display: flex;
+        flex-direction: column !important; /* Stack buttons vertically */
+        gap: 15px !important;
+        width: 100%;
+        margin-top: 40px !important;
+    }
+
+    /* 4. Make buttons full-width for easy tapping */
+    .cta-container .btn-ui {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 16px 20px;
+        min-width: unset;
+    }
+    /* 1. Reduce header padding for more vertical space */
+    .legal-page-wrapper {
+        padding: 100px 0 60px !important;
+    }
+
+    /* 2. Flatten the glass container for mobile */
+    .legal-container {
+        padding: 30px 15px !important;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        background: transparent; /* Cleaner look on small screens */
+        box-shadow: none;
+    }
+
+    /* 1. Change Grid to Flex Column to enable 'order' */
+    .contact-utility-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 40px !important;
+    }
+
+    /* 2. Push Form to Top (Order: 1) */
+    .contact-utility-grid .form-glass-box {
+        order: 1;
+        padding: 30px 20px !important;
+        width: 100%;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+    }
+
+    /* 3. Push Info Cards to Bottom (Order: 2) */
+    .contact-utility-grid .contact-method-stack {
+        order: 2;
+        gap: 20px !important;
+    }
+
+    /* 4. Mobile Typography & Space Refinement */
+    .legal-page-wrapper {
+        padding: 100px 0 60px !important;
+    }
+
+    .legal-container {
+        padding: 20px 15px !important;
+        background: transparent;
+        border: none;
+    }
+
+    .utility-card {
+        padding: 25px 20px !important;
+        text-align: center;
+    }
+
+    .utility-value {
+        font-size: 1.4rem !important;
+        word-break: break-word;
+    }
+
+    .area-tags {
+        justify-content: center;
+    }
+
+    /* 6. Form Spacing for Mobile */
+    .form-glass-box {
+        padding: 30px 20px !important;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .utility-form-textarea {
+        min-height: 150px; /* Larger area for mobile typing */
+        font-size: 16px !important; /* Prevents iOS auto-zoom */
+    }
+
+    /* 7. Full-width Button for easier thumb access */
+    .btn.primary.full-width {
+        padding: 18px 0 !important;
+        font-size: 0.8rem;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .footer-brand-side { grid-column: span 1; }
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+    .legal-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .brand{
+        justify-content: center;
+    }
+    .btn.primary {
+        width: 100% !important; /* Full width for thumbs */
+        padding: 18px 20px;
+        letter-spacing: 3px; /* Slightly tighter for narrow screens */
+    }
+    .btn.primary:hover {
+        transform: none; /* Better mobile UX */
+    }
+
+
+}
+/* =========================================
+   MASTER PRIMARY BUTTON (Solid Luxury)
+========================================= */
+.btn.primary {
+    /* 1. Typography & Dimensions */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 45px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem; 
+    text-transform: uppercase;
+    letter-spacing: 4px; /* Constant luxury tracking */
+    text-decoration: none;
+    border-radius: 2px; /* Precision edges */
+    cursor: pointer;
+    border: none;
+    
+    /* 2. Metallic Realism (3-Stop Gradient) */
+    background: linear-gradient(135deg, #B8952D 0%, #F1D27B 50%, #B8952D 100%);
+    background-size: 200% auto;
+    color: #050505 !important; /* Pure contrast black */
+    
+    /* 3. Physics & Depth */
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* 4. The "Light Sweep" Shimmer Effect */
+.btn.primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.5), 
+        transparent
+    );
+    transition: all 0.6s;
 }
 
 
@@ -1328,9 +1643,19 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
     opacity: 0.8 !important;
     cursor: not-allowed !important;
     pointer-events: none !important;
-    background: #444 !important; /* Forces a dark grey background */
-    color: #888 !important;      /* Forces grey text */
+    background: #444 !important;
+    color: #888 !important;
     border-color: #555 !important;
+    transform: none !important; /* Prevents lifting while loading */
+    letter-spacing: 2px !important;
+}
+
+/* Ensure Loading State overrides everything */
+.btn.primary.btn-loading {
+    background: #444 !important;
+    filter: grayscale(1) !important;
+    transform: none !important;
+    pointer-events: none !important;
 }
 
 /* 4. LIGHT MODE SPECIFIC FIX */
@@ -1340,21 +1665,25 @@ body.light-mode .blog-cta-btn.secondary {
 }
 /* 6. INTERACTIVE STATES */
 
-/* Hover: The "Uplift" Effect */
+/* 5. Hover Interaction (Removed Letter Spread) */
 .btn.primary:hover {
-    transform: translateY(-4px) scale(1.02); /* Slight lift and grow */
-    filter: brightness(1.05); /* Gentle glow boost */
+    transform: translateY(-5px); /* Elegant lift */
+    background-position: right center; /* Shifts the metallic glow */
+    /* letter-spacing remains 4px (Fixed) */
     box-shadow: 
-        0 8px 15px rgba(0, 0, 0, 0.2), 
-        0 25px 50px rgba(212, 175, 55, 0.5), 
-        inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        0 20px 40px rgba(212, 175, 55, 0.25),
+        0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Active: The "Tactile Click" Effect */
+/* 6. Active State (The Click) */
 .btn.primary:active {
-    transform: translateY(-1px) scale(0.98); /* Physical button feel */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    transition: all 0.1s ease;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.1s;
+}
+
+.btn.primary:hover::before {
+    left: 100%;
 }
 
 .btn.secondary {
@@ -1731,6 +2060,16 @@ body.light-mode .stat-divider {
 .menu-footer {
     width: 100%;
     display: flex;
+    flex-direction: column; /* Stacks items vertically */
+    align-items: center;    /* Centers them horizontally */
+    gap: 30px;              /* Space between socials and button */
+    padding-bottom: 40px;
+}
+
+.menu-socials {
+    display: flex;
+    flex-direction: row;    /* Keep icons side-by-side */
+    gap: 20px;
     justify-content: center;
 }
 
@@ -1750,6 +2089,7 @@ body.light-mode .stat-divider {
     display: flex;
     align-items: center;
     gap: 10px;
+    width: fit-content;
 }
 
 .theme-btn-menu:hover {
@@ -2052,3 +2392,324 @@ input[name="phone"]:valid:not(:placeholder-shown) {
     display: block;
 }
 
+/* --- Footer Social System --- */
+.footer-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 20px;
+}
+
+/* Re-confirming the social link style for both Footer and Menu */
+.social-icon-link {
+    color: var(--text-muted);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px; /* Slightly larger touch target for mobile menu */
+    height: 44px;
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+}
+
+.social-icon-link:hover {
+    color: var(--gold-main);
+    border-color: var(--gold-main);
+    transform: translateY(-3px);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+.social-icon-link svg {
+    width: 18px;
+    height: 18px;
+}
+
+.error-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 5% 60px;
+    background: radial-gradient(circle at center, var(--card-bg) 0%, var(--bg-body) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Cinematic noise overlay for 404 texture */
+.error-wrapper::before {
+    content: ""; 
+    position: absolute; 
+    inset: 0; 
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    opacity: 0.2;
+}
+
+.big-404 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(8rem, 20vw, 15rem);
+    line-height: 0.8;
+    font-weight: 600;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    letter-spacing: -5px;
+    opacity: 0;
+    animation: fadeInUp 1s forwards 0.2s;
+}
+
+.error-msg {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    max-width: 500px;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    opacity: 0;
+    animation: fadeInUp 1s forwards 0.5s;
+}
+
+.btn-wrapper {
+    opacity: 0;
+    animation: fadeInUp 1s forwards 0.8s;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* =========================================
+   ABOUT US PAGE SPECIFIC STYLES
+========================================= */
+
+/* The Main Wrapper */
+.legal-page-wrapper {
+    padding: 5%L;
+    background: radial-gradient(circle at top right, var(--card-bg) 0%, var(--bg-body) 100%);
+    min-height: 100vh;
+    transition: background 0.4s ease;
+}
+
+/* The Content Box */
+.legal-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    padding: 60px;
+    border-radius: 12px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+}
+
+/* Typography for the Vision */
+.legal-header { 
+    text-align: center; 
+    margin-bottom: 60px; 
+}
+
+.legal-header h1 { 
+    font-size: clamp(2.5rem, 5vw, 3.5rem); 
+    color: var(--text-main); 
+    font-family: 'Cormorant Garamond', serif; 
+    margin-top: 10px;
+}
+
+.legal-label { 
+    color: var(--gold-main); 
+    text-transform: uppercase; 
+    letter-spacing: 4px; 
+    font-size: 0.75rem; 
+    font-weight: 800; 
+}
+
+/* Section Headings */
+.legal-body h3 { 
+    color: var(--gold-main); 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 1.8rem; 
+    margin-top: 45px; 
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Paragraph Text */
+.legal-body p { 
+    color: var(--text-muted); 
+    font-family: 'Manrope', sans-serif;
+    line-height: 1.8; 
+    margin-bottom: 25px; 
+    font-size: 1.05rem;
+}
+
+/* Founder Quote Styling */
+.legal-body p em {
+    display: block;
+    padding: 20px;
+    border-left: 2px solid var(--gold-main);
+    background: rgba(212, 175, 55, 0.03);
+    font-size: 1.15rem;
+    color: var(--text-main);
+}
+
+/* =========================================
+   SERVICES FUNNEL PAGE STYLES
+========================================= */
+
+/* A. The Grid (Desktop) */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.service-card {
+    padding: 40px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.02);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* 1. Standard Hover for regular cards */
+.service-card:hover {
+    border-color: var(--gold-main);
+    transform: translateY(-5px);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+/* 2. Specific Hover for the HIGHLIGHT card */
+/* We combine the classes to increase strength (specificity) */
+.service-card.highlight:hover {
+    background: rgba(212, 175, 55, 0.1); /* Slightly deeper gold tint */
+    border-color: var(--gold-main);
+    transform: translateY(-8px); /* Slightly higher lift for emphasis */
+    box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15); /* Soft gold outer glow */
+}
+
+/* B. Process Steps */
+.process-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.step-item { text-align: left; }
+.step-num { color: var(--gold-main); font-weight: 800; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+.step-item h4 { font-size: 1.4rem; color: var(--text-main); margin-bottom: 10px; }
+
+.cta-flex-container {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: center;
+}
+
+/* =========================================
+   CONTACT UTILITY PAGE STYLES
+========================================= */
+.contact-utility-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 60px;
+    margin-top: 50px;
+    align-items: start;
+}
+
+.contact-method-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.utility-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 35px;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+.utility-card:hover {
+    border-color: var(--gold-main);
+}
+
+.utility-label {
+    color: var(--gold-main);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.utility-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: var(--text-main);
+    line-height: 1.2;
+}
+
+.utility-subtext {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    line-height: 1.5;
+}
+
+/* Operational Area Pills */
+.area-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.area-tag {
+    font-size: 0.7rem;
+    padding: 6px 12px;
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Contact Page Textarea */
+.utility-form-textarea {
+    width: 100%;
+    min-height: 130px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 15px;
+    color: var(--text-main);
+    font-family: 'Manrope', sans-serif;
+    outline: none;
+    resize: none;
+    transition: all 0.3s ease;
+}
+
+.utility-form-textarea:focus {
+    border-color: var(--gold-main);
+    background: rgba(255, 255, 255, 0.08);
+}

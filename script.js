@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initDataLoading();      
     initGlobalInteractions(); 
     initProgressiveForm(); 
+    initSubPageForms();
     
     if(document.getElementById('property-main')) {
         initPropertyDetails();
@@ -71,8 +72,8 @@ function optimizeDriveImage(url, width = 1600) {
         const idMatch = url.match(/id=([^&]+)/) || url.match(/\/d\/([^/]+)/);
         
         if (idMatch && idMatch[1]) {
-            // FIXED: Added the missing $ sign here
-            return `https://lh3.googleusercontent.com/u/0/d/${idMatch[1]}=s${width}`;
+            // FIXED: Changed '0' to '$' and 'http' to 'https'
+            return `https://lh3.googleusercontent.com/d/${idMatch[1]}=s${width}`;
         }
     }
     return url;
@@ -598,3 +599,67 @@ function injectRealEstateSchema(properties) {
     document.head.appendChild(script);
 }
 
+// ===================================================
+// NEW: LOGIC FOR SERVICES & CONTACT UTILITY PAGES
+// ===================================================
+function initSubPageForms() {
+    const servicesForm = document.getElementById('servicesLandingForm');
+    const contactForm = document.getElementById('contactUtilityForm');
+
+    // If we are on the Services page, handle that form
+    if (servicesForm) {
+        servicesForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await runSubPageSubmission(servicesForm);
+        });
+    }
+
+    // If we are on the Contact page, handle that form
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await runSubPageSubmission(contactForm);
+        });
+    }
+}
+
+// Shared helper for the two new forms
+async function runSubPageSubmission(formElement) {
+    const phoneField = formElement.querySelector('input[name="phone"]');
+    const phoneValue = phoneField.value.trim();
+    
+    // 10-digit validation
+    if (!/^\d{10}$/.test(phoneValue)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        phoneField.focus();
+        return;
+    }
+
+    const btn = formElement.querySelector('button');
+    const originalHTML = btn.innerHTML;
+
+    btn.classList.add('btn-loading');
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner"></span> Securing Access...`;
+
+    const formData = new FormData(formElement);
+    const params = new URLSearchParams();
+    for (const pair of formData) {
+        params.append(pair[0], pair[1]);
+    }
+
+    try {
+        await fetch(API_URL, { 
+            method: "POST", 
+            body: params, 
+            mode: 'no-cors'
+        });
+        window.location.href = "thankyou.html";
+    } catch (err) {
+        console.error("Form Error:", err);
+        alert("Issue submitting. Please try WhatsApp.");
+        btn.classList.remove('btn-loading');
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+    }
+}

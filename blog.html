@@ -11,17 +11,44 @@
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    
     <title>Market Insights | PeakSquare Estates</title>
-    <meta name="description" content="Expert analysis, luxury property trends, and real estate insights for Pune's premium market." />
+    <meta name="description" content="Expert real estate analysis, luxury property trends, and premium market insights for Pune." />
+    <link rel="canonical" href="https://www.peaksquareestates.com/blog.html" />
 
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-    <link rel="stylesheet" href="styles.css" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.peaksquareestates.com/blog.html">
+    <meta property="og:title" content="Market Insights | PeakSquare Estates">
+    <meta property="og:description" content="Expert analysis of Pune's luxury landscape. Verified listings and premium service.">
+    <meta property="og:image" content="https://www.peaksquareestates.com/assets/og-image.jpg">
+
+    <meta name="theme-color" content="#050505">
+
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/favicon-180.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="styles.css" />
 
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js" defer></script>
     <script src="script.js" defer></script>
     <script src="blog.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "PeakSquare Estates",
+      "url": "https://www.peaksquareestates.com/",
+      "logo": "https://www.peaksquareestates.com/assets/favicon-180.png",
+      "sameAs": [
+        "https://www.facebook.com/peaksquareestates",
+        "https://www.instagram.com/peaksquareestates",
+        "https://www.linkedin.com/company/peaksquareestates"
+      ]
+    }
+    </script>
 </head>
 
 <body>
@@ -30,37 +57,53 @@
             <span class="close-icon">✕</span>
             <span class="close-text">Close</span>
         </button>
+        
         <div class="search-container">
             <div class="search-bar-wrapper">
                 <input type="text" class="search-input" placeholder="Type a location or project..." id="searchInput" autocomplete="off">
                 <div class="search-line-effect"></div>
             </div>
+    
+            <div class="search-quick-discover">
+                <p>Popular Searches</p>
+                <div class="discover-chips">
+                    <button onclick="document.getElementById('searchInput').value='Charholi'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Charholi</button>
+                    <button onclick="document.getElementById('searchInput').value='Moshi'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Moshi</button>
+                    <button onclick="document.getElementById('searchInput').value='Dudulgaon'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Dudulgaon</button>
+                </div>
+            </div>
+    
             <div id="searchResults" class="search-results-list"></div>
         </div>
     </div>
 
     <header class="header">
         <div class="container">
-            <a href="/" class="logo-link" aria-label="PeakSquare Estates Home">
+            <a href="index.html" class="logo-link">
                 <div class="brand">
-                    <div class="logo-box"><img src="assets/logo.svg" alt="Logo" width="40" height="40"></div>
+                    <img src="assets/logo.svg" alt="Logo" width="40" height="40">
                     <div class="brand-text">
                         <span class="sub">PEAKSQUARE</span>
                         <span class="main">ESTATES</span>
                     </div>
                 </div>
             </a>
-
+    
             <nav class="desktop-nav">
                 <a href="index.html#projects" class="nav-item">Properties</a>
-                <a href="blog.html" class="nav-item">Market Pulse</a>
-                <a href="mailto:sales@peaksquareestates.com" class="nav-item">Email Us</a>
+                <a href="services.html" class="nav-item">Expertise</a>
+                <a href="blog.html" class="nav-item">Insights</a>
+                <a href="about.html" class="nav-item">Our Story</a>
+                <a href="contact.html" class="nav-item">Contact</a>
             </nav>
-
+    
             <div class="header-controls">
-                <a href="https://wa.me/917276607467" class="desktop-cta" target="_blank" rel="noopener noreferrer">Enquire Now</a>
-                <button id="searchTrigger" class="icon-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-                <button id="menuTrigger" class="icon-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+                <button id="searchTrigger" class="icon-btn" aria-label="Search">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                <button id="menuTrigger" class="icon-btn" aria-label="Menu">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
             </div>
         </div>
     </header>
@@ -75,8 +118,6 @@
             </div>
         </nav>
         
-        
-    
         <div id="blogDynamicContent">
             <section class="section">
                 <div class="container">
@@ -84,18 +125,9 @@
                         <h3 class="section-title fade-in-scroll">Latest Articles</h3>
                         <p class="section-subtitle">Expert analysis of Pune's luxury landscape.</p>
                     </div>
-                    
                     <div class="project-grid" id="blogGridSkeleton">
-                        <div class="skeleton-card">
-                            <div class="skeleton-box sk-img"></div>
-                            <div class="skeleton-box sk-title"></div>
-                            <div class="skeleton-box sk-text"></div>
-                        </div>
-                        <div class="skeleton-card">
-                            <div class="skeleton-box sk-img"></div>
-                            <div class="skeleton-box sk-title"></div>
-                            <div class="skeleton-box sk-text"></div>
-                        </div>
+                        <div class="skeleton-card"><div class="skeleton-box sk-img"></div><div class="skeleton-box sk-title"></div><div class="skeleton-box sk-text"></div></div>
+                        <div class="skeleton-card"><div class="skeleton-box sk-img"></div><div class="skeleton-box sk-title"></div><div class="skeleton-box sk-text"></div></div>
                     </div>
                 </div>
             </section>
@@ -105,35 +137,92 @@
     </main>
     
     <footer class="main-footer">
-        <div class="footer-links">
-            <a href="blog.html" class="footer-link">Market Insights</a> • 
-            <a href="privacy.html" class="footer-link">Privacy Policy</a> • 
-            <a href="terms.html" class="footer-link">Terms</a> • 
-            <a href="disclaimer.html" class="footer-link">Disclaimer</a>
-            <span class="footer-desktop-sep"> • </span>
-            <button id="themeToggleFooter" class="theme-btn-footer">☀ Switch Theme</button>
-        </div>
-        <div class="footer-copyright">
-            © 2025 PEAKSQUARE ESTATES
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand-side">
+                    <div class="brand">
+                        <img src="assets/logo.svg" alt="Logo" width="40" height="40">
+                        <div class="brand-text">
+                            <span class="sub">PEAKSQUARE</span>
+                            <span class="main">ESTATES</span>
+                        </div>
+                    </div>
+                    <p>Curating the highest standard of real estate advocacy and verified luxury residences in Pune.</p>
+                </div>
+    
+                <div class="footer-nav-col">
+                    <span class="footer-col-title">Explore</span>
+                    <nav class="footer-list">
+                        <a href="index.html" class="footer-link">Home</a>
+                        <a href="index.html#projects" class="footer-link">Properties</a>
+                        <a href="services.html" class="footer-link">Our Expertise</a>
+                        <a href="blog.html" class="footer-link">Market Pulse</a>
+                    </nav>
+                </div>
+    
+                <div class="footer-nav-col">
+                    <span class="footer-col-title">Company</span>
+                    <nav class="footer-list">
+                        <a href="about.html" class="footer-link">Our Story</a>
+                        <a href="contact.html" class="footer-link">Connect</a>
+                    </nav>
+                </div>
+    
+                <div class="footer-nav-col">
+                    <span class="footer-col-title">Follow Us</span>
+                    <div class="footer-socials">
+                        <a href="https://www.instagram.com/peaksquareestates" class="social-icon-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="https://www.facebook.com/peaksquareestates" class="social-icon-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                        <a href="https://www.linkedin.com/company/peaksquareestates" class="social-icon-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="footer-bottom">
+                <div class="footer-copyright">© 2025 PEAKSQUARE ESTATES</div>
+                
+                <div class="legal-links">
+                    <a href="privacy.html" class="legal-link">Privacy</a>
+                    <a href="terms.html" class="legal-link">Terms</a>
+                    <a href="disclaimer.html" class="legal-link">Disclaimer</a>
+                </div>
+    
+                <button id="themeToggleFooter" class="theme-btn-footer">Switch Theme</button>
+            </div>
         </div>
     </footer>
-
+    
     <div class="menu-overlay" id="menuOverlay">
-        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu">
-            <span class="close-icon">✕</span>
-            <span class="close-text">Close</span>
-        </button>
+        <button class="menu-close-btn" id="menuClose" aria-label="Close Menu"><span class="close-icon">✕</span></button>
+        
         <nav class="menu-nav">
-            <span class="menu-label">Menu</span>
+            <span class="menu-label">Navigational Menu</span>
             <a href="index.html" class="menu-link">Home</a>
             <a href="index.html#projects" class="menu-link">Properties</a>
-            <a href="blog.html" class="menu-link">Insights</a>
-            <a href="mailto:sales@peaksquareestates.com" class="menu-link">Email us</a>
+            <a href="services.html" class="menu-link">Our Expertise</a>
+            <a href="blog.html" class="menu-link">Market Pulse</a>
+            <a href="contact.html" class="menu-link">Contact Us</a>
         </nav>
         <div class="menu-footer">
+            <div class="menu-socials">
+                <a href="https://www.instagram.com/peaksquareestates" class="social-icon-link" target="_blank" rel="noopener noreferrer">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="https://www.facebook.com/peaksquareestates" class="social-icon-link" target="_blank" rel="noopener noreferrer">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/peaksquareestates" class="social-icon-link" target="_blank" rel="noopener noreferrer">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+            </div>
             <button id="themeToggle" class="theme-btn-menu">☀ Switch Theme</button>
         </div>
     </div>
-
 </body>
 </html>
