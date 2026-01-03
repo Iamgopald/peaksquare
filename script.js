@@ -11,6 +11,15 @@ document.addEventListener("DOMContentLoaded", () => {
     initProgressiveForm(); 
     initSubPageForms();
     
+    // --- FIX: LEAD MAGNET LOGIC MOVED INSIDE HERE ---
+    const magnetForm = document.getElementById('leadMagnetForm');
+    if(magnetForm) {
+        magnetForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // This STOPS the page reload
+            runSubPageSubmission(magnetForm, true); // This triggers the download
+        });
+    }
+
     if(document.getElementById('property-main')) {
         initPropertyDetails();
     }
@@ -18,15 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Global API Config
 const API_URL = "https://script.google.com/macros/s/AKfycbzjU1QsPqJodJ0OIdKrn0bf0kguyGbNrOonKaKzbj4kDKLoygi3G70G3yjoZLNMskgc/exec";
-const CACHE_DURATION = 3600000; // 1 Hour Cache
-
-
-// ===================================================
-// 2. THEME MANAGER (Fixed for Footer Support)
-// ===================================================
+// TIP: Set this to 0 temporarily if you want to see image changes instantly, then change back to 3600000
+const CACHE_DURATION = 3600000; 
 
 // ===================================================
-// 2. THEME MANAGER (Handles Header, Menu, and Footer)
+// 2. THEME MANAGER
 // ===================================================
 function initThemeManager() {
     const toggleBtn = document.getElementById('themeToggle');
@@ -44,7 +49,6 @@ function initThemeManager() {
         if(footerToggleBtn) footerToggleBtn.innerHTML = text;
     };
 
-    // Set initial state
     if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
         body.classList.add('light-mode');
         updateUI(true);
@@ -59,29 +63,25 @@ function initThemeManager() {
         updateUI(isCurrentlyLight);
     };
 
-    // Event Listeners for all possible toggle locations
     if (toggleBtn) toggleBtn.addEventListener('click', switchTheme);
     if (menuToggleBtn) menuToggleBtn.addEventListener('click', switchTheme);
     if (footerToggleBtn) footerToggleBtn.addEventListener('click', switchTheme);
 }
 
 function optimizeDriveImage(url, width = 1600) {
-    // 1. Fallback if URL is missing
     if (!url || url === "#") return 'assets/favicon.svg'; 
     
-    // 2. Check if it's a Google Drive link
     if (url.includes('drive.google.com')) {
-        // Extract the ID
         const idMatch = url.match(/id=([^&]+)/) || url.match(/\/d\/([^/]+)/);
         
         if (idMatch && idMatch[1]) {
-            // FIXED: Use 'lh3.googleusercontent.com/d/' for reliable file hosting
+            // FIXED: Added the missing '$' before {idMatch}
             return `https://lh3.googleusercontent.com/d/${idMatch[1]}=s${width}`;
         }
     }
-    // 3. Return original URL if it's not a Drive link
     return url;
 }
+
 // ===================================================
 // 3. PERFORMANCE: SCROLL & ANIMATIONS
 // ===================================================
@@ -120,15 +120,12 @@ function initScrollAnimations() {
 // 4. DATA ENGINE (Robust & Cached)
 // ===================================================
 async function initDataLoading() {
-    // Only run on Homepage
     if(document.getElementById('propertyGrid')) {
         renderSkeleton('propertyGrid', 3);
         renderSkeleton('featured-blog-container', 2);
         
-        // Fetch Data
         await loadContent('peaksquare_data', 'propertyGrid', renderProperties);
         await loadContent('peaksquare_blog_data', 'featured-blog-container', renderBlogs, "?action=getBlogList");
-       
     }
      initSearchLogic(); 
     if (!localStorage.getItem('peaksquare_data')) {
@@ -190,7 +187,7 @@ async function loadContent(key, containerId, renderFn, queryParam = "") {
 }
 
 // ===================================================
-// 5. PROPERTY DETAIL LOGIC (Clean & Dynamic)
+// 5. PROPERTY DETAIL LOGIC (With Multi-Image Support)
 // ===================================================
 async function initPropertyDetails() {
     const container = document.getElementById('dynamicContent');
@@ -225,18 +222,13 @@ function renderSingleProperty(p, container) {
     const possession = p.Possession || "Ready to Move";
 
     // --- NEW: PARSE MULTIPLE IMAGES ---
-    // Split the ImageURL string by commas to get an array
     let rawImages = p.ImageURL ? p.ImageURL.split(',') : [];
-    // Clean up whitespace from the links
     rawImages = rawImages.map(url => url.trim()).filter(url => url.length > 0);
     
-    // Fallback if empty
     if (rawImages.length === 0) rawImages = ['assets/favicon.svg'];
 
-    // 1. Hero Image is the FIRST link
     const heroImg = optimizeDriveImage(rawImages[0], isMobile ? 800 : 1600);
 
-    // 2. Generate Gallery Grid HTML from ALL links
     const galleryHTML = rawImages.map(url => {
         const optimizedUrl = optimizeDriveImage(url, 800);
         return `
@@ -247,13 +239,11 @@ function renderSingleProperty(p, container) {
             </div>
         `;
     }).join('');
-    // --- END NEW IMAGE LOGIC ---
 
     const desc = `Discover this exclusive <strong>${type}</strong> located in the prime area of <strong>${loc}</strong>. This premium property is listed at <strong>${price}</strong> with a possession status of <strong>${possession}</strong>. Verified by PeakSquare Estates.`;
     const message = `Hi, I am interested in ${title} at ${loc} listed for ${price}. Please share details.`;
     const encodedMsg = encodeURIComponent(message);
 
-    // 1. Update Sticky Bottom Bar
     const stickyWa = document.querySelector('.sticky-btn.whatsapp');
     if(stickyWa) stickyWa.href = `https://wa.me/917276607467?text=${encodedMsg}`;
     
@@ -266,7 +256,6 @@ function renderSingleProperty(p, container) {
         waLink.setAttribute('rel', 'noopener noreferrer');
     }
 
-    // Clean Container-Based Injection
     container.innerHTML = `
     <section class="hero property-hero">
         <div class="hero-bg">
@@ -292,50 +281,51 @@ function renderSingleProperty(p, container) {
         </div>
     </section>
 
-        <section class="property-specs-section">
-            <div class="container">
-                <div class="property-meta-grid fade-in-up">
-                    <div class="meta-item meta-divider">
-                        <span class="meta-label">Type</span>
-                        <strong class="meta-value">${type}</strong>
-                    </div>
-                    <div class="meta-item meta-divider">
-                        <span class="meta-label">Possession</span>
-                        <strong class="meta-value">${possession}</strong>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Location</span>
-                        <strong class="meta-value">${loc}</strong>
-                    </div>
+    <section class="property-specs-section">
+        <div class="container">
+            <div class="property-meta-grid fade-in-up">
+                <div class="meta-item meta-divider">
+                    <span class="meta-label">Type</span>
+                    <strong class="meta-value">${type}</strong>
+                </div>
+                <div class="meta-item meta-divider">
+                    <span class="meta-label">Possession</span>
+                    <strong class="meta-value">${possession}</strong>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Location</span>
+                    <strong class="meta-value">${loc}</strong>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h3 class="section-title">Property Overview</h3>
-                </div>
-                <div class="blog-body-content content-columns">
-                    <p>${desc}</p>
-                </div>
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h3 class="section-title">Property Overview</h3>
             </div>
-        </section>
+            <div class="blog-body-content content-columns">
+                <p>${desc}</p>
+            </div>
+        </div>
+    </section>
 
-        <section class="section" style="padding-top:0;">
-            <div class="container">
-                <div class="section-header">
-                    <h3 class="section-title">Gallery (${rawImages.length} Photos)</h3>
-                </div>
-                <div class="project-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding:0;">
-                    ${galleryHTML}
-                </div>
+    <section class="section" style="padding-top:0;">
+        <div class="container">
+            <div class="section-header">
+                <h3 class="section-title">Gallery (${rawImages.length} Photos)</h3>
             </div>
-        </section>
+            <div class="project-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding:0;">
+                ${galleryHTML}
+            </div>
+        </div>
+    </section>
     `;
     
     initScrollAnimations();
 }
+
 // ===================================================
 // 6. RENDERERS
 // ===================================================
@@ -401,7 +391,6 @@ function renderBlogs(blogs, container) {
     }).join('');
 }
 
-
 // ===================================================
 // 7. UNIFIED OVERLAY MANAGER
 // ===================================================
@@ -430,23 +419,16 @@ function initGlobalInteractions() {
             if(id === 'search' && searchInput) searchInput.blur();
         }
     };
-    document.getElementById('searchTrigger')?.addEventListener('click', () => toggleOverlay('search', true));
-    document.getElementById('menuTrigger')?.addEventListener('click', () => toggleOverlay('menu', true));
-    document.getElementById('searchClose')?.addEventListener('click', () => toggleOverlay('search', false));
-    document.getElementById('menuClose')?.addEventListener('click', () => toggleOverlay('menu', false));
-
-    document.querySelectorAll('.menu-link').forEach(link => {
-        link.addEventListener('click', () => toggleOverlay('menu', false));
-    });
+    
     const searchBtn = document.getElementById('searchTrigger');
     const menuBtn = document.getElementById('menuTrigger');
-    if(searchBtn) searchBtn?.addEventListener('click', () => toggleOverlay('search', true));
-    if(menuBtn) menuBtn?.addEventListener('click', () => toggleOverlay('menu', true));
+    if(searchBtn) searchBtn.addEventListener('click', () => toggleOverlay('search', true));
+    if(menuBtn) menuBtn.addEventListener('click', () => toggleOverlay('menu', true));
 
     const searchClose = document.getElementById('searchClose');
     const menuClose = document.getElementById('menuClose');
-    if(searchClose) searchClose?.addEventListener('click', () => toggleOverlay('search', false));
-    if(menuClose) menuClose?.addEventListener('click', () => toggleOverlay('menu', false));
+    if(searchClose) searchClose.addEventListener('click', () => toggleOverlay('search', false));
+    if(menuClose) menuClose.addEventListener('click', () => toggleOverlay('menu', false));
 
     document.querySelectorAll('.menu-link').forEach(link => {
         link.addEventListener('click', () => toggleOverlay('menu', false));
@@ -525,7 +507,7 @@ function initSearchLogic() {
 }
 
 // ===================================================
-// 9. PROGRESSIVE FORM (Unified: Mobile UX + Sheets Integration)
+// 9. PROGRESSIVE FORM
 // ===================================================
 function initProgressiveForm() {
     const select = document.getElementById('interestType');
@@ -535,7 +517,7 @@ function initProgressiveForm() {
 
     if (!form) return;
 
-    // --- A. MOBILE UX: HIDE STICKY BAR WHILE TYPING ---
+    // A. HIDE STICKY BAR WHILE TYPING
     const formInputs = form.querySelectorAll('input, select, textarea');
     formInputs.forEach(input => {
         input.addEventListener('focus', () => {
@@ -550,7 +532,7 @@ function initProgressiveForm() {
         });
     });
 
-    // --- B. REVEAL HIDDEN FIELDS ---
+    // B. REVEAL HIDDEN FIELDS
     if (select && fields) {
         select.addEventListener('change', () => {
             fields.classList.add('active');
@@ -559,33 +541,24 @@ function initProgressiveForm() {
         });
     }
 
-    // --- C. CLEAN SUBMIT LOGIC ---
+    // C. CLEAN SUBMIT LOGIC
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // 1. Phone Validation Check
-    const phoneField = form.querySelector('input[name="phone"]');
-    const phoneValue = phoneField.value.trim();
-    
-    // Check if it's exactly 10 digits
-    if (!/^\d{10}$/.test(phoneValue)) {
-        alert("Please enter a valid 10-digit mobile number.");
-        phoneField.focus();
-        phoneField.style.borderColor = "red"; // Visual feedback
-        return; // Stop the function here
-    }
-        // Validate hidden fields
-        if (fields && !fields.classList.contains('active')) {
-            fields.classList.add('active');
-            fields.style.display = 'block';
-            fields.style.opacity = '1';
-            if (select && !select.value) { select.focus(); return; }
+        // 1. Phone Validation
+        const phoneField = form.querySelector('input[name="phone"]');
+        const phoneValue = phoneField.value.trim();
+        
+        if (!/^\d{10}$/.test(phoneValue)) {
+            alert("Please enter a valid 10-digit mobile number.");
+            phoneField.focus();
+            phoneField.style.borderColor = "red"; 
+            return; 
         }
 
         const btn = form.querySelector('button');
         const originalHTML = btn.innerHTML;
 
-        // 1. Trigger Loading UI
         btn.classList.add('btn-loading');
         btn.disabled = true;
         btn.innerHTML = `<span class="spinner"></span> Securing Access...`;
@@ -606,13 +579,13 @@ function initProgressiveForm() {
         } catch (err) {
             console.error("Form Error:", err);
             alert("Issue submitting. Please try WhatsApp.");
-            // Reset button on failure
             btn.classList.remove('btn-loading');
             btn.disabled = false;
             btn.innerHTML = originalHTML;
         }
     });
 }
+
 // ===================================================
 // 10. SEO SCHEMA
 // ===================================================
@@ -640,13 +613,12 @@ function injectRealEstateSchema(properties) {
 }
 
 // ===================================================
-// NEW: LOGIC FOR SERVICES & CONTACT UTILITY PAGES
+// 11. SUB-PAGE FORM HANDLERS
 // ===================================================
 function initSubPageForms() {
     const servicesForm = document.getElementById('servicesLandingForm');
     const contactForm = document.getElementById('contactUtilityForm');
 
-    // If we are on the Services page, handle that form
     if (servicesForm) {
         servicesForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -654,7 +626,6 @@ function initSubPageForms() {
         });
     }
 
-    // If we are on the Contact page, handle that form
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -668,7 +639,6 @@ async function runSubPageSubmission(formElement, isDownload = false) {
     const phoneField = formElement.querySelector('input[name="phone"]');
     const phoneValue = phoneField.value.trim();
     
-    // 10-digit validation
     if (!/^\d{10}$/.test(phoneValue)) {
         alert("Please enter a valid 10-digit mobile number.");
         phoneField.focus();
@@ -695,12 +665,9 @@ async function runSubPageSubmission(formElement, isDownload = false) {
             mode: 'no-cors'
         });
         
-        // --- THE LOGIC SPLIT ---
         if (isDownload) {
-            // If lead magnet, go to ?access=kit
             window.location.href = "thankyou.html?access=kit";
         } else {
-            // If contact form, go to normal Thank You
             window.location.href = "thankyou.html";
         }
         
@@ -714,36 +681,31 @@ async function runSubPageSubmission(formElement, isDownload = false) {
 }
 
 // ===================================================
-// EXIT INTENT LOGIC (Desktop & Mobile Timer)
+// EXIT INTENT LOGIC
 // ===================================================
 setTimeout(() => {
     const popup = document.getElementById('exitPopup');
     const closeBtn = document.getElementById('closeExitPopup');
-    const STORAGE_KEY = 'peaksquare_popup_seen_v1'; // Unique key
+    const STORAGE_KEY = 'peaksquare_popup_seen_v1'; 
     
-    // Only show if user hasn't seen it (Using localStorage for permanent memory)
     if (!localStorage.getItem(STORAGE_KEY)) {
-        
-        // 1. Show on Mouse Exit (Desktop)
         const exitHandler = (e) => {
             if (e.clientY < 0) {
                 showPopup();
-                document.removeEventListener('mouseleave', exitHandler); // Run once
+                document.removeEventListener('mouseleave', exitHandler); 
             }
         };
         document.addEventListener('mouseleave', exitHandler);
 
-        // 2. Show on Timer (Mobile/All) - 15 seconds
         setTimeout(() => {
             showPopup();
         }, 15000); 
     }
 
     function showPopup() {
-        // Check one last time to prevent double firing
         if(popup && !popup.classList.contains('active') && !localStorage.getItem(STORAGE_KEY)) {
             popup.classList.add('active');
-            localStorage.setItem(STORAGE_KEY, 'true'); // Save immediately so it doesn't show again
+            localStorage.setItem(STORAGE_KEY, 'true');
         }
     }
 
@@ -751,7 +713,6 @@ setTimeout(() => {
         closeBtn.addEventListener('click', () => {
             popup.classList.remove('active');
         });
-        // Close if clicking outside the box
         popup.addEventListener('click', (e) => {
             if (e.target === popup) popup.classList.remove('active');
         });
