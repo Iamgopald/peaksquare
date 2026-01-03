@@ -20,8 +20,13 @@
     
     <meta name="robots" content="noindex, nofollow" />
     
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-    <link rel="apple-touch-icon" href="assets/favicon-180.png">
+    <link rel="icon" type="image/png" href="assets/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="shortcut icon" href="assets/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="PeakSquare" />
+<link rel="manifest" href="assets/site.webmanifest" />
+<meta name="theme-color" content="#050505">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -96,7 +101,7 @@
         <div class="container">
             <a href="index.html" class="logo-link">
                 <div class="brand">
-                    <img src="assets/logo.svg" alt="Logo" width="40" height="40">
+                    <img src="assets/favicon.svg" alt="PeakSquare Estates Logo" width="40" height="40">
                     <div class="brand-text">
                         <span class="sub">PEAKSQUARE</span>
                         <span class="main">ESTATES</span>
@@ -130,19 +135,40 @@
                     <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
             </div>
-            <h1 class="success-title">Inquiry Received</h1>
-            <p class="success-message">
-                Thank you for reaching out to PeakSquare Estates. <br>
-                Our property concierge will contact you within 24 hours.
+            
+            <h1 class="success-title" id="dynamicTitle">Inquiry Received</h1>
+            <p class="success-message" id="dynamicMessage">
+                Thank you for contacting PeakSquare Estates. <br>
+                Our concierge team will get in touch with you shortly.
             </p>
-            <div class="cta-container">
-                <a href="index.html" class="btn-ui btn-primary">Return Home</a>
-                <a href="blog.html" class="btn-ui btn-secondary">Market Pulse</a>
-            </div>
-            <div class="success-footer-text" style="margin-top: 40px;">
-                Direct Contact: +91 72766 07467
+            
+            <div class="cta-container" style="flex-direction: column; align-items: center;">
+                
+                <div id="downloadSection" style="display: none; width: 100%; text-align: center;">
+                    <p style="font-size: 0.9rem; color: var(--gold-main); margin-bottom: 10px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:5px;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        Exclusive Access Unlocked
+                    </p>
+                    
+                    <a href="https://drive.google.com/drive/folders/1Mli5kOTEml_IZdIHWZkVOldnDIhZkF28?usp=drive_link" class="btn primary btn-ui" target="_blank" style="min-width: 250px; margin-bottom: 15px;">
+                        Open Project Library
+                    </a>
+                </div>
+    
+                <a href="index.html" class="btn-ui btn-secondary full-width">
+                    Return to Home
+                </a>
             </div>
         </div>
+    
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('access') === 'kit') {
+                document.getElementById('dynamicTitle').innerText = "Access Granted";
+                document.getElementById('dynamicMessage').innerHTML = "Your Investment Kit is ready.<br>Click below to view the exclusive data.";
+                document.getElementById('downloadSection').style.display = "block";
+            }
+        </script>
     </main>
 
     <footer class="main-footer">
@@ -150,7 +176,7 @@
             <div class="footer-grid">
                 <div class="footer-brand-side">
                     <div class="brand">
-                        <img src="assets/logo.svg" alt="Logo" width="40" height="40">
+                        <img src="assets/favicon.svg" alt="PeakSquare Estates Logo" width="40" height="40">
                         <div class="brand-text">
                             <span class="sub">PEAKSQUARE</span>
                             <span class="main">ESTATES</span>

@@ -1259,7 +1259,7 @@ body.light-mode .sticky-btn.call { background: #fff; color: #000; border-color: 
         height: 70vh;
     }
     .property-title-large,.hero-title{
-        font-size: 1rem;
+        font-size: 2rem;
     }
     .btn-ui {
         width: 100%;
@@ -2712,4 +2712,146 @@ input[name="phone"]:valid:not(:placeholder-shown) {
 .utility-form-textarea:focus {
     border-color: var(--gold-main);
     background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================
+   LEAD GENERATION MACHINE STYLES
+========================================= */
+
+/* --- 1. The Lead Magnet Section --- */
+.lead-magnet-section {
+    position: relative;
+    overflow: hidden;
+    padding: 80px 0;
+}
+
+.lead-magnet-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, #050505 0%, #1a1a1a 100%);
+    z-index: -2;
+}
+
+.lead-magnet-glow {
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.lead-magnet-label {
+    color: var(--gold-main);
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.lead-magnet-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: var(--text-main);
+}
+
+.lead-magnet-title span {
+    color: var(--gold-main);
+    font-style: italic;
+}
+
+.lead-magnet-desc {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    max-width: 500px;
+}
+
+.lead-features-list {
+    margin-bottom: 30px;
+    display: grid;
+    gap: 15px;
+}
+
+.lead-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-main);
+    font-family: 'Manrope', sans-serif;
+}
+
+/* --- 2. The Exit Intent Popup --- */
+.exit-popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exit-popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.exit-popup-box {
+    max-width: 480px;
+    width: 90%;
+    position: relative;
+    border: 1px solid var(--gold-main);
+    background: #111;
+    padding: 40px 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+}
+
+.close-popup-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-popup-btn:hover {
+    color: var(--gold-main);
+}
+
+/* --- 3. Thank You Page Styles --- */
+.thank-you-box {
+    text-align: center;
+    padding: 100px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.thank-you-box h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    color: var(--gold-main);
+    margin-bottom: 20px;
+}
+
+.thank-you-box p {
+    color: var(--text-muted);
+    margin-bottom: 40px;
 }

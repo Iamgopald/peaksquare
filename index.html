@@ -29,13 +29,13 @@
     
         <meta name="theme-color" content="#050505">
     
-        <link rel="icon" href="assets/favicon-32.png" sizes="32x32">
-        <link rel="icon" href="/assets/favicon-144.png" sizes="144x144" type="image/png">
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="assets/favicon-180.png">
-        <link rel="icon" type="image/png" href="/assets/favicon-96x96.png" sizes="96x96" />
-<link rel="manifest" href="/assets/site.webmanifest" />
+        <link rel="icon" type="image/png" href="assets/favicon-96x96.png" sizes="96x96" />
+        <link rel="shortcut icon" href="assets/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="PeakSquare" />
+        <link rel="manifest" href="assets/site.webmanifest" />
+        <meta name="theme-color" content="#050505">
+        <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,7 +45,7 @@
         <link rel="stylesheet" href="styles.css" />
     
         <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.5/bundled/lenis.min.js" defer></script>
-        <script src="script.js" defer></script>
+         <script src="script.js" defer></script> 
     
         <script type="application/ld+json">
         {
@@ -76,13 +76,11 @@
             <span class="close-icon">✕</span>
             <span class="close-text">Close</span>
         </button>
-        
         <div class="search-container">
             <div class="search-bar-wrapper">
                 <input type="text" class="search-input" placeholder="Type a location or project..." id="searchInput" autocomplete="off">
                 <div class="search-line-effect"></div>
             </div>
-    
             <div class="search-quick-discover">
                 <p>Popular Searches</p>
                 <div class="discover-chips">
@@ -91,16 +89,15 @@
                     <button onclick="document.getElementById('searchInput').value='Dudulgaon'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Dudulgaon</button>
                 </div>
             </div>
-    
             <div id="searchResults" class="search-results-list"></div>
         </div>
     </div>
-
+    
     <header class="header">
         <div class="container">
             <a href="index.html" class="logo-link">
                 <div class="brand">
-                    <img src="assets/logo.svg" alt="Logo" width="40" height="40">
+                    <img src="./assets/favicon.svg" alt="Logo" width="40" height="40">
                     <div class="brand-text">
                         <span class="sub">PEAKSQUARE</span>
                         <span class="main">ESTATES</span>
@@ -232,7 +229,60 @@
                 </div>
             </div>
         </section>
-
+        <section class="lead-magnet-section" id="lead-magnet">
+            <div class="lead-magnet-bg"></div>
+            <div class="lead-magnet-glow"></div>
+        
+            <div class="container">
+                <div class="cta-flex-container">
+                    <div class="cta-text-side">
+                        <span class="lead-magnet-label">Investor Resources</span>
+                        <h2 class="lead-magnet-title">
+                            Download the 2025 <br>
+                            <span>Investment Kit</span>
+                        </h2>
+                        <p class="lead-magnet-desc">
+                            Get exclusive insights on price trends in Charholi & Moshi, legal checklists, and our curated list of high-appreciation assets.
+                        </p>
+                        
+                        <ul class="lead-features-list">
+                            <li class="lead-feature-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                Market Analysis Report
+                            </li>
+                            <li class="lead-feature-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                Legal Due Diligence Checklist
+                            </li>
+                        </ul>
+                    </div>
+        
+                    <div class="form-glass-box">
+                        <div class="form-header">
+                            <h3>Get the PDF</h3>
+                            <p>Sent directly to your inbox.</p>
+                        </div>
+                        
+                        <form id="leadMagnetForm" class="contact-form">
+                            <input type="hidden" name="type" value="Download_Investment_Kit">
+                            
+                            <div class="field-group">
+                                <input type="text" name="name" placeholder="Full Name" required>
+                            </div>
+                            <div class="field-group">
+                                <input type="email" name="email" placeholder="Email Address" required>
+                            </div>
+                            <div class="field-group">
+                                <input type="tel" name="phone" placeholder="Mobile Number" pattern="[0-9]{10}" maxlength="10" required>
+                            </div>
+                            
+                            <button type="submit" class="btn primary full-width">Download Now</button>
+                            <p class="privacy-note">🔒 Strictly Confidential.</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="section" id="market-pulse">
             <div class="container">
             <div class="market-pulse-header fade-in-scroll">
@@ -263,7 +313,7 @@
             <div class="footer-grid">
                 <div class="footer-brand-side">
                     <div class="brand">
-                        <img src="assets/logo.svg" alt="Logo" width="40" height="40">
+                        <img src="assets/favicon.svg?v=1" alt="Logo" width="40" height="40">
                         <div class="brand-text">
                             <span class="sub">PEAKSQUARE</span>
                             <span class="main">ESTATES</span>
@@ -286,7 +336,8 @@
                     <span class="footer-col-title">Company</span>
                     <nav class="footer-list">
                         <a href="about.html" class="footer-link">Our Story</a>
-                        <a href="contact.html" class="footer-link">Connect</a                    </nav>
+                        <a href="contact.html" class="footer-link">Connect</a>
+                    </nav>
                 </div>
     
                 <div class="footer-nav-col">
@@ -321,13 +372,13 @@
     
     <div class="menu-overlay" id="menuOverlay">
         <button class="menu-close-btn" id="menuClose" aria-label="Close Menu"><span class="close-icon">✕</span></button>
-        
         <nav class="menu-nav">
-            <span class="menu-label">Navigational Menu</span>
+            <span class="menu-label">Concierge Menu</span>
             <a href="index.html" class="menu-link">Home</a>
             <a href="index.html#projects" class="menu-link">Properties</a>
             <a href="services.html" class="menu-link">Our Expertise</a>
             <a href="blog.html" class="menu-link">Market Pulse</a>
+            <a href="about.html" class="menu-link">Our Story</a>
             <a href="contact.html" class="menu-link">Contact Us</a>
         </nav>
         <div class="menu-footer">
@@ -355,9 +406,28 @@
             Call
         </a>
     </div>
+    <div id="exitPopup" class="exit-popup-overlay">
+        <div class="exit-popup-box">
+            <button id="closeExitPopup" class="close-popup-btn">✕</button>
+            
+            <span class="lead-magnet-label">Wait! Don't Miss Out</span>
+            <h3 class="lead-magnet-title" style="font-size: 2rem; color: #fff;">
+                Get the <span>Complete</span> Property List?
+            </h3>
+            <p class="lead-magnet-desc" style="margin: 10px auto;">
+                We have 5 off-market properties not listed on the website. Get the list via WhatsApp.
+            </p>
+    
+            <a href="https://wa.me/917276607467?text=Hi%2C%20send%20me%20the%20off-market%20list." 
+           class="btn primary full-width" 
+           target="_blank" 
+           rel="noopener noreferrer">
+            Yes, Send via WhatsApp
+        </a>
+        </div>
+    </div>
 
 </body>
 
 
 </html>
-

@@ -66,16 +66,20 @@ function initThemeManager() {
 }
 
 function optimizeDriveImage(url, width = 1600) {
-    if (!url || url === "#") return 'assets/logo.svg';
+    // 1. Fallback if URL is missing
+    if (!url || url === "#") return 'assets/favicon.svg'; 
     
+    // 2. Check if it's a Google Drive link
     if (url.includes('drive.google.com')) {
+        // Extract the ID
         const idMatch = url.match(/id=([^&]+)/) || url.match(/\/d\/([^/]+)/);
         
         if (idMatch && idMatch[1]) {
-            // FIXED: Changed '0' to '$' and 'http' to 'https'
+            // FIXED: Use 'lh3.googleusercontent.com/d/' for reliable file hosting
             return `https://lh3.googleusercontent.com/d/${idMatch[1]}=s${width}`;
         }
     }
+    // 3. Return original URL if it's not a Drive link
     return url;
 }
 // ===================================================
@@ -222,6 +226,12 @@ function renderSingleProperty(p, container) {
     const possession = p.Possession || "Ready to Move";
     
     const desc = `Discover this exclusive <strong>${type}</strong> located in the prime area of <strong>${loc}</strong>. This premium property is listed at <strong>${price}</strong> with a possession status of <strong>${possession}</strong>. Verified by PeakSquare Estates.`;
+    const message = `Hi, I am interested in ${title} at ${loc} listed for ${price}. Please share details.`;
+    const encodedMsg = encodeURIComponent(message);
+
+    // 1. Update Sticky Bottom Bar
+    const stickyWa = document.querySelector('.sticky-btn.whatsapp');
+    if(stickyWa) stickyWa.href = `https://wa.me/917276607467?text=${encodedMsg}`;
     
     document.title = `${title} | PeakSquare Estates`;
     
@@ -234,19 +244,29 @@ function renderSingleProperty(p, container) {
 
     // Clean Container-Based Injection
     container.innerHTML = `
-        <section class="hero property-hero">
-            <div class="hero-bg">
-                <div class="hero-overlay"></div>
-                <img src="${img}" class="hero-bg-img" alt="${title}">
-            </div>
-            <div class="container"> 
-                <div class="hero-text-content">
-                    <span class="hero-badge" style="display:block; opacity:1;">${loc}</span>
-                    <h1 class="hero-title property-title-large fade-in-up">${title}</h1>
-                    <h2 class="property-price-tag fade-in-up">${price}</h2>
+    <section class="hero property-hero">
+        <div class="hero-bg">
+            <div class="hero-overlay"></div>
+            <img src="${img}" class="hero-bg-img" alt="${title}">
+        </div>
+        <div class="container"> 
+            <div class="hero-text-content">
+                <span class="hero-badge" style="display:block; opacity:1;">${loc}</span>
+                <h1 class="hero-title property-title-large fade-in-up">${title}</h1>
+                <h2 class="property-price-tag fade-in-up">${price}</h2>
+                
+                <div class="fade-in-up" style="margin-top: 25px;">
+                    <a href="https://wa.me/917276607467?text=${encodeURIComponent('Hi, I want to book a site visit for ' + title)}" 
+                       target="_blank" 
+                       class="btn primary" 
+                       style="background: var(--gold-main); color: #000; border: none; font-weight: 700;">
+                       📅 Book Site Visit
+                    </a>
                 </div>
+
             </div>
-        </section>
+        </div>
+    </section>
 
         <section class="property-specs-section">
             <div class="container">
@@ -623,8 +643,8 @@ function initSubPageForms() {
     }
 }
 
-// Shared helper for the two new forms
-async function runSubPageSubmission(formElement) {
+// UPDATED: Shared helper that handles redirection logic
+async function runSubPageSubmission(formElement, isDownload = false) {
     const phoneField = formElement.querySelector('input[name="phone"]');
     const phoneValue = phoneField.value.trim();
     
@@ -640,7 +660,7 @@ async function runSubPageSubmission(formElement) {
 
     btn.classList.add('btn-loading');
     btn.disabled = true;
-    btn.innerHTML = `<span class="spinner"></span> Securing Access...`;
+    btn.innerHTML = `<span class="spinner"></span> Processing...`;
 
     const formData = new FormData(formElement);
     const params = new URLSearchParams();
@@ -654,7 +674,16 @@ async function runSubPageSubmission(formElement) {
             body: params, 
             mode: 'no-cors'
         });
-        window.location.href = "thankyou.html";
+        
+        // --- THE LOGIC SPLIT ---
+        if (isDownload) {
+            // If lead magnet, go to ?access=kit
+            window.location.href = "thankyou.html?access=kit";
+        } else {
+            // If contact form, go to normal Thank You
+            window.location.href = "thankyou.html";
+        }
+        
     } catch (err) {
         console.error("Form Error:", err);
         alert("Issue submitting. Please try WhatsApp.");
@@ -663,3 +692,48 @@ async function runSubPageSubmission(formElement) {
         btn.innerHTML = originalHTML;
     }
 }
+
+// ===================================================
+// EXIT INTENT LOGIC (Desktop & Mobile Timer)
+// ===================================================
+setTimeout(() => {
+    const popup = document.getElementById('exitPopup');
+    const closeBtn = document.getElementById('closeExitPopup');
+    const STORAGE_KEY = 'peaksquare_popup_seen_v1'; // Unique key
+    
+    // Only show if user hasn't seen it (Using localStorage for permanent memory)
+    if (!localStorage.getItem(STORAGE_KEY)) {
+        
+        // 1. Show on Mouse Exit (Desktop)
+        const exitHandler = (e) => {
+            if (e.clientY < 0) {
+                showPopup();
+                document.removeEventListener('mouseleave', exitHandler); // Run once
+            }
+        };
+        document.addEventListener('mouseleave', exitHandler);
+
+        // 2. Show on Timer (Mobile/All) - 15 seconds
+        setTimeout(() => {
+            showPopup();
+        }, 15000); 
+    }
+
+    function showPopup() {
+        // Check one last time to prevent double firing
+        if(popup && !popup.classList.contains('active') && !localStorage.getItem(STORAGE_KEY)) {
+            popup.classList.add('active');
+            localStorage.setItem(STORAGE_KEY, 'true'); // Save immediately so it doesn't show again
+        }
+    }
+
+    if (closeBtn && popup) {
+        closeBtn.addEventListener('click', () => {
+            popup.classList.remove('active');
+        });
+        // Close if clicking outside the box
+        popup.addEventListener('click', (e) => {
+            if (e.target === popup) popup.classList.remove('active');
+        });
+    }
+}, 1000);
