@@ -221,10 +221,34 @@ function renderSingleProperty(p, container) {
     const loc = p.Location || "Pune";
     const price = p.Price || "Price on Request";
     const isMobile = window.innerWidth < 768;
-    const img = optimizeDriveImage(p.ImageURL, isMobile ? 800 : 1600);
     const type = p.Type || "Premium Property";
     const possession = p.Possession || "Ready to Move";
+
+    // --- NEW: PARSE MULTIPLE IMAGES ---
+    // Split the ImageURL string by commas to get an array
+    let rawImages = p.ImageURL ? p.ImageURL.split(',') : [];
+    // Clean up whitespace from the links
+    rawImages = rawImages.map(url => url.trim()).filter(url => url.length > 0);
     
+    // Fallback if empty
+    if (rawImages.length === 0) rawImages = ['assets/favicon.svg'];
+
+    // 1. Hero Image is the FIRST link
+    const heroImg = optimizeDriveImage(rawImages[0], isMobile ? 800 : 1600);
+
+    // 2. Generate Gallery Grid HTML from ALL links
+    const galleryHTML = rawImages.map(url => {
+        const optimizedUrl = optimizeDriveImage(url, 800);
+        return `
+            <div class="project-card" style="width:100%; cursor: zoom-in;" onclick="window.open('${optimizedUrl}', '_blank')">
+                <div class="project-card-image">
+                    <img src="${optimizedUrl}" alt="${title} Gallery" loading="lazy">
+                </div>
+            </div>
+        `;
+    }).join('');
+    // --- END NEW IMAGE LOGIC ---
+
     const desc = `Discover this exclusive <strong>${type}</strong> located in the prime area of <strong>${loc}</strong>. This premium property is listed at <strong>${price}</strong> with a possession status of <strong>${possession}</strong>. Verified by PeakSquare Estates.`;
     const message = `Hi, I am interested in ${title} at ${loc} listed for ${price}. Please share details.`;
     const encodedMsg = encodeURIComponent(message);
@@ -247,7 +271,7 @@ function renderSingleProperty(p, container) {
     <section class="hero property-hero">
         <div class="hero-bg">
             <div class="hero-overlay"></div>
-            <img src="${img}" class="hero-bg-img" alt="${title}">
+            <img src="${heroImg}" class="hero-bg-img" alt="${title}">
         </div>
         <div class="container"> 
             <div class="hero-text-content">
@@ -301,14 +325,10 @@ function renderSingleProperty(p, container) {
         <section class="section" style="padding-top:0;">
             <div class="container">
                 <div class="section-header">
-                    <h3 class="section-title">Gallery</h3>
+                    <h3 class="section-title">Gallery (${rawImages.length} Photos)</h3>
                 </div>
-                <div class="project-grid" style="display:grid; grid-template-columns: 1fr; padding:0;">
-                    <div class="project-card" style="width:100%; cursor:default;">
-                        <div class="project-card-image">
-                            <img src="${img}" alt="Gallery View">
-                        </div>
-                    </div>
+                <div class="project-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding:0;">
+                    ${galleryHTML}
                 </div>
             </div>
         </section>
